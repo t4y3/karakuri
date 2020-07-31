@@ -1,0 +1,42 @@
+{
+  "name": "visualize-mediancut-algorithm",
+  "version": "1.0.0",
+  "description": "Visualize Median cut algorithm",
+  "main": "index.js",
+  "scripts": {
+    "lint:js": "eslint src/*.ts",
+    "format:js": "eslint src/*.ts --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/*.ts": [
+      "eslint --fix"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t4y3/visualize-mediancut-algorithm.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/t4y3/visualize-mediancut-algorithm/issues"
+  },
+  "homepage": "https://github.com/t4y3/visualize-mediancut-algorithm#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.7.1",
+    "@typescript-eslint/parser": "^3.7.1",
+    "eslint": "^7.5.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.7"
+  }
+}
