@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint:js": "eslint src/*.ts",
-    "format:js": "eslint src/*.ts --fix"
+    "lint:css": "stylelint src/*.pcss",
+    "format:js": "eslint src/*.ts --fix",
+    "format:css": "stylelint src/*.pcss --fix"
   },
   "husky": {
     "hooks": {
@@ -37,6 +39,11 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
+    "stylelint": "^13.6.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.1.0",
+    "stylelint-prettier": "^1.1.2",
     "typescript": "^3.9.7"
   }
 }
