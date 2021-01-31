@@ -1,2 +1,2 @@
-# visualize-mediancut-algorithm
+# color-reduction-algorithm
 Visualize Median cut algorithm
