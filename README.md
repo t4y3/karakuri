@@ -1,2 +1,2 @@
-# color-reduction-algorithm
-Visualize Median cut algorithm
+# Karakuri
+Visualizing Karakuri
