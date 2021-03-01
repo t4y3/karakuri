@@ -1,30 +1,33 @@
 <script lang="ts">
-	export let name: string;
+import { app } from './stores/app';
+// import Nav from './components/Nav.svelte';
+// import Pane from './components/Pane.svelte';
+import Viewer from './components/Viewer/Viewer.svelte';
+import Introduction from './components/Introduction.svelte';
+
+const handleRemove = () => {
+  $app.file = null;
+};
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+<main class="w-full h-full">
+  {#if !$app.file}
+    <Introduction />
+  {:else}
+    <Viewer class="w-full h-full" />
+    <!--		<div class="fixed right-8 top-8">-->
+    <!--			<Pane></Pane>-->
+    <!--		</div>-->
+    <!--	<div class="fixed right-8 top-8">-->
+    <!--		<Nav></Nav>-->
+    <!--	</div>-->
+    <div class="fixed left-0 right-0 bottom-0 h-1/5">
+      <div id="timeline" class="h-full"></div>
+    </div>
+    <div class="fixed left-8 top-8 bg-gray-100 p-2 cursor-pointer rounded-full" on:click="{handleRemove}">
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 text-gray-800">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </div>
+  {/if}
 </main>
-
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
