@@ -19,11 +19,11 @@ void main(){
 
     gl_Position = mvpMatrix * vec4(position, 1.0);
 
-    // ワールド空間（モデル座標変換後の空間）上の頂点の位置
-    vec4 worldPosition = mMatrix * vec4(position, 1.0);
-    // カメラからの距離
-    float dist = length(worldPosition.xyz - eyePosition) / 0.5;
+//    // ワールド空間（モデル座標変換後の空間）上の頂点の位置
+//    vec4 worldPosition = mMatrix * vec4(position, 1.0);
+//    // カメラからの距離
+//    float dist = length(worldPosition.xyz - eyePosition);
 
-    gl_PointSize = dist;
+    gl_PointSize = mix(1.0, 12.0 / gl_Position.w, interporation);
 }
 

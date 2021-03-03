@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onMount } from 'svelte';
-import { setup } from './script/script';
+import { setup } from './script/setup';
 let canvasElement;
 
 onMount(() => {

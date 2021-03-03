@@ -1,10 +1,10 @@
 import { WebGLUtility, WebGLMath, WebGLGeometry, WebGLOrbitCamera } from './webgl';
 import MedianCut from 'mediancut';
-
+import { Taxis } from 'taxis';
 import { get } from 'svelte/store';
 import { app } from '../../../stores/app';
 import { settings } from '../../../stores/settings';
-import { Taxis } from '../../../utils/taxis/taxis';
+import { steps } from '../../../stores/steps';
 
 const CANVAS_SIZE = 128;
 const DISPLAY_TEXTURE_SIZE = 1.0;
@@ -16,7 +16,9 @@ let BOXES_POSITION = [0.0, 0.0, 0.0];
 export const setup = (canvas) => {
   const webgl = new WebGLUtility(); // WebGL API をまとめたユーティリティ
   // 時間軸の設定
-  const taxis = new Taxis();
+  const taxis = new Taxis({
+    container: document.querySelector('#timeline')
+  });
 
   taxis.insert('Sampling', 3 * 1000);
   for (let i = 0; i < get(settings).bucketsCount; i++) {
@@ -575,14 +577,25 @@ export const setup = (canvas) => {
    */
   function render() {
     const gl = webgl.gl;
-
+    let currentStep = 0;
     // TODO: 何度もticketAddされちゃうのを修正
     taxis.ticker((delta, axes) => {
       if (taxis.entered('split#0')) {
         boxesStep = true;
+        currentStep = 1;
       }
       if (taxis.left('split#0')) {
         boxesStep = false;
+        currentStep = 0;
+      }
+      if (taxis.entered(`Average color#0`)) {
+        currentStep = 2;
+      }
+      if (taxis.left(`Average color#0`)) {
+        currentStep = 1;
+      }
+      if (taxis.entered(`Mapping`)) {
+        currentStep = 3;
       }
 
       for (let i = 0; i < get(settings).bucketsCount; i++) {
@@ -607,13 +620,14 @@ export const setup = (canvas) => {
           }
         }
       }
+      steps.update(currentStep)
 
       // レンダリング時のクリア処理など
       setupRendering();
 
       // subの描画
       webgl.program = programSub;
-      gl.uniformMatrix4fv(uniLocationSub.eyePosition, false, camera.position);
+      gl.uniform3fv(uniLocationSub.eyePosition, camera.position);
       renderMovePoints([0.0, 0.0, 0.0]);
       renderMoveAfterPoints([0.0, 0.0, 0.0]);
 

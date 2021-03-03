@@ -5,10 +5,12 @@ import { steps } from '../stores/steps';
 <nav aria-label="Progress" class="max-w-sm">
   <ol class="overflow-hidden">
     {#each $steps.steps as item, i}
-      <li class="relative pb-10">
+      <li class="relative pb-10" class:pb-10="{ i < $steps.steps.length - 1 }">
+        {#if i < $steps.steps.length - 1}
+          <div class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-600" aria-hidden="true"></div>
+        {/if}
         <!-- Complete Step -->
-        <div class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-600" aria-hidden="true"></div>
-        <a href="#" class="relative flex items-start group">
+        <div class="relative flex items-start group">
           {#if i < $steps.current}
             <span class="h-9 flex items-center">
               <span
@@ -44,61 +46,14 @@ import { steps } from '../stores/steps';
               </span>
             </span>
           {/if}
-          <span class="ml-4 min-w-0 flex flex-col">
-            <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">{item}</span>
-            <span class="text-sm text-gray-500">Vitae sed mi luctus laoreet.</span>
+          <span class="ml-4 min-w-0 flex flex-col space-y-1">
+            <span class="text-xs font-semibold uppercase tracking-wide text-gray-300">{item.title}</span>
+            {#each item.list as children, j}
+              <span class="text-sm text-gray-500">{children}</span>
+            {/each}
           </span>
-        </a>
+        </div>
       </li>
     {/each}
-  </ol>
-  <ol class="overflow-hidden">
-    <li class="relative pb-10">
-      <!-- Current Step -->
-      <div class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
-      <a href="#" class="relative flex items-start group" aria-current="step">
-        <span class="h-9 flex items-center" aria-hidden="true">
-          <span
-            class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-600 rounded-full">
-            <span class="h-2.5 w-2.5 bg-gray-600 rounded-full"></span>
-          </span>
-        </span>
-        <span class="ml-4 min-w-0 flex flex-col">
-          <span class="text-xs font-semibold uppercase tracking-wide text-gray-600">Profile information</span>
-          <span class="text-sm text-gray-500">Cursus semper viverra facilisis et et some more.</span>
-        </span>
-      </a>
-    </li>
-
-    <li class="relative pb-10">
-      <div class="-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-300" aria-hidden="true"></div>
-      <a href="#" class="relative flex items-start group">
-        <span class="h-9 flex items-center" aria-hidden="true">
-          <span
-            class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
-            <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
-          </span>
-        </span>
-        <span class="ml-4 min-w-0 flex flex-col">
-          <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Theme</span>
-          <span class="text-sm text-gray-500">Faucibus nec enim leo et.</span>
-        </span>
-      </a>
-    </li>
-
-    <li class="relative">
-      <a href="#" class="relative flex items-start group">
-        <span class="h-9 flex items-center" aria-hidden="true">
-          <span
-            class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400">
-            <span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span>
-          </span>
-        </span>
-        <span class="ml-4 min-w-0 flex flex-col">
-          <span class="text-xs font-semibold uppercase tracking-wide text-gray-500">Preview</span>
-          <span class="text-sm text-gray-500">Iusto et officia maiores porro ad non quas.</span>
-        </span>
-      </a>
-    </li>
   </ol>
 </nav>

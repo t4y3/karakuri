@@ -1,6 +1,6 @@
 <script lang="ts">
 import { app } from './stores/app';
-// import Nav from './components/Nav.svelte';
+import Nav from './components/Nav.svelte';
 // import Pane from './components/Pane.svelte';
 import Viewer from './components/Viewer/Viewer.svelte';
 import Introduction from './components/Introduction.svelte';
@@ -18,9 +18,9 @@ const handleRemove = () => {
     <!--		<div class="fixed right-8 top-8">-->
     <!--			<Pane></Pane>-->
     <!--		</div>-->
-    <!--	<div class="fixed right-8 top-8">-->
-    <!--		<Nav></Nav>-->
-    <!--	</div>-->
+    	<div class="fixed right-8 top-8">
+    		<Nav></Nav>
+    	</div>
     <div class="fixed left-0 right-0 bottom-0 h-1/5">
       <div id="timeline" class="h-full"></div>
     </div>
