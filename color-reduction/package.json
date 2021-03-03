@@ -10,7 +10,7 @@
     "dev:css": "postcss public/global.css -o public/index.css -w",
     "start": "sirv public",
     "validate": "svelte-check",
-    "deploy": "cp -r public ../docs/color-reduction"
+    "deploy": "rm -rf ../docs/color-reduction && cp -r public ../docs/color-reduction"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
