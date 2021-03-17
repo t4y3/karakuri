@@ -17,28 +17,30 @@ export const setup = (canvas) => {
   const webgl = new WebGLUtility(); // WebGL API をまとめたユーティリティ
   // 時間軸の設定
   const taxis = new Taxis({
-    container: document.querySelector('#timeline')
+    timeline: {
+      container: document.querySelector('#timeline'),
+      debug: false
+    }
   });
 
-  taxis.insert('Sampling', 3 * 1000);
+  taxis.add('Sampling', 3 * 1000);
   for (let i = 0; i < get(settings).bucketsCount; i++) {
     if (i === 0) {
-      taxis.append(`split#${i}`, 0.5 * 1000, 500);
+      taxis.add(`split#${i}`, 0.5 * 1000, 500);
     } else {
-      taxis.append(`split#${i}`, 0.5 * 1000);
+      taxis.add(`split#${i}`, 0.5 * 1000);
     }
   }
   for (let i = 0; i < get(settings).bucketsCount; i++) {
-    taxis.append(`Average color#${i}`, 0.5 * 1000);
+    taxis.add(`Average color#${i}`, 0.5 * 1000);
   }
-  taxis.append('Mapping', 3 * 1000, 500);
+  taxis.add('Mapping', 3 * 1000, 500);
 
   let medianCut;
   let bucketsPerStep = [];
   let currentBucket = 0;
 
   let paintedBucket = -1;
-  let boxesStep = false;
 
   // キャンバスのセットアップ
   webgl.initialize(canvas);
@@ -577,44 +579,36 @@ export const setup = (canvas) => {
    */
   function render() {
     const gl = webgl.gl;
-    let currentStep = 0;
     // TODO: 何度もticketAddされちゃうのを修正
     taxis.ticker((delta, axes) => {
-      if (taxis.entered('split#0')) {
-        boxesStep = true;
+      let currentStep = 0;
+      if (axes.get('Sampling').pass) {
         currentStep = 1;
       }
-      if (taxis.left('split#0')) {
-        boxesStep = false;
-        currentStep = 0;
-      }
-      if (taxis.entered(`Average color#0`)) {
+      if (axes.get('split#7').pass) {
         currentStep = 2;
       }
-      if (taxis.left(`Average color#0`)) {
-        currentStep = 1;
-      }
-      if (taxis.entered(`Mapping`)) {
+      if (axes.get('Average color#7').pass) {
         currentStep = 3;
       }
 
       for (let i = 0; i < get(settings).bucketsCount; i++) {
-        if (taxis.entered(`split#${i}`)) {
+        if (axes.get(`split#${i}`).enter) {
           if (currentBucket < i) {
             currentBucket = i;
           }
         }
-        if (taxis.entered(`Average color#${i}`)) {
+        if (axes.get(`Average color#${i}`).enter) {
           if (paintedBucket < i) {
             paintedBucket = i;
           }
         }
-        if (taxis.left(`split#${i}`)) {
+        if (axes.get(`split#${i}`).progress <= 0) {
           if (i <= currentBucket) {
             currentBucket = i - 1;
           }
         }
-        if (taxis.left(`Average color#${i}`)) {
+        if (axes.get(`Average color#${i}`).progress <= 0) {
           if (i <= paintedBucket) {
             paintedBucket = i - 1;
           }
@@ -637,7 +631,7 @@ export const setup = (canvas) => {
       renderBeforeTexture(BEFORE_TEXTURE_POSITION);
       // renderAfterTexture(AFTER_TEXTURE_POSITION);
 
-      if (boxesStep) {
+      if (axes.get('split#0').enter) {
         renderBoxesLine(BOXES_POSITION);
         if (-1 < paintedBucket) {
           renderBoxes(BOXES_POSITION);

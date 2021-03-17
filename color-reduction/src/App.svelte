@@ -18,7 +18,7 @@ const handleRemove = () => {
     <!--		<div class="fixed right-8 top-8">-->
     <!--			<Pane></Pane>-->
     <!--		</div>-->
-    	<div class="fixed right-8 top-8">
+    	<div class="fixed right-8 top-8 hidden md:block">
     		<Nav></Nav>
     	</div>
     <div class="fixed left-0 right-0 bottom-0 h-1/5">
