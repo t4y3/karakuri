@@ -1,0 +1,43 @@
+{
+  "name": "karakuri",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Visualizing Karakuri",
+  "directories": {
+    "doc": "docs"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts}": [
+      "eslint src",
+      "prettier --write"
+    ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t4y3/karakuri.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/t4y3/karakuri/issues"
+  },
+  "homepage": "https://github.com/t4y3/karakuri#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "prettier": "^2.2.1",
+    "simple-git-hooks": "^2.2.0"
+  }
+}
