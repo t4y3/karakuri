@@ -1,0 +1,20 @@
+{
+  "name": "sample",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm run build:js & npm run build:css",
+    "build:js": "rollup -c",
+    "build:css": "NODE_ENV=production postcss public/global.css -o public/index.css",
+    "dev": "npm run dev:js & npm run dev:css",
+    "dev:js": "rollup -c -w",
+    "dev:css": "postcss public/global.css -o public/index.css -w",
+    "start": "sirv public",
+    "validate": "svelte-check",
+    "deploy": "rm -rf ../../docs/sample && cp -r public ../../docs/sample"
+  },
+  "dependencies": {
+    "gl-matrix": "^3.3.0",
+    "taxis": "0.0.3",
+    "tweakpane": "^1.6.1"
+  }
+}
