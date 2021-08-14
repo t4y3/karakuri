@@ -3,6 +3,7 @@
   "exclude": ["node_modules/*", "__sapper__/*", "public/*"],
   "compilerOptions": {
     "target": "ESNext",
-    "outDir": "lib"
+    "outDir": "lib",
+    "moduleResolution": "Node"
   }
 }

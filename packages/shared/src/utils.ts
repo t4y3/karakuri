@@ -1,10 +1,3 @@
-/**
- * - [ ] shaderを読み込む？？
- * - [ ] shaderオブジェクトを作る
- * - [ ] programオブジェクトにまとめる
- * - [ ] shaderオブジェクトを作る
- */
-
 export const createProgram = (
   gl: WebGLRenderingContext,
   vertexShader: WebGLShader,
@@ -45,6 +38,22 @@ export const createShaderObject = (gl: WebGLRenderingContext, source: string, ty
   return shader;
 };
 
+export const createVBO = (gl: WebGLRenderingContext, vertexArray: Float32Array): WebGLBuffer => {
+  const vbo = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexArray), gl.STATIC_DRAW);
+  gl.bindBuffer(gl.ARRAY_BUFFER, null);
+  return vbo;
+}
+
+export const createIBO = (gl: WebGLRenderingContext, index: number[]) => {
+  const ibo = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Int16Array(index), gl.STATIC_DRAW);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+  return ibo;
+};
+
 export const enableAttribute = (gl: WebGLRenderingContext, vbo: WebGLBuffer[], attribLocation: number[], attribStride: number[]) => {
   vbo.forEach((buffer, i) => {
     gl.bindBuffer(gl.ARRAY_BUFFER ,buffer);
@@ -52,9 +61,3 @@ export const enableAttribute = (gl: WebGLRenderingContext, vbo: WebGLBuffer[], a
     gl.vertexAttribPointer(attribLocation[i], attribStride[i], gl.FLOAT, false, 0, 0);
   });
 };
-
-// export const resizeCanvas = (canvas: HTMLCanvasElement, container: HTMLElement) => {
-//   container.addEventListener('resize', () => {
-//
-//   }, { passive: true })
-// };
