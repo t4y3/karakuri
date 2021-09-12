@@ -1,5 +1,5 @@
 
-(function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(window.document);
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 var app = (function () {
     'use strict';
 
@@ -24,6 +24,14 @@ var app = (function () {
     function safe_not_equal(a, b) {
         return a != a ? b == b : a !== b || ((a && typeof a === 'object') || typeof a === 'function');
     }
+    let src_url_equal_anchor;
+    function src_url_equal(element_src, url) {
+        if (!src_url_equal_anchor) {
+            src_url_equal_anchor = document.createElement('a');
+        }
+        src_url_equal_anchor.href = url;
+        return element_src === src_url_equal_anchor.href;
+    }
     function is_empty(obj) {
         return Object.keys(obj).length === 0;
     }
@@ -47,11 +55,10 @@ var app = (function () {
     function component_subscribe(component, store, callback) {
         component.$$.on_destroy.push(subscribe(store, callback));
     }
-    function set_store_value(store, ret, value = ret) {
+    function set_store_value(store, ret, value) {
         store.set(value);
         return ret;
     }
-
     function append(target, node) {
         target.appendChild(node);
     }
@@ -95,9 +102,9 @@ var app = (function () {
     function toggle_class(element, name, toggle) {
         element.classList[toggle ? 'add' : 'remove'](name);
     }
-    function custom_event(type, detail) {
+    function custom_event(type, detail, bubbles = false) {
         const e = document.createEvent('CustomEvent');
-        e.initCustomEvent(type, false, false, detail);
+        e.initCustomEvent(type, bubbles, false, detail);
         return e;
     }
 
@@ -259,7 +266,7 @@ var app = (function () {
         }
         component.$$.dirty[(i / 31) | 0] |= (1 << (i % 31));
     }
-    function init(component, options, instance, create_fragment, not_equal, props, dirty = [-1]) {
+    function init(component, options, instance, create_fragment, not_equal, props, append_styles, dirty = [-1]) {
         const parent_component = current_component;
         set_current_component(component);
         const $$ = component.$$ = {
@@ -280,8 +287,10 @@ var app = (function () {
             // everything else
             callbacks: blank_object(),
             dirty,
-            skip_bound: false
+            skip_bound: false,
+            root: options.target || parent_component.$$.root
         };
+        append_styles && append_styles($$.root);
         let ready = false;
         $$.ctx = instance
             ? instance(component, options.props || {}, (i, ret, ...rest) => {
@@ -345,7 +354,7 @@ var app = (function () {
     }
 
     function dispatch_dev(type, detail) {
-        document.dispatchEvent(custom_event(type, Object.assign({ version: '3.37.0' }, detail)));
+        document.dispatchEvent(custom_event(type, Object.assign({ version: '3.42.5' }, detail), true));
     }
     function append_dev(target, node) {
         dispatch_dev('SvelteDOMInsert', { target, node });
@@ -430,16 +439,15 @@ var app = (function () {
      */
     function writable(value, start = noop) {
         let stop;
-        const subscribers = [];
+        const subscribers = new Set();
         function set(new_value) {
             if (safe_not_equal(value, new_value)) {
                 value = new_value;
                 if (stop) { // store is ready
                     const run_queue = !subscriber_queue.length;
-                    for (let i = 0; i < subscribers.length; i += 1) {
-                        const s = subscribers[i];
-                        s[1]();
-                        subscriber_queue.push(s, value);
+                    for (const subscriber of subscribers) {
+                        subscriber[1]();
+                        subscriber_queue.push(subscriber, value);
                     }
                     if (run_queue) {
                         for (let i = 0; i < subscriber_queue.length; i += 2) {
@@ -455,17 +463,14 @@ var app = (function () {
         }
         function subscribe(run, invalidate = noop) {
             const subscriber = [run, invalidate];
-            subscribers.push(subscriber);
-            if (subscribers.length === 1) {
+            subscribers.add(subscriber);
+            if (subscribers.size === 1) {
                 stop = start(set) || noop;
             }
             run(value);
             return () => {
-                const index = subscribers.indexOf(subscriber);
-                if (index !== -1) {
-                    subscribers.splice(index, 1);
-                }
-                if (subscribers.length === 0) {
+                subscribers.delete(subscriber);
+                if (subscribers.size === 0) {
                     stop();
                     stop = null;
                 }
@@ -530,7 +535,7 @@ var app = (function () {
     }
     const steps = createSteps();
 
-    /* src/components/Nav.svelte generated by Svelte v3.37.0 */
+    /* src/components/Nav.svelte generated by Svelte v3.42.5 */
     const file$3 = "src/components/Nav.svelte";
 
     function get_each_context(ctx, list, i) {
@@ -1002,14 +1007,14 @@ var app = (function () {
 
     function instance$3($$self, $$props, $$invalidate) {
     	let $steps;
-    	validate_store(steps, "steps");
+    	validate_store(steps, 'steps');
     	component_subscribe($$self, steps, $$value => $$invalidate(0, $steps = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots("Nav", slots, []);
+    	validate_slots('Nav', slots, []);
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Nav> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Nav> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$capture_state = () => ({ steps, $steps });
@@ -1032,149 +1037,14 @@ var app = (function () {
 
     var t;!function(t){t[t.R=0]="R",t[t.G=1]="G",t[t.B=2]="B";}(t||(t={}));var e=function(t,e){this.imageData=t,this.options=e||{strict:!1},this.colors=this.__calculateColorCount(this.imageData.data),this.buckets=[],this.__bucketsPerStep=[];},n={roundingBits:{configurable:!0},palette:{configurable:!0},bucketsPerStep:{configurable:!0}};e.averageColor=function(t){for(var e=0,n=0,r=0,a=0,o=0,i=t.length;o<i;o=o+1|0){var s=t[o],h=s[0],c=s[1],u=s[2],l=s[3];n=h*l+n,r=c*l+r,a=u*l+a,e=e+l|0;}return [Math.round(n/e),Math.round(r/e),Math.round(a/e)]},n.roundingBits.get=function(){return this.options.strict?255:248},n.palette.get=function(){for(var t=[],n=0,r=this.buckets.length;n<r;n=n+1|0)t[n]=e.averageColor(this.buckets[n].colors);return t},n.bucketsPerStep.get=function(){return this.__bucketsPerStep},e.prototype.reduce=function(t){if(this.colors.length<=t)return console.warn("It has already been reduced color."),this.imageData;this.buckets=this.__mediancut([this.__generateBucket(this.colors)],t);for(var n=new Map,r=0,a=this.buckets.length;r<a;r=r+1|0)for(var o=this.buckets[r],i=e.averageColor(o.colors),s=0,h=o.colors.length;s<h;s=s+1|0){var c=o.colors[s],u=c[0],l=c[1],g=c[2],m=u&this.roundingBits|(l&this.roundingBits)<<8|(g&this.roundingBits)<<16;n.set(m,i);}for(var f=this.imageData.data,p=f.length,d=new Uint8ClampedArray(p),_=0;_<p;){var v=f[_]&this.roundingBits|(f[_+1]&this.roundingBits)<<8|(f[_+2]&this.roundingBits)<<16,B=n.get(v),b=B[0],k=B[1],x=B[2];d[_]=b,d[_+1]=k,d[_+2]=x,d[_+3]=f[_+3],_=_+4|0;}return new ImageData(d,this.imageData.width,this.imageData.height)},e.prototype.__calculateColorCount=function(t){for(var e=new Map,n=t.length,r=0;r<n;){var a=t[r]&this.roundingBits,o=t[r+1]&this.roundingBits,i=t[r+2]&this.roundingBits,s=a|o<<8|i<<16,h=e.get(s),c=h?h[3]+1:1;e.set(s,[a,o,i,c]),r=r+4|0;}var u=[];return e.forEach((function(t){u[u.length]=t;})),u},e.prototype.__getTotalAnGreatestRangeChannel=function(e){for(var n=0,r=0,a=0,o=0,i=255,s=255,h=255,c=e.length,u=0;u<c;){var l=e[u],g=l[0],m=l[1],f=l[2],p=l[3];r=Math.max(g,r),a=Math.max(m,a),o=Math.max(f,o),i=Math.min(g,i),s=Math.min(m,s),h=Math.min(f,h),n+=p,u=u+1|0;}var d=1.2*(r-i),_=1.2*(a-s),v=o-h,B=Math.max(d,_,v),b=t.R;return d===B&&(b=t.R),_===B&&(b=t.G),v===B&&(b=t.B),{total:n,channel:b,minR:i,minG:s,minB:h,maxR:r,maxG:a,maxB:o}},e.prototype.__mediancut=function(t,e){this.__bucketsPerStep.push([].concat(t));var n=0,r=0;if(t.length+1>e)return t;for(var a=0,o=t.length;a<o;a=a+1|0)t[a].total>n&&1!==t[a].colors.length&&(r=a,n=t[a].total);var i=t[r];if(1===i.total||1===i.colors.length)return console.error("Cube could not be split."),t;var s=i.channel;i.colors.sort((function(t,e){return t[s]-e[s]}));var h=Math.floor((i.colors.length+1)/2),c=this.__generateBucket(i.colors.slice(0,h)),u=this.__generateBucket(i.colors.slice(h));return t.splice(r,1,c,u),this.__mediancut(t,e)},e.prototype.__generateBucket=function(t){var e=this.__getTotalAnGreatestRangeChannel(t);return {colors:t,total:e.total,channel:e.channel,minR:e.minR,minG:e.minG,minB:e.minB,maxR:e.maxR,maxG:e.maxG,maxB:e.maxB}},Object.defineProperties(e.prototype,n);
 
-    var p = class extends HTMLElement {
-      constructor(i, t, a = !0) {
-        super();
-        this.editing = !1;
-        this.attachShadow({ mode: 'open' }),
-          (this.axes = i),
-          (this.totalTime = t),
-          (this.debug = a),
-          (this.shadowRoot.innerHTML = this.template(i, t)),
-          (this.$pane = this.shadowRoot.querySelector('#pane')),
-          (this.$timeline = this.shadowRoot.querySelector('#timeline')),
-          (this.$current = this.shadowRoot.querySelector('#current')),
-          (this.$progress = this.shadowRoot.querySelector('#progress')),
-          (this.$labels = this.shadowRoot.querySelectorAll('.label')),
-          (this.$bars = this.shadowRoot.querySelectorAll('.bar')),
-          (this.$barsBegin = this.shadowRoot.querySelectorAll('.begin')),
-          (this.$barsEnd = this.shadowRoot.querySelectorAll('.end')),
-          (this.$previous = this.shadowRoot.querySelector('#previous')),
-          (this.$playPause = this.shadowRoot.querySelector('#play-pause')),
-          (this.$next = this.shadowRoot.querySelector('#next')),
-          (this.playing = !0),
-          (this.previous = !1),
-          (this.next = !1),
-          (this.skip = -1),
-          this.$previous.addEventListener('click', (e) => {
-            this.previous = !0;
-          }),
-          this.$playPause.addEventListener('click', (e) => {
-            this.playing = !this.playing;
-          }),
-          this.$next.addEventListener('click', (e) => {
-            this.next = !0;
-          });
-        for (let e = 0, n = this.$bars.length; e < n; e++) {
-          if (
-            (this.$bars[e].addEventListener('click', (l) => {
-              let o = l.currentTarget,
-                h = Number(o.getAttribute('idx'));
-              this.skip = h;
-            }),
-            !this.debug)
-          )
-            continue;
-          let r = this.$barsBegin[e],
-            d = this.$barsEnd[e];
-          r.addEventListener('input', (l) => {
-            let o = Number(r.value);
-            if (Number(this.$barsEnd[e].value) < o) {
-              l.preventDefault();
-              return;
-            }
-            if (Number.isFinite(this.axes[e].position))
-              (this.axes[e].position = o),
-                (this.axes[e].duration = this.axes[e].endAt - (this.axes[e].delay + this.axes[e].position));
-            else {
-              let h = this.axes.find((c) => c.key === this.axes[e].position);
-              (this.axes[e].delay = o - h.endAt),
-                (this.axes[e].duration = this.axes[e].endAt - (this.axes[e].delay + h.endAt));
-            }
-          }),
-            d.addEventListener('input', (l) => {
-              let o = Number(d.value);
-              if (o < Number(this.$barsBegin[e].value)) {
-                l.preventDefault();
-                return;
-              }
-              if (Number.isFinite(this.axes[e].position))
-                this.axes[e].duration = o - (this.axes[e].position + this.axes[e].delay);
-              else {
-                let h = this.axes.find((c) => c.key === this.axes[e].position);
-                this.axes[e].duration = o - h.endAt - this.axes[e].delay;
-              }
-            });
-        }
-        this.$labels.forEach((e) => {
-          e.addEventListener('click', (n) => {
-            let s = n.currentTarget,
-              r = Number(s.getAttribute('idx'));
-            this.skip = r;
-          });
-        }),
-          this.$current.addEventListener('input', (e) => {
-            this.editing = !0;
-            let n = Number(this.$current.value);
-            this.__updateProgressPosition(n), this.__updateBar(this.totalTime);
-          }),
-          this.$current.addEventListener('change', (e) => {
-            this.editing = !1;
-          });
-      }
-      attributeChangedCallback() {}
-      connectedCallback() {}
-      disconnectedCallback() {}
-      getAxes() {
-        return this.axes;
-      }
-      get(i) {
-        let t = Date.now(),
-          a = Number(this.$current.value),
-          e = t - i;
-        if ((this.playing || ((i = t - a), (e = a)), this.editing && ((i = t - a), (e = a)), -1 < this.skip)) {
-          let n = this.axes[this.skip];
-          (i = t - n.beginAt), (e = n.beginAt), (this.skip = -1);
-        }
-        return (
-          this.previous && ((this.previous = !1), (i = t), (e = 0)),
-          this.next && ((this.next = !1), (i = t - this.totalTime), (e = this.totalTime)),
-          { beginAt: i, elapsedTime: e, editing: this.editing }
-        );
-      }
-      update(i, t, a) {
-        (this.axes = a),
-          (this.totalTime = t),
-          this.$current.setAttribute('max', t),
-          (this.$current.value = i),
-          this.__updateProgressPosition(i),
-          this.__updateBar(t),
-          this.debug && this.__updateBarRange(t),
-          this.__updateScale(t);
-      }
-      template(i, t) {
-        let a = '',
-          e = '',
-          n = '';
-        for (let s = 0; s < i.length; s++) {
-          let r = i[s];
-          a += `<div class="row" id="row-${s}"><div class="label" idx="${s}">${r.key}</div></div>`;
-          let d = '';
-          this.debug &&
-            (d = `
+    var p=class extends HTMLElement{constructor(i,t,a=!0){super();this.editing=!1;this.attachShadow({mode:"open"}),this.axes=i,this.totalTime=t,this.debug=a,this.shadowRoot.innerHTML=this.template(i,t),this.$pane=this.shadowRoot.querySelector("#pane"),this.$timeline=this.shadowRoot.querySelector("#timeline"),this.$current=this.shadowRoot.querySelector("#current"),this.$progress=this.shadowRoot.querySelector("#progress"),this.$labels=this.shadowRoot.querySelectorAll(".label"),this.$bars=this.shadowRoot.querySelectorAll(".bar"),this.$barsBegin=this.shadowRoot.querySelectorAll(".begin"),this.$barsEnd=this.shadowRoot.querySelectorAll(".end"),this.$previous=this.shadowRoot.querySelector("#previous"),this.$playPause=this.shadowRoot.querySelector("#play-pause"),this.$next=this.shadowRoot.querySelector("#next"),this.playing=!0,this.previous=!1,this.next=!1,this.skip=-1,this.$previous.addEventListener("click",e=>{this.previous=!0;}),this.$playPause.addEventListener("click",e=>{this.playing=!this.playing;}),this.$next.addEventListener("click",e=>{this.next=!0;});for(let e=0,n=this.$bars.length;e<n;e++){if(this.$bars[e].addEventListener("click",l=>{let o=l.currentTarget,h=Number(o.getAttribute("idx"));this.skip=h;}),!this.debug)continue;let r=this.$barsBegin[e],d=this.$barsEnd[e];r.addEventListener("input",l=>{let o=Number(r.value);if(Number(this.$barsEnd[e].value)<o){l.preventDefault();return}if(Number.isFinite(this.axes[e].position))this.axes[e].position=o,this.axes[e].duration=this.axes[e].endAt-(this.axes[e].delay+this.axes[e].position);else {let h=this.axes.find(c=>c.key===this.axes[e].position);this.axes[e].delay=o-h.endAt,this.axes[e].duration=this.axes[e].endAt-(this.axes[e].delay+h.endAt);}}),d.addEventListener("input",l=>{let o=Number(d.value);if(o<Number(this.$barsBegin[e].value)){l.preventDefault();return}if(Number.isFinite(this.axes[e].position))this.axes[e].duration=o-(this.axes[e].position+this.axes[e].delay);else {let h=this.axes.find(c=>c.key===this.axes[e].position);this.axes[e].duration=o-h.endAt-this.axes[e].delay;}});}this.$labels.forEach(e=>{e.addEventListener("click",n=>{let s=n.currentTarget,r=Number(s.getAttribute("idx"));this.skip=r;});}),this.$current.addEventListener("input",e=>{this.editing=!0;let n=Number(this.$current.value);this.__updateProgressPosition(n),this.__updateBar(this.totalTime);}),this.$current.addEventListener("change",e=>{this.editing=!1;});}attributeChangedCallback(){}connectedCallback(){}disconnectedCallback(){}getAxes(){return this.axes}get(i){let t=Date.now(),a=Number(this.$current.value),e=t-i;if(this.playing||(i=t-a,e=a),this.editing&&(i=t-a,e=a),-1<this.skip){let n=this.axes[this.skip];i=t-n.beginAt,e=n.beginAt,this.skip=-1;}return this.previous&&(this.previous=!1,i=t,e=0),this.next&&(this.next=!1,i=t-this.totalTime,e=this.totalTime),{beginAt:i,elapsedTime:e,editing:this.editing}}update(i,t,a){this.axes=a,this.totalTime=t,this.$current.setAttribute("max",t),this.$current.value=i,this.__updateProgressPosition(i),this.__updateBar(t),this.debug&&this.__updateBarRange(t),this.__updateScale(t);}template(i,t){let a="",e="",n="";for(let s=0;s<i.length;s++){let r=i[s];a+=`<div class="row" id="row-${s}"><div class="label" idx="${s}">${r.key}</div></div>`;let d="";this.debug&&(d=`
           <input class="begin" type="range" min="0" max="0" step="10" value="${r.beginAt}">
           <input class="end" type="range" min="0" max="0" step="10" value="${r.endAt}">
-        `),
-            (e += `
+        `),e+=`
         <div class="row">
-          <div class="bar bar--${this.debug ? 'debug' : 'default'}" idx="${s}"></div>
+          <div class="bar bar--${this.debug?"debug":"default"}" idx="${s}"></div>
           ${d}
-        </div>`),
-            this.debug;
-        }
-        for (let s = 0, r = Math.floor(t / 1e3); s < r; s++)
-          n += `<div class="scale-label" style="--sec: ${s + 1}">${s + 1}s</div>`;
-        return `
+        </div>`,this.debug;}for(let s=0,r=Math.floor(t/1e3);s<r;s++)n+=`<div class="scale-label" style="--sec: ${s+1}">${s+1}s</div>`;return `
       <style>
         * {
           box-sizing: border-box;
@@ -1495,153 +1365,7 @@ var app = (function () {
         </div>
         <div id="progress" class="progress"></div>
       </div>
-    `;
-      }
-      __updateScale(i) {
-        let t = this.shadowRoot.querySelector('.test');
-        t && t.remove(),
-          this.shadowRoot.querySelectorAll('.scale-label').forEach((s) => {
-            s.remove();
-          }),
-          this.shadowRoot.querySelector('.scale').style.setProperty('--total', i);
-        let e = '';
-        for (let s = 0, r = Math.floor(i / 1e3); s < r; s++)
-          e += `<div class="scale-label" style="--sec: ${s + 1}">${s + 1}s</div>`;
-        let n = document.createElement('div');
-        (n.className = 'test'), (n.innerHTML = e), this.shadowRoot.querySelector('.scale').appendChild(n);
-      }
-      __updateProgressPosition(i) {
-        let t = this.$timeline.clientWidth,
-          a = Math.min(i / this.totalTime, 1) * t;
-        this.$progress.style.transform = `translateX(${a}px)`;
-      }
-      __updateBarRange(i) {
-        for (let t = 0; t < this.$bars.length; t++) {
-          let a = this.axes[t];
-          this.$barsBegin[t].setAttribute('max', i),
-            (this.$barsBegin[t].value = a.beginAt),
-            this.$barsEnd[t].setAttribute('max', i),
-            (this.$barsEnd[t].value = a.endAt);
-        }
-      }
-      __updateBar(i) {
-        let a = this.$timeline.clientWidth / i;
-        for (let e = 0; e < this.$bars.length; e++) {
-          let n = this.axes[e],
-            s = n.beginAt * a,
-            r = (n.endAt - n.beginAt) * a;
-          (this.$bars[e].style.transform = `translateX(${s}px)`),
-            (this.$bars[e].style.width = `${r}px`),
-            0 < n.progress && !n.pass
-              ? this.$bars[e].classList.add('bar--active')
-              : this.$bars[e].classList.remove('bar--active');
-        }
-      }
-    };
-    window.customElements.define('taxis-timeline', p);
-    var u = { key: '', beginAt: 0, endAt: 0, duration: 0, delay: 0, position: 0, progress: 0, enter: !1, pass: !1 };
-    var g = class {
-      constructor(i = {}) {
-        this.option = i;
-        this.axes = [];
-      }
-      get totalTime() {
-        return this.axes.length ? Math.max(...this.axes.map((i) => i.endAt)) : 0;
-      }
-      get totalTimeForTimeline() {
-        return this.totalTime + 500;
-      }
-      get everyPassed() {
-        return this.axes.every((i) => i.pass);
-      }
-      restart() {
-        this.beginAt = Date.now();
-      }
-      getAxis({ key: i }) {
-        return this.axes.find((t) => t.key === i);
-      }
-      getAxes() {
-        return this.axes;
-      }
-      add(i, t, a = 0, e) {
-        let n = this.totalTime + a;
-        if (e !== void 0) Number.isFinite(e) ? (n = e + a) : (n = this.getAxis({ key: e }).endAt + a);
-        else {
-          let s = this.axes[this.axes.length - 1];
-          e = s ? s.key : 0;
-        }
-        return (
-          this.axes.push({ ...u, key: i, beginAt: n, endAt: n + t, duration: t, delay: a, position: e }), this.sort(), this
-        );
-      }
-      begin() {
-        this.option.timeline &&
-          ((this.timeline = new p(this.axes, this.totalTimeForTimeline, this.option.timeline.debug)),
-          this.option.timeline.container.appendChild(this.timeline)),
-          (this.beginAt = Date.now()),
-          this.__tick();
-      }
-      reset() {
-        cancelAnimationFrame(this.requestID);
-      }
-      ticker(i) {
-        this.tickerFn = i;
-      }
-      __tick() {
-        let i = this.beginAt,
-          t = Date.now() - i,
-          a = !1;
-        if (this.option.timeline) {
-          this.axes = this.recalculation(this.timeline.getAxes());
-          let { beginAt: e, elapsedTime: n, editing: s } = this.timeline.get(this.beginAt);
-          (i = e), (t = n), (a = s);
-        }
-        (this.beginAt = i),
-          this.axes.forEach((e, n) => {
-            let s = t - e.beginAt,
-              r = Math.max(0, Math.min(s / e.duration, 1)),
-              d = e.beginAt <= t,
-              l = e.endAt < t;
-            (e.progress = r), (e.enter = d), (e.pass = l);
-          }),
-          this.option.timeline && !a && this.timeline.update(t, this.totalTimeForTimeline, this.axes),
-          this.tickerFn && this.tickerFn(t, this.toMap(this.axes)),
-          (this.requestID = requestAnimationFrame(this.__tick.bind(this)));
-      }
-      calculation() {
-        let i = [];
-        for (let t = 0; t < this.axes.length; t++) {
-          let a = this.axes[t],
-            { key: e, duration: n, position: s, delay: r } = a,
-            l = Math.max(...i.map((o) => o.endAt)) + r;
-          s !== void 0 ? (Number.isFinite(s) ? (l = s + r) : (l = this.getAxis({ key: s }).endAt + r)) : (s = l),
-            i.push({ ...u, key: e, beginAt: l, endAt: l + n, duration: n, delay: r, position: s });
-        }
-      }
-      recalculation(i) {
-        let t = [];
-        for (let a = 0; a < i.length; a++) {
-          let e = i[a],
-            { key: n, duration: s, position: r, delay: d } = e,
-            o = Math.max(...t.map((h) => h.endAt)) + d;
-          r !== void 0 ? (Number.isFinite(r) ? (o = r + d) : (o = this.getAxis({ key: r }).endAt + d)) : (r = o),
-            t.push({ ...u, key: n, beginAt: o, endAt: o + s, duration: s, delay: d, position: r });
-        }
-        return t;
-      }
-      sort() {
-        this.axes.sort((i, t) => i.beginAt - t.beginAt);
-      }
-      toMap(i) {
-        let t = new Map();
-        return (
-          i.forEach((a) => {
-            (t[a.key] = a), t.set(a.key, a);
-          }),
-          t
-        );
-      }
-    };
+    `}__updateScale(i){let t=this.shadowRoot.querySelector(".test");t&&t.remove(),this.shadowRoot.querySelectorAll(".scale-label").forEach(s=>{s.remove();}),this.shadowRoot.querySelector(".scale").style.setProperty("--total",i);let e="";for(let s=0,r=Math.floor(i/1e3);s<r;s++)e+=`<div class="scale-label" style="--sec: ${s+1}">${s+1}s</div>`;let n=document.createElement("div");n.className="test",n.innerHTML=e,this.shadowRoot.querySelector(".scale").appendChild(n);}__updateProgressPosition(i){let t=this.$timeline.clientWidth,a=Math.min(i/this.totalTime,1)*t;this.$progress.style.transform=`translateX(${a}px)`;}__updateBarRange(i){for(let t=0;t<this.$bars.length;t++){let a=this.axes[t];this.$barsBegin[t].setAttribute("max",i),this.$barsBegin[t].value=a.beginAt,this.$barsEnd[t].setAttribute("max",i),this.$barsEnd[t].value=a.endAt;}}__updateBar(i){let a=this.$timeline.clientWidth/i;for(let e=0;e<this.$bars.length;e++){let n=this.axes[e],s=n.beginAt*a,r=(n.endAt-n.beginAt)*a;this.$bars[e].style.transform=`translateX(${s}px)`,this.$bars[e].style.width=`${r}px`,0<n.progress&&!n.pass?this.$bars[e].classList.add("bar--active"):this.$bars[e].classList.remove("bar--active");}}};window.customElements.define("taxis-timeline",p);var u={key:"",beginAt:0,endAt:0,duration:0,delay:0,position:0,progress:0,enter:!1,pass:!1};var g=class{constructor(i={}){this.option=i;this.axes=[];}get totalTime(){return this.axes.length?Math.max(...this.axes.map(i=>i.endAt)):0}get totalTimeForTimeline(){return this.totalTime+500}get everyPassed(){return this.axes.every(i=>i.pass)}restart(){this.beginAt=Date.now();}getAxis({key:i}){return this.axes.find(t=>t.key===i)}getAxes(){return this.axes}add(i,t,a=0,e){let n=this.totalTime+a;if(e!==void 0)Number.isFinite(e)?n=e+a:n=this.getAxis({key:e}).endAt+a;else {let s=this.axes[this.axes.length-1];e=s?s.key:0;}return this.axes.push({...u,key:i,beginAt:n,endAt:n+t,duration:t,delay:a,position:e}),this.sort(),this}begin(){this.option.timeline&&(this.timeline=new p(this.axes,this.totalTimeForTimeline,this.option.timeline.debug),this.option.timeline.container.appendChild(this.timeline)),this.beginAt=Date.now(),this.__tick();}reset(){cancelAnimationFrame(this.requestID);}ticker(i){this.tickerFn=i;}__tick(){let i=this.beginAt,t=Date.now()-i,a=!1;if(this.option.timeline){this.axes=this.recalculation(this.timeline.getAxes());let{beginAt:e,elapsedTime:n,editing:s}=this.timeline.get(this.beginAt);i=e,t=n,a=s;}this.beginAt=i,this.axes.forEach((e,n)=>{let s=t-e.beginAt,r=Math.max(0,Math.min(s/e.duration,1)),d=e.beginAt<=t,l=e.endAt<t;e.progress=r,e.enter=d,e.pass=l;}),this.option.timeline&&!a&&this.timeline.update(t,this.totalTimeForTimeline,this.axes),this.tickerFn&&this.tickerFn(t,this.toMap(this.axes)),this.requestID=requestAnimationFrame(this.__tick.bind(this));}calculation(){let i=[];for(let t=0;t<this.axes.length;t++){let a=this.axes[t],{key:e,duration:n,position:s,delay:r}=a,l=Math.max(...i.map(o=>o.endAt))+r;s!==void 0?Number.isFinite(s)?l=s+r:l=this.getAxis({key:s}).endAt+r:s=l,i.push({...u,key:e,beginAt:l,endAt:l+n,duration:n,delay:r,position:s});}}recalculation(i){let t=[];for(let a=0;a<i.length;a++){let e=i[a],{key:n,duration:s,position:r,delay:d}=e,o=Math.max(...t.map(h=>h.endAt))+d;r!==void 0?Number.isFinite(r)?o=r+d:o=this.getAxis({key:r}).endAt+d:r=o,t.push({...u,key:n,beginAt:o,endAt:o+s,duration:s,delay:d,position:r});}return t}sort(){this.axes.sort((i,t)=>i.beginAt-t.beginAt);}toMap(i){let t=new Map;return i.forEach(a=>{t[a.key]=a,t.set(a.key,a);}),t}};
 
     /**
      * Common utilities
@@ -3537,7 +3261,7 @@ var app = (function () {
         }
     }
 
-    /* src/components/Viewer/Viewer.svelte generated by Svelte v3.37.0 */
+    /* src/components/Viewer/Viewer.svelte generated by Svelte v3.42.5 */
     const file$2 = "src/components/Viewer/Viewer.svelte";
 
     function create_fragment$2(ctx) {
@@ -3596,7 +3320,7 @@ var app = (function () {
 
     function instance$2($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots("Viewer", slots, []);
+    	validate_slots('Viewer', slots, []);
     	let canvasElement;
     	let timelineElement;
     	const scene = new Scene();
@@ -3612,18 +3336,18 @@ var app = (function () {
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Viewer> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Viewer> was created with unknown prop '${key}'`);
     	});
 
     	function canvas_binding($$value) {
-    		binding_callbacks[$$value ? "unshift" : "push"](() => {
+    		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
     			canvasElement = $$value;
     			$$invalidate(0, canvasElement);
     		});
     	}
 
     	function div0_binding($$value) {
-    		binding_callbacks[$$value ? "unshift" : "push"](() => {
+    		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
     			timelineElement = $$value;
     			$$invalidate(1, timelineElement);
     		});
@@ -3639,8 +3363,8 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ("canvasElement" in $$props) $$invalidate(0, canvasElement = $$props.canvasElement);
-    		if ("timelineElement" in $$props) $$invalidate(1, timelineElement = $$props.timelineElement);
+    		if ('canvasElement' in $$props) $$invalidate(0, canvasElement = $$props.canvasElement);
+    		if ('timelineElement' in $$props) $$invalidate(1, timelineElement = $$props.timelineElement);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -3664,7 +3388,7 @@ var app = (function () {
     	}
     }
 
-    /* src/components/Introduction.svelte generated by Svelte v3.37.0 */
+    /* src/components/Introduction.svelte generated by Svelte v3.42.5 */
     const file$1 = "src/components/Introduction.svelte";
 
     function create_fragment$1(ctx) {
@@ -3897,7 +3621,7 @@ var app = (function () {
     			add_location(div8, file$1, 64, 2, 1831);
     			attr_dev(p3, "class", "text-center text-sm font-semibold uppercase text-gray-500 tracking-wide");
     			add_location(p3, file$1, 117, 6, 4419);
-    			if (img0.src !== (img0_src_value = "./assets/bison.jpg")) attr_dev(img0, "src", img0_src_value);
+    			if (!src_url_equal(img0.src, img0_src_value = "./assets/bison.jpg")) attr_dev(img0, "src", img0_src_value);
     			attr_dev(img0, "alt", "");
     			attr_dev(img0, "class", "cursor-pointer");
     			add_location(img0, file$1, 120, 10, 4704);
@@ -3908,7 +3632,7 @@ var app = (function () {
     			add_location(span2, file$1, 121, 10, 4803);
     			attr_dev(div9, "class", "col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1");
     			add_location(div9, file$1, 119, 8, 4613);
-    			if (img1.src !== (img1_src_value = "./assets/colorful.jpg")) attr_dev(img1, "src", img1_src_value);
+    			if (!src_url_equal(img1.src, img1_src_value = "./assets/colorful.jpg")) attr_dev(img1, "src", img1_src_value);
     			attr_dev(img1, "alt", "");
     			attr_dev(img1, "class", "cursor-pointer");
     			add_location(img1, file$1, 132, 10, 5357);
@@ -3919,7 +3643,7 @@ var app = (function () {
     			add_location(span3, file$1, 133, 10, 5459);
     			attr_dev(div10, "class", "col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1");
     			add_location(div10, file$1, 131, 8, 5266);
-    			if (img2.src !== (img2_src_value = "./assets/shibuya.jpg")) attr_dev(img2, "src", img2_src_value);
+    			if (!src_url_equal(img2.src, img2_src_value = "./assets/shibuya.jpg")) attr_dev(img2, "src", img2_src_value);
     			attr_dev(img2, "alt", "");
     			attr_dev(img2, "class", "cursor-pointer");
     			add_location(img2, file$1, 144, 10, 5989);
@@ -3930,7 +3654,7 @@ var app = (function () {
     			add_location(span4, file$1, 145, 10, 6090);
     			attr_dev(div11, "class", "col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1");
     			add_location(div11, file$1, 143, 8, 5898);
-    			if (img3.src !== (img3_src_value = "./assets/telephone_booth.jpg")) attr_dev(img3, "src", img3_src_value);
+    			if (!src_url_equal(img3.src, img3_src_value = "./assets/telephone_booth.jpg")) attr_dev(img3, "src", img3_src_value);
     			attr_dev(img3, "alt", "");
     			attr_dev(img3, "class", "cursor-pointer");
     			add_location(img3, file$1, 156, 10, 6604);
@@ -3941,7 +3665,7 @@ var app = (function () {
     			add_location(span5, file$1, 157, 10, 6713);
     			attr_dev(div12, "class", "col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1");
     			add_location(div12, file$1, 155, 8, 6513);
-    			if (img4.src !== (img4_src_value = "./assets/pineapple.jpg")) attr_dev(img4, "src", img4_src_value);
+    			if (!src_url_equal(img4.src, img4_src_value = "./assets/pineapple.jpg")) attr_dev(img4, "src", img4_src_value);
     			attr_dev(img4, "alt", "");
     			attr_dev(img4, "class", "cursor-pointer");
     			add_location(img4, file$1, 168, 10, 7228);
@@ -4072,15 +3796,15 @@ var app = (function () {
 
     function instance$1($$self, $$props, $$invalidate) {
     	let $app;
-    	validate_store(app$1, "app");
+    	validate_store(app$1, 'app');
     	component_subscribe($$self, app$1, $$value => $$invalidate(1, $app = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots("Introduction", slots, []);
+    	validate_slots('Introduction', slots, []);
 
     	onMount(() => {
-    		const uploadArea = document.getElementById("upload-area");
+    		const uploadArea = document.getElementById('upload-area');
 
-    		uploadArea.addEventListener("change", e => {
+    		uploadArea.addEventListener('change', e => {
     			changeHandler({
     				e,
     				data: undefined,
@@ -4090,7 +3814,7 @@ var app = (function () {
     			});
     		});
 
-    		uploadArea.addEventListener("drop", e => {
+    		uploadArea.addEventListener('drop', e => {
     			e.preventDefault();
 
     			changeHandler({
@@ -4102,15 +3826,15 @@ var app = (function () {
     			});
     		});
 
-    		uploadArea.addEventListener("dragenter", e => {
+    		uploadArea.addEventListener('dragenter', e => {
     			e.preventDefault();
     		});
 
-    		uploadArea.addEventListener("dragover", e => {
+    		uploadArea.addEventListener('dragover', e => {
     			e.preventDefault();
     		});
 
-    		uploadArea.addEventListener("dragleave", e => {
+    		uploadArea.addEventListener('dragleave', e => {
     			e.preventDefault();
     		});
 
@@ -4152,7 +3876,7 @@ var app = (function () {
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<Introduction> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Introduction> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$capture_state = () => ({ onMount, app: app$1, handleSelect, $app });
@@ -4173,10 +3897,10 @@ var app = (function () {
     	}
     }
 
-    /* src/App.svelte generated by Svelte v3.37.0 */
+    /* src/App.svelte generated by Svelte v3.42.5 */
     const file = "src/App.svelte";
 
-    // (13:2) {:else}
+    // (14:2) {:else}
     function create_else_block(ctx) {
     	let viewer;
     	let t0;
@@ -4208,19 +3932,19 @@ var app = (function () {
     			svg = svg_element("svg");
     			path = svg_element("path");
     			attr_dev(div0, "class", "fixed right-8 top-8 hidden md:block");
-    			add_location(div0, file, 14, 4, 399);
+    			add_location(div0, file, 15, 4, 447);
     			attr_dev(path, "stroke-linecap", "round");
     			attr_dev(path, "stroke-linejoin", "round");
     			attr_dev(path, "stroke-width", "2");
     			attr_dev(path, "d", "M6 18L18 6M6 6l12 12");
-    			add_location(path, file, 19, 8, 685);
+    			add_location(path, file, 20, 8, 733);
     			attr_dev(svg, "fill", "none");
     			attr_dev(svg, "viewBox", "0 0 24 24");
     			attr_dev(svg, "stroke", "currentColor");
     			attr_dev(svg, "class", "w-8 text-gray-800");
-    			add_location(svg, file, 18, 6, 591);
+    			add_location(svg, file, 19, 6, 639);
     			attr_dev(div1, "class", "fixed left-8 top-8 bg-gray-100 p-2 cursor-pointer rounded-full");
-    			add_location(div1, file, 17, 4, 482);
+    			add_location(div1, file, 18, 4, 530);
     		},
     		m: function mount(target, anchor) {
     			mount_component(viewer, target, anchor);
@@ -4266,14 +3990,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(13:2) {:else}",
+    		source: "(14:2) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (11:2) {#if !$app.file}
+    // (12:2) {#if !$app.file}
     function create_if_block(ctx) {
     	let introduction;
     	let current;
@@ -4306,7 +4030,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(11:2) {#if !$app.file}",
+    		source: "(12:2) {#if !$app.file}",
     		ctx
     	});
 
@@ -4334,7 +4058,7 @@ var app = (function () {
     			main = element("main");
     			if_block.c();
     			attr_dev(main, "class", "w-full h-full");
-    			add_location(main, file, 9, 0, 279);
+    			add_location(main, file, 10, 0, 327);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4399,10 +4123,10 @@ var app = (function () {
 
     function instance($$self, $$props, $$invalidate) {
     	let $app;
-    	validate_store(app$1, "app");
+    	validate_store(app$1, 'app');
     	component_subscribe($$self, app$1, $$value => $$invalidate(0, $app = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
-    	validate_slots("App", slots, []);
+    	validate_slots('App', slots, []);
 
     	const handleRemove = () => {
     		set_store_value(app$1, $app.file = null, $app);
@@ -4411,7 +4135,7 @@ var app = (function () {
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== "$$") console.warn(`<App> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<App> was created with unknown prop '${key}'`);
     	});
 
     	$$self.$capture_state = () => ({
