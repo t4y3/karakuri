@@ -6,7 +6,6 @@ let paneElement;
 const scene = new Scene();
 
 onMount(() => {
-  // setup(canvasElement, paneElement);
   scene.init(canvasElement, paneElement)
 });
 onDestroy(() => {

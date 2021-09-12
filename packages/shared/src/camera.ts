@@ -21,7 +21,7 @@ export class Camera {
   private isScalable: boolean = true;
   private drag: boolean;
 
-  private distance: number = 10.0;
+  private __distance: number = 10.0;
   private scale: number = 0.0;
 
   private rotateX: number = 0.0;
@@ -35,8 +35,8 @@ export class Camera {
 
   // TODO: オプションでもらえるように
   private center = [0.0, 0.0, 0.0];
-  private __position = [0.0, 7.0, this.distance];
-  private defaultPosition = [0.0, 7.0, this.distance];
+  private __position = [0.0, 7.0, this.__distance];
+  private defaultPosition = [0.0, 7.0, this.__distance];
 
   private defaultUpDirection = [0.0, 1.0, 0.0];
   private upDirection = [0.0, 1.0, 0.0];
@@ -46,6 +46,14 @@ export class Camera {
 
   get position () {
     return this.__position;
+  }
+
+  get distance() {
+    return this.__distance;
+  }
+
+  set distance(value) {
+    this.__distance = value;
   }
 
   constructor(private readonly container: HTMLElement, private readonly option?: Options) {
@@ -176,11 +184,11 @@ export class Camera {
 
     // scale
     this.scale *= 0.7;
-    this.distance += this.scale;
-    this.distance = Math.min(Math.max(this.distance, this.minDistance), this.maxDistance);
+    this.__distance += this.scale;
+    this.__distance = Math.min(Math.max(this.__distance, this.minDistance), this.maxDistance);
     const d = vec3.create();
     vec3.normalize(d, this.__position);
-    vec3.scale(this.__position, d, this.distance);
+    vec3.scale(this.__position, d, this.__distance);
 
     return mat4.targetTo(mat4.create(), this.__position, this.center, this.upDirection);
   }

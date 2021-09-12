@@ -13,6 +13,7 @@
     "deploy": "rm -rf ../../docs/color-reduction && cp -r public ../../docs/color-reduction"
   },
   "dependencies": {
+    "gl-matrix": "^3.3.0",
     "mediancut": "^2.1.0",
     "taxis": "0.0.3",
     "tweakpane": "^1.5.8"

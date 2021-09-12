@@ -15,14 +15,8 @@ const handleRemove = () => {
     <Introduction />
   {:else}
     <Viewer class="w-full h-full" />
-    <!--		<div class="fixed right-8 top-8">-->
-    <!--			<Pane></Pane>-->
-    <!--		</div>-->
-    	<div class="fixed right-8 top-8 hidden md:block">
-    		<Nav></Nav>
-    	</div>
-    <div class="fixed left-0 right-0 bottom-0 h-1/5">
-      <div id="timeline" class="h-full"></div>
+    <div class="fixed right-8 top-8 hidden md:block">
+      <Nav></Nav>
     </div>
     <div class="fixed left-8 top-8 bg-gray-100 p-2 cursor-pointer rounded-full" on:click="{handleRemove}">
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 text-gray-800">
