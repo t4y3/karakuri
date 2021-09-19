@@ -1,9 +1,9 @@
 import { Taxis } from 'taxis';
 import { mat4, vec3 } from 'gl-matrix';
-import * as geometry from 'shared/lib/geometry';
-import type { Geometry } from 'shared/lib/geometry';
-import { createProgram, createShaderObject, createVBO, createIBO, enableAttribute } from 'shared/lib/utils';
-import { Camera } from 'shared/lib/camera';
+import * as geometry from 'shared/lib/src/geometry';
+import type { Geometry } from 'shared/lib/src/geometry';
+import { createProgram, createShaderObject, createVBO, createIBO, enableAttribute } from 'shared/lib/src/utils';
+import { Camera } from 'shared/lib/src/camera';
 import { fragment, vertex, attribute, uniLocation } from '../shader/shader';
 import { addParameters } from '../../../utils/parameters';
 import type { Parameters } from '../../../utils/parameters';
@@ -150,7 +150,7 @@ export class Scene {
         createVBO(this.gl, this.items[i].geometry.color),
         createVBO(this.gl, this.items[i].geometry.normal),
       ];
-      this.items[i].IBO = createIBO(this.gl, this.items[i].geometry.index);
+      this.items[i].IBO = createIBO(this.gl, this.items[i].geometry.indices);
     }
   }
 
@@ -165,14 +165,14 @@ export class Scene {
       mat4.translate(mMatrix, mMatrix, [0.0, BOX_SIZE/ 2, 0.0]);
 
       this.setupMvp(mMatrix);
-      this.gl.drawElements(this.gl.TRIANGLES, this.items[i].geometry.index.length, this.gl.UNSIGNED_SHORT, 0);
+      this.gl.drawElements(this.gl.TRIANGLES, this.items[i].geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
     });
   }
 
   setupAxisGeometry() {
     this.floor.geometry = geometry.floor(20, 20, [0.45, 0.45, 0.45, 1.0]);
     this.floor.VBO = [createVBO(this.gl, this.floor.geometry.position), createVBO(this.gl, this.floor.geometry.color)];
-    this.floor.IBO = createIBO(this.gl, this.floor.geometry.index);
+    this.floor.IBO = createIBO(this.gl, this.floor.geometry.indices);
   }
 
   renderAxis(position) {
@@ -184,7 +184,7 @@ export class Scene {
     this.setupMvp(mMatrix);
     // this.gl.drawArrays(this.gl.LINES, 0, this.floor.geometry.position.length / 3);
     this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.floor.IBO);
-    this.gl.drawElements(this.gl.TRIANGLES, this.floor.geometry.index.length, this.gl.UNSIGNED_SHORT, 0);
+    this.gl.drawElements(this.gl.TRIANGLES, this.floor.geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
   }
 
   setupMvp(mMatrix) {

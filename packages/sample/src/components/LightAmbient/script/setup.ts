@@ -1,9 +1,9 @@
 import { Taxis } from 'taxis';
 import { mat4, vec3 } from 'gl-matrix';
-import * as geometry from 'shared/lib/geometry';
-import type { Geometry } from 'shared/lib/geometry';
-import { createProgram, createShaderObject, createVBO, createIBO, enableAttribute } from 'shared/lib/utils';
-import { Camera } from 'shared/lib/camera';
+import * as geometry from 'shared/lib/src/geometry';
+import type { Geometry } from 'shared/lib/src/geometry';
+import { createProgram, createShaderObject, createVBO, createIBO, enableAttribute } from 'shared/lib/src/utils';
+import { Camera } from 'shared/lib/src/camera';
 import { fragment, vertex, attribute, uniLocation } from '../shader/shader';
 import { addParameters } from '../../../utils/parameters';
 import type { Parameters } from '../../../utils/parameters';
@@ -134,7 +134,7 @@ export class Scene {
         createVBO(this.gl, cube.color),
         createVBO(this.gl, cube.normal),
       ];
-      const IBO = createIBO(this.gl, cube.index);
+      const IBO = createIBO(this.gl, cube.indices);
 
       this.items[i] = {
         geometry: cube,
@@ -155,7 +155,7 @@ export class Scene {
       mat4.rotate(mMatrix, mMatrix, delta / 1000, [1.0, 1.0, 1.0]);
 
       this.setupMvp(mMatrix);
-      this.gl.drawElements(this.gl.TRIANGLES, this.items[i].geometry.index.length, this.gl.UNSIGNED_SHORT, 0);
+      this.gl.drawElements(this.gl.TRIANGLES, this.items[i].geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
     }
   }
 

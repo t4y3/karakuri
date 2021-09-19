@@ -3,7 +3,7 @@ type Color = [number, number, number, number];
 export type Geometry = {
   position: Float32Array;
   color: Float32Array;
-  index?: number[];
+  indices?: number[];
   normal?: Float32Array;
 };
 
@@ -88,14 +88,14 @@ export const plane = (width: number, height: number, color: Color): Geometry => 
     0, 2, 1,
     1, 2, 3
   ];
-  return { position, normal: nor, color: col, index: idx };
+  return { position, normal: nor, color: col, indices: idx };
 };
 
 /**
  * @example
  * // Render using drawElements with mode gl.TRIANGLES.
  * this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.floor.IBO);
- * this.gl.drawElements(this.gl.TRIANGLES, this.floor.geometry.index.length, this.gl.UNSIGNED_SHORT, 0);
+ * this.gl.drawElements(this.gl.TRIANGLES, this.floor.geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
  */
 export const floor = (width: number, depth: number, color: Color): Geometry => {
   const w = width / 2;
@@ -133,7 +133,7 @@ export const floor = (width: number, depth: number, color: Color): Geometry => {
     0, 1, 2,
     2, 1, 3
   ];
-  return { position, normal, color: col, index: idx };
+  return { position, normal, color: col, indices: idx };
 };
 
 // TODO: 変更
@@ -190,7 +190,7 @@ export const cube = (side: number, color: Color): Geometry => {
   //   0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0
   // ];
   // prettier-ignore
-  let index = [
+  let indices = [
     0,  1,  2,  0,  2,  3,
     4,  5,  6,  4,  6,  7,
     8,  9, 10,  8, 10, 11,
@@ -198,7 +198,7 @@ export const cube = (side: number, color: Color): Geometry => {
     16, 17, 18, 16, 18, 19,
     20, 21, 22, 20, 22, 23
   ];
-  return { position, normal, color: new Float32Array(col), index };
+  return { position, normal, color: new Float32Array(col), indices };
 };
 
 export const cubeWireframe = (width, height, depth, color: Color): Geometry => {
@@ -325,7 +325,7 @@ export const box = (width, height, depth, color): Geometry => {
   //   0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0
   // ];
   // prettier-ignore
-  const index = [
+  const indices = [
     0,  1,  2,  0,  2,  3,
     4,  5,  6,  4,  6,  7,
     8,  9, 10,  8, 10, 11,
@@ -333,7 +333,7 @@ export const box = (width, height, depth, color): Geometry => {
     16, 17, 18, 16, 18, 19,
     20, 21, 22, 20, 22, 23
   ];
-  return { position, normal, color: new Float32Array(col), index };
+  return { position, normal, color: new Float32Array(col), indices };
 };
 
 // TODO: 命名変更

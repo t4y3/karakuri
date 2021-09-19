@@ -9,9 +9,9 @@ import {
   createIBO,
   createTexture,
   enableAttribute,
-} from 'shared/lib/utils';
-import { Camera } from 'shared/lib/camera';
-import { axis, box as boxGeometry, boxLine as boxLineGeometry, plane, Geometry } from 'shared/lib/geometry';
+} from 'shared/lib/src/utils';
+import { Camera } from 'shared/lib/src/camera';
+import { axis, box as boxGeometry, boxLine as boxLineGeometry, plane, Geometry } from 'shared/lib/src/geometry';
 import {
   fragment,
   vertex,
@@ -263,7 +263,7 @@ export class Scene {
       createVBO(this.gl, this.beforeImage.geometry.texCoord),
     ];
     // インデックスバッファを生成
-    this.beforeImage.IBO = createIBO(this.gl, this.beforeImage.geometry.index);
+    this.beforeImage.IBO = createIBO(this.gl, this.beforeImage.geometry.indices);
   }
 
   setupAfterTexture() {
@@ -274,7 +274,7 @@ export class Scene {
       createVBO(this.gl, this.afterImage.geometry.texCoord),
     ];
     // インデックスバッファを生成
-    this.afterImage.IBO = createIBO(this.gl, this.afterImage.geometry.index);
+    this.afterImage.IBO = createIBO(this.gl, this.afterImage.geometry.indices);
   }
 
   setupPointGeometry() {
@@ -381,7 +381,7 @@ export class Scene {
         ];
         this.boxesVBO[i][j] = [createVBO(this.gl, box.position), createVBO(this.gl, box.color)];
         // インデックスバッファを生成
-        this.boxesIBO[i][j] = createIBO(this.gl, box.index);
+        this.boxesIBO[i][j] = createIBO(this.gl, box.indices);
       });
     });
   }
@@ -428,7 +428,7 @@ export class Scene {
 
     this.setupMvp(position);
 
-    this.gl.drawElements(this.gl.TRIANGLES, this.beforeImage.geometry.index.length, this.gl.UNSIGNED_SHORT, 0);
+    this.gl.drawElements(this.gl.TRIANGLES, this.beforeImage.geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
   }
 
   /**
@@ -452,7 +452,7 @@ export class Scene {
       ];
       this.setupMvp(pos);
 
-      this.gl.drawElements(this.gl.TRIANGLES, this.boxes[lastIndex][i].index.length, this.gl.UNSIGNED_SHORT, 0);
+      this.gl.drawElements(this.gl.TRIANGLES, this.boxes[lastIndex][i].indices.length, this.gl.UNSIGNED_SHORT, 0);
     }
   }
 

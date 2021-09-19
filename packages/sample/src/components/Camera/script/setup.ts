@@ -1,9 +1,9 @@
 import { Taxis } from 'taxis';
 import { mat4 } from 'gl-matrix';
-import * as geometry from 'shared/lib/geometry';
-import type { Geometry } from 'shared/lib/geometry';
-import { createProgram, createShaderObject, createVBO, enableAttribute } from 'shared/lib/utils';
-import { Camera } from 'shared/lib/camera';
+import * as geometry from 'shared/lib/src/geometry';
+import type { Geometry } from 'shared/lib/src/geometry';
+import { createProgram, createShaderObject, createVBO, enableAttribute } from 'shared/lib/src/utils';
+import { Camera } from 'shared/lib/src/camera';
 import { fragment, vertex, attribute, uniLocation } from '../shader/shader';
 import { addParameters } from '../../../utils/parameters';
 import type { Parameters } from '../../../utils/parameters';
