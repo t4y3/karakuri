@@ -25,20 +25,9 @@ export class Scene {
   parameters: Parameters = {
     cullFace: true,
     depthTest: true,
-    light: {
-      position: {
-        x: 1,
-        y: 1,
-        z: 1,
-      },
-    },
     ambientLight: {
       enable: true,
-      intensity: 0.2,
-    },
-    specularLight: {
-      enable: true,
-      shininess: 2.0
+      intensity: 0.5,
     },
   };
   // model系
@@ -123,18 +112,9 @@ export class Scene {
 
     this.reflectParameters();
 
-    this.gl.uniform3fv(this.uniLocation.eyePosition, this.camera.position);
-    this.gl.uniform3fv(this.uniLocation.lightDirection, [
-      this.parameters.light.position.x,
-      this.parameters.light.position.y,
-      this.parameters.light.position.z,
-    ]);
     this.gl.uniform1f(this.uniLocation.ambient, this.parameters.ambientLight.intensity);
-    this.gl.uniform1i(this.uniLocation.enableSpecular, Number(this.parameters.specularLight.enable));
-    this.gl.uniform1f(this.uniLocation.shininess, this.parameters.specularLight.shininess);
     this.gl.uniform1i(this.uniLocation.enableAmbientLight, Number(this.parameters.ambientLight.enable));
 
-    // 自作の
     mat4.invert(this.vMatrix, this.camera.update());
 
     mat4.perspective(this.pMatrix, 45, this.canvas.width / this.canvas.height, 0.1, 20.0);
@@ -170,8 +150,6 @@ export class Scene {
       enableAttribute(this.gl, this.items[i].VBO, this.attLocation, this.attStride);
       this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.items[i].IBO);
 
-
-
       let mMatrix = mat4.create();
       mat4.translate(mMatrix, mMatrix, this.items[i].position);
       mat4.rotate(mMatrix, mMatrix, delta / 1000, [1.0, 1.0, 1.0]);
@@ -197,21 +175,12 @@ export class Scene {
   }
 
   setupMvp(mMatrix) {
-    // normalMatrix
-    const normalMatrix = mat4.create();
-    mat4.invert(normalMatrix, mMatrix);
-    mat4.transpose(normalMatrix, normalMatrix);
-    this.gl.uniformMatrix4fv(this.uniLocation.normalMatrix, false, normalMatrix);
-
     // mvp 行列を生成してシェーダに送る
     const mvpMatrix = mat4.create();
     mat4.multiply(mvpMatrix, this.vpMatrix, mMatrix);
     this.gl.uniformMatrix4fv(this.uniLocation.mvpMatrix, false, mvpMatrix);
   }
 
-  /**
-   * render処理
-   */
   render() {
     this.taxis.begin();
 

@@ -2,6 +2,7 @@
   "name": "shared",
   "version": "1.0.0",
   "scripts": {
+    "prebuild": "tsc --declaration",
     "dev": "tsc --watch --declaration"
   },
   "dependencies": {

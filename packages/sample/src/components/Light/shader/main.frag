@@ -78,7 +78,5 @@ void main(){
 
     // 反射光の成分は単純に加算して出力する @@@
     gl_FragColor = vec4(rgb + specular, 1.0);
-
-//    gl_FragColor = vec4(rgb, 1.0);
 }
 

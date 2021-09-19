@@ -1,6 +1,8 @@
 <script lang="ts">
 import Camera from './components/Camera/Camera.svelte';
 import Light from './components/Light/Light.svelte';
+import LightAmbient from './components/LightAmbient/LightAmbient.svelte';
+import Picking from './components/Picking/Picking.svelte';
 import url from './stores/url';
 
 const pages = {
@@ -13,6 +15,16 @@ const pages = {
     hash: '#light',
     component: Light,
     description: 'Phong reflection model'
+  },
+  lightAmbient: {
+    hash: '#lightAmbient',
+    component: LightAmbient,
+    description: 'Ambient'
+  },
+  picking: {
+    hash: '#picking',
+    component: Picking,
+    description: '...'
   },
 };
 const pageList = Object.values(pages);

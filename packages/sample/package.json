@@ -10,7 +10,7 @@
     "dev:css": "postcss public/global.css -o public/index.css -w",
     "start": "sirv public",
     "validate": "svelte-check",
-    "deploy": "rm -rf ../../docs/sample && cp -r public ../../docs/sample"
+    "docs": "npm run build && rm -rf ../../docs/sample && cp -r public ../../docs/sample"
   },
   "dependencies": {
     "gl-matrix": "^3.3.0",

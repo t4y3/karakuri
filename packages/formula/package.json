@@ -10,7 +10,7 @@
     "dev:css": "postcss public/global.css -o public/index.css -w",
     "start": "sirv public",
     "validate": "svelte-check",
-    "deploy": "rm -rf ../../docs/formula && cp -r public ../../docs/formula"
+    "docs": "npm run build && rm -rf ../../docs/formula && cp -r public ../../docs/formula"
   },
   "dependencies": {
     "taxis": "0.0.3",
