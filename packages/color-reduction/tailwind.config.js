@@ -1,14 +1,12 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  purge: {
-    content: ["./src/**/*.svelte"],
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: ["./src/**/*.svelte"],
+  darkMode: 'media',
   theme: {
     extend: {
       colors: {
-        gray: colors.blueGray
+        gray: colors.slate
       }
     },
   },
