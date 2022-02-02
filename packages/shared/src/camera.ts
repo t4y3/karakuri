@@ -35,11 +35,11 @@ export class Camera {
 
   // TODO: オプションでもらえるように
   private center = [0.0, 0.0, 0.0];
-  private __position = [0.0, 7.0, this.__distance];
-  private defaultPosition = [0.0, 7.0, this.__distance];
+  private __position: vec3 = [0.0, 7.0, this.__distance];
+  private defaultPosition: vec3 = [0.0, 7.0, this.__distance];
 
-  private defaultUpDirection = [0.0, 1.0, 0.0];
-  private upDirection = [0.0, 1.0, 0.0];
+  private defaultUpDirection: vec3 = [0.0, 1.0, 0.0];
+  private upDirection: vec3 = [0.0, 1.0, 0.0];
 
   private minDistance: number = 1.0;
   private maxDistance: number = 20.0;
@@ -84,8 +84,9 @@ export class Camera {
       const n = vec3.create();
       vec3.normalize(n, this.option.position.direction)
       vec3.scale(v, n, this.option.position.distance);
-      this.__position = [...v];
-      this.defaultPosition = [...v];
+      this.__distance = this.option.position.distance;
+      this.__position = [...v] as vec3;
+      this.defaultPosition = [...v] as vec3;
     // private position = [0.0, 7.0, this.distance];
     // private defaultPosition = [0.0, 7.0, this.distance];
     //

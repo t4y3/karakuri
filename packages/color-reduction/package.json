@@ -10,7 +10,7 @@
     "dev:css": "postcss public/global.css -o public/index.css -w",
     "start": "sirv public",
     "validate": "svelte-check",
-    "deploy": "rm -rf ../../docs/color-reduction && cp -r public ../../docs/color-reduction"
+    "docs": "npm run build && rm -rf ../../docs/color-reduction && cp -r public ../../docs/color-reduction"
   },
   "dependencies": {
     "gl-matrix": "^3.3.0",

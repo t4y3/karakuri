@@ -1,2 +1,4211 @@
-var app=function(){"use strict";function t(){}function e(t){return t()}function n(){return Object.create(null)}function i(t){t.forEach(e)}function r(t){return"function"==typeof t}function s(t,e){return t!=t?e==e:t!==e||t&&"object"==typeof t||"function"==typeof t}function a(e,...n){if(null==e)return t;const i=e.subscribe(...n);return i.unsubscribe?()=>i.unsubscribe():i}function o(t){let e;return a(t,(t=>e=t))(),e}function l(t,e,n){t.$$.on_destroy.push(a(e,n))}function c(t,e,n=e){return t.set(n),e}function u(t,e){t.appendChild(e)}function h(t,e,n){t.insertBefore(e,n||null)}function d(t){t.parentNode.removeChild(t)}function p(t,e){for(let n=0;n<t.length;n+=1)t[n]&&t[n].d(e)}function g(t){return document.createElement(t)}function m(t){return document.createTextNode(t)}function f(){return m(" ")}function b(t,e,n,i){return t.addEventListener(e,n,i),()=>t.removeEventListener(e,n,i)}function x(t,e,n){null==n?t.removeAttribute(e):t.getAttribute(e)!==n&&t.setAttribute(e,n)}function v(t,e){e=""+e,t.wholeText!==e&&(t.data=e)}function E(t,e,n){t.classList[n?"add":"remove"](e)}let y;function _(t){y=t}function T(t){(function(){if(!y)throw new Error("Function called outside component initialization");return y})().$$.on_mount.push(t)}const w=[],A=[],R=[],M=[],k=Promise.resolve();let P=!1;function L(t){R.push(t)}let $=!1;const B=new Set;function C(){if(!$){$=!0;do{for(let t=0;t<w.length;t+=1){const e=w[t];_(e),S(e.$$)}for(_(null),w.length=0;A.length;)A.pop()();for(let t=0;t<R.length;t+=1){const e=R[t];B.has(e)||(B.add(e),e())}R.length=0}while(w.length);for(;M.length;)M.pop()();P=!1,$=!1,B.clear()}}function S(t){if(null!==t.fragment){t.update(),i(t.before_update);const e=t.dirty;t.dirty=[-1],t.fragment&&t.fragment.p(t.ctx,e),t.after_update.forEach(L)}}const U=new Set;let I;function D(t,e){t&&t.i&&(U.delete(t),t.i(e))}function F(t,e,n,i){if(t&&t.o){if(U.has(t))return;U.add(t),I.c.push((()=>{U.delete(t),i&&(n&&t.d(1),i())})),t.o(e)}}function N(t){t&&t.c()}function X(t,n,s){const{fragment:a,on_mount:o,on_destroy:l,after_update:c}=t.$$;a&&a.m(n,s),L((()=>{const n=o.map(e).filter(r);l?l.push(...n):i(n),t.$$.on_mount=[]})),c.forEach(L)}function O(t,e){const n=t.$$;null!==n.fragment&&(i(n.on_destroy),n.fragment&&n.fragment.d(e),n.on_destroy=n.fragment=null,n.ctx=[])}function q(t,e){-1===t.$$.dirty[0]&&(w.push(t),P||(P=!0,k.then(C)),t.$$.dirty.fill(0)),t.$$.dirty[e/31|0]|=1<<e%31}function V(e,r,s,a,o,l,c=[-1]){const u=y;_(e);const h=e.$$={fragment:null,ctx:null,props:l,update:t,not_equal:o,bound:n(),on_mount:[],on_destroy:[],before_update:[],after_update:[],context:new Map(u?u.$$.context:[]),callbacks:n(),dirty:c,skip_bound:!1};let p=!1;if(h.ctx=s?s(e,r.props||{},((t,n,...i)=>{const r=i.length?i[0]:n;return h.ctx&&o(h.ctx[t],h.ctx[t]=r)&&(!h.skip_bound&&h.bound[t]&&h.bound[t](r),p&&q(e,t)),n})):[],h.update(),p=!0,i(h.before_update),h.fragment=!!a&&a(h.ctx),r.target){if(r.hydrate){const t=function(t){return Array.from(t.childNodes)}(r.target);h.fragment&&h.fragment.l(t),t.forEach(d)}else h.fragment&&h.fragment.c();r.intro&&D(e.$$.fragment),X(e,r.target,r.anchor),C()}_(u)}class j{$destroy(){O(this,1),this.$destroy=t}$on(t,e){const n=this.$$.callbacks[t]||(this.$$.callbacks[t]=[]);return n.push(e),()=>{const t=n.indexOf(e);-1!==t&&n.splice(t,1)}}$set(t){var e;this.$$set&&(e=t,0!==Object.keys(e).length)&&(this.$$.skip_bound=!0,this.$$set(t),this.$$.skip_bound=!1)}}const G=[];function H(e,n=t){let i;const r=[];function a(t){if(s(e,t)&&(e=t,i)){const t=!G.length;for(let t=0;t<r.length;t+=1){const n=r[t];n[1](),G.push(n,e)}if(t){for(let t=0;t<G.length;t+=2)G[t][0](G[t+1]);G.length=0}}}return{set:a,update:function(t){a(t(e))},subscribe:function(s,o=t){const l=[s,o];return r.push(l),1===r.length&&(i=n(a)||t),s(e),()=>{const t=r.indexOf(l);-1!==t&&r.splice(t,1),0===r.length&&(i(),i=null)}}}}const z={file:null};const Y=function(){const{subscribe:t,set:e,update:n}=H(z);return{subscribe:t,reset:()=>e(z),set:t=>e(t)}}(),W={steps:[{title:"Sampling",list:["Sampling the original image for color statistics."]},{title:"Splitting",list:["Put all the pixels of the image (that is, their RGB values) in a bucket.","Find out which color channel (red, green, or blue) among the pixels in the bucket has the greatest range, then sort the pixels according to that channel's values.","After the bucket has been sorted, move the upper half of the pixels into a new bucket."]},{title:"Calculate the average color",list:["Average the pixels in each bucket and you have a palette of 16 colors."]},{title:"Mapping",list:["Mapping the colors to their representative in the color map."]}],current:0};const Z=function(){const{subscribe:t,set:e,update:n}=H(W);return{subscribe:t,reset:()=>e(W),update:t=>e(Object.assign(Object.assign({},W),{current:t})),set:t=>e(t)}}();function J(t,e,n){const i=t.slice();return i[1]=e[n],i[3]=n,i}function K(t,e,n){const i=t.slice();return i[4]=e[n],i[6]=n,i}function Q(t){let e;return{c(){e=g("div"),x(e,"class","-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-600"),x(e,"aria-hidden","true")},m(t,n){h(t,e,n)},d(t){t&&d(e)}}}function tt(t){let e;return{c(){e=g("span"),e.innerHTML='<span class="relative z-10 w-8 h-8 flex items-center justify-center bg-gray-600 rounded-full group-hover:bg-gray-800"><svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></span>',x(e,"class","h-9 flex items-center")},m(t,n){h(t,e,n)},d(t){t&&d(e)}}}function et(t){let e;return{c(){e=g("span"),e.innerHTML='<span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-600 rounded-full"><span class="h-2.5 w-2.5 bg-gray-600 rounded-full"></span></span>',x(e,"class","h-9 flex items-center"),x(e,"aria-hidden","true")},m(t,n){h(t,e,n)},d(t){t&&d(e)}}}function nt(t){let e;return{c(){e=g("span"),e.innerHTML='<span class="relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400"><span class="h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300"></span></span>',x(e,"class","h-9 flex items-center"),x(e,"aria-hidden","true")},m(t,n){h(t,e,n)},d(t){t&&d(e)}}}function it(t){let e,n,i=t[4]+"";return{c(){e=g("span"),n=m(i),x(e,"class","text-sm text-gray-500")},m(t,i){h(t,e,i),u(e,n)},p(t,e){1&e&&i!==(i=t[4]+"")&&v(n,i)},d(t){t&&d(e)}}}function rt(t){let e,n,i,r,s,a,o,l,c,b,y,_=t[1].title+"",T=t[3]<t[0].steps.length-1&&Q(),w=t[3]<t[0].current&&tt(),A=t[3]===t[0].current&&et(),R=t[0].current<t[3]&&nt(),M=t[1].list,k=[];for(let e=0;e<M.length;e+=1)k[e]=it(K(t,M,e));return{c(){e=g("li"),T&&T.c(),n=f(),i=g("div"),w&&w.c(),r=f(),A&&A.c(),s=f(),R&&R.c(),a=f(),o=g("span"),l=g("span"),c=m(_),b=f();for(let t=0;t<k.length;t+=1)k[t].c();y=f(),x(l,"class","text-xs font-semibold uppercase tracking-wide text-gray-300"),x(o,"class","ml-4 min-w-0 flex flex-col space-y-1"),x(i,"class","relative flex items-start group"),x(e,"class","relative pb-10"),E(e,"pb-10",t[3]<t[0].steps.length-1)},m(t,d){h(t,e,d),T&&T.m(e,null),u(e,n),u(e,i),w&&w.m(i,null),u(i,r),A&&A.m(i,null),u(i,s),R&&R.m(i,null),u(i,a),u(i,o),u(o,l),u(l,c),u(o,b);for(let t=0;t<k.length;t+=1)k[t].m(o,null);u(e,y)},p(t,l){if(t[3]<t[0].steps.length-1?T||(T=Q(),T.c(),T.m(e,n)):T&&(T.d(1),T=null),t[3]<t[0].current?w||(w=tt(),w.c(),w.m(i,r)):w&&(w.d(1),w=null),t[3]===t[0].current?A||(A=et(),A.c(),A.m(i,s)):A&&(A.d(1),A=null),t[0].current<t[3]?R||(R=nt(),R.c(),R.m(i,a)):R&&(R.d(1),R=null),1&l&&_!==(_=t[1].title+"")&&v(c,_),1&l){let e;for(M=t[1].list,e=0;e<M.length;e+=1){const n=K(t,M,e);k[e]?k[e].p(n,l):(k[e]=it(n),k[e].c(),k[e].m(o,null))}for(;e<k.length;e+=1)k[e].d(1);k.length=M.length}1&l&&E(e,"pb-10",t[3]<t[0].steps.length-1)},d(t){t&&d(e),T&&T.d(),w&&w.d(),A&&A.d(),R&&R.d(),p(k,t)}}}function st(e){let n,i,r=e[0].steps,s=[];for(let t=0;t<r.length;t+=1)s[t]=rt(J(e,r,t));return{c(){n=g("nav"),i=g("ol");for(let t=0;t<s.length;t+=1)s[t].c();x(i,"class","overflow-hidden"),x(n,"aria-label","Progress"),x(n,"class","max-w-sm")},m(t,e){h(t,n,e),u(n,i);for(let t=0;t<s.length;t+=1)s[t].m(i,null)},p(t,[e]){if(1&e){let n;for(r=t[0].steps,n=0;n<r.length;n+=1){const a=J(t,r,n);s[n]?s[n].p(a,e):(s[n]=rt(a),s[n].c(),s[n].m(i,null))}for(;n<s.length;n+=1)s[n].d(1);s.length=r.length}},i:t,o:t,d(t){t&&d(n),p(s,t)}}}function at(t,e,n){let i;return l(t,Z,(t=>n(0,i=t))),[i]}class ot extends j{constructor(t){super(),V(this,t,at,st,s,{})}}class lt{static loadFile(t){return new Promise(((e,n)=>{fetch(t).then((t=>t.text())).then((t=>{e(t)})).catch((t=>{n(t)}))}))}set width(t){this.canvas.width=t}get width(){return this.canvas.width}set height(t){this.canvas.height=t}get height(){return this.canvas.height}set program(t){this.gl.useProgram(t),this.currentProgram=t}get program(){return this.currentProgram}constructor(){this.canvas=null,this.gl=null,this.currentProgram=null}initialize(t,e){if(this.canvas=t,this.gl=this.canvas.getContext("webgl"+(!0===e?"2":"")),null==this.gl)throw new Error("webgl not supported")}createShaderObject(t,e){const n=this.gl,i=n.createShader(e);if(n.shaderSource(i,t),n.compileShader(i),n.getShaderParameter(i,n.COMPILE_STATUS))return i;throw new Error(n.getShaderInfoLog(i))}createProgramObject(t,e){const n=this.gl,i=n.createProgram();if(n.attachShader(i,t),n.attachShader(i,e),n.linkProgram(i),n.deleteShader(t),n.deleteShader(e),n.getProgramParameter(i,n.LINK_STATUS))return n.useProgram(i),i;throw new Error(n.getProgramInfoLog(i))}createProgramObjectTF(t,e,n){const i=this.gl,r=i.createProgram();if(i.attachShader(r,t),i.attachShader(r,e),i.transformFeedbackVaryings(r,n,i.SEPARATE_ATTRIBS),i.linkProgram(r),i.deleteShader(t),i.deleteShader(e),i.getProgramParameter(r,i.LINK_STATUS))return i.useProgram(r),r;throw new Error(i.getProgramInfoLog(r))}createVBO(t){const e=this.gl,n=e.createBuffer();return e.bindBuffer(e.ARRAY_BUFFER,n),e.bufferData(e.ARRAY_BUFFER,new Float32Array(t),e.STATIC_DRAW),e.bindBuffer(e.ARRAY_BUFFER,null),n}createIBO(t){const e=this.gl,n=e.createBuffer();return e.bindBuffer(e.ELEMENT_ARRAY_BUFFER,n),e.bufferData(e.ELEMENT_ARRAY_BUFFER,new Int16Array(t),e.STATIC_DRAW),e.bindBuffer(e.ELEMENT_ARRAY_BUFFER,null),n}enableAttribute(t,e,n){const i=this.gl;t.forEach(((t,r)=>{i.bindBuffer(i.ARRAY_BUFFER,t),i.enableVertexAttribArray(e[r]),i.vertexAttribPointer(e[r],n[r],i.FLOAT,!1,0,0)}))}createTexture(t,e){const n=this.gl,i=n.createTexture();return n.activeTexture(e),n.bindTexture(n.TEXTURE_2D,i),n.texImage2D(n.TEXTURE_2D,0,n.RGBA,n.RGBA,n.UNSIGNED_BYTE,t),n.generateMipmap(n.TEXTURE_2D),n.texParameteri(n.TEXTURE_2D,n.TEXTURE_MIN_FILTER,n.NEAREST),n.texParameteri(n.TEXTURE_2D,n.TEXTURE_MAG_FILTER,n.NEAREST),n.texParameteri(n.TEXTURE_2D,n.TEXTURE_WRAP_S,n.CLAMP_TO_EDGE),n.texParameteri(n.TEXTURE_2D,n.TEXTURE_WRAP_T,n.CLAMP_TO_EDGE),n.bindTexture(n.TEXTURE_2D,null),i}createCubeTextureFromFile(t,e){return new Promise((n=>{const i=this.gl,r=i.createTexture();i.activeTexture(i.TEXTURE0),i.bindTexture(i.TEXTURE_CUBE_MAP,r);const s=t.map(((t,n)=>new Promise((r=>{const s=new Image;s.addEventListener("load",(()=>{i.texImage2D(e[n],0,i.RGBA,i.RGBA,i.UNSIGNED_BYTE,s),r()}),!1),s.src=t}))));Promise.all(s).then((()=>{i.generateMipmap(i.TEXTURE_CUBE_MAP),i.texParameteri(i.TEXTURE_CUBE_MAP,i.TEXTURE_MIN_FILTER,i.LINEAR),i.texParameteri(i.TEXTURE_CUBE_MAP,i.TEXTURE_MAG_FILTER,i.LINEAR),i.texParameteri(i.TEXTURE_CUBE_MAP,i.TEXTURE_WRAP_S,i.CLAMP_TO_EDGE),i.texParameteri(i.TEXTURE_CUBE_MAP,i.TEXTURE_WRAP_T,i.CLAMP_TO_EDGE),i.bindTexture(i.TEXTURE_CUBE_MAP,null),n(r)}))}))}createFramebuffer(t,e){const n=this.gl,i=n.createFramebuffer(),r=n.createRenderbuffer(),s=n.createTexture();return n.bindFramebuffer(n.FRAMEBUFFER,i),n.bindRenderbuffer(n.RENDERBUFFER,r),n.renderbufferStorage(n.RENDERBUFFER,n.DEPTH_COMPONENT16,t,e),n.framebufferRenderbuffer(n.FRAMEBUFFER,n.DEPTH_ATTACHMENT,n.RENDERBUFFER,r),n.activeTexture(n.TEXTURE0),n.bindTexture(n.TEXTURE_2D,s),n.texImage2D(n.TEXTURE_2D,0,n.RGBA,t,e,0,n.RGBA,n.UNSIGNED_BYTE,null),n.texParameteri(n.TEXTURE_2D,n.TEXTURE_MAG_FILTER,n.LINEAR),n.texParameteri(n.TEXTURE_2D,n.TEXTURE_MIN_FILTER,n.LINEAR),n.texParameteri(n.TEXTURE_2D,n.TEXTURE_WRAP_S,n.CLAMP_TO_EDGE),n.texParameteri(n.TEXTURE_2D,n.TEXTURE_WRAP_T,n.CLAMP_TO_EDGE),n.framebufferTexture2D(n.FRAMEBUFFER,n.COLOR_ATTACHMENT0,n.TEXTURE_2D,s,0),n.bindTexture(n.TEXTURE_2D,null),n.bindRenderbuffer(n.RENDERBUFFER,null),n.bindFramebuffer(n.FRAMEBUFFER,null),{framebuffer:i,depthRenderbuffer:r,texture:s}}}class ct{static get DEFAULT_DISTANCE(){return 5}static get DEFAULT_MIN_DISTANCE(){return 1}static get DEFAULT_MAX_DISTANCE(){return 10}static get DEFAULT_MOVE_SCALE(){return 2}constructor(t,e={}){this.target=t,this.distance=e.distance||ct.DEFAULT_DISTANCE,this.minDistance=e.min||ct.DEFAULT_MIN_DISTANCE,this.maxDistance=e.max||ct.DEFAULT_MAX_DISTANCE,this.moveScale=e.move||ct.DEFAULT_MOVE_SCALE,this.position=[0,0,this.distance],this.center=[0,0,0],this.upDirection=[0,1,0],this.moveX=[1,0,0],this.moveZ=[0,0,1],this.defaultPosition=[0,0,this.distance],this.defaultCenter=[0,0,0],this.defaultUpDirection=[0,1,0],this.defaultMoveX=[1,0,0],this.defaultMoveZ=[0,0,1],this.movePosition=[0,0,0],this.rotateX=0,this.rotateY=0,this.scale=0,this.isDown=!1,this.prevPosition=[0,0],this.offsetPosition=[0,0],this.qt=gt.create(),this.qtx=gt.create(),this.qty=gt.create(),this.mouseInteractionStart=this.mouseInteractionStart.bind(this),this.mouseInteractionMove=this.mouseInteractionMove.bind(this),this.mouseInteractionEnd=this.mouseInteractionEnd.bind(this),this.wheelScroll=this.wheelScroll.bind(this),this.target.addEventListener("mousedown",this.mouseInteractionStart,!1),this.target.addEventListener("mousemove",this.mouseInteractionMove,!1),this.target.addEventListener("mouseup",this.mouseInteractionEnd,!1),this.target.addEventListener("contextmenu",(t=>{t.preventDefault()}),!1)}mouseInteractionStart(t){this.isDown=!0;const e=this.target.getBoundingClientRect();this.prevPosition=[t.clientX-e.left,t.clientY-e.top]}mouseInteractionMove(t){if(!0!==this.isDown)return;const e=this.target.getBoundingClientRect(),n=e.width,i=e.height,r=t.clientX-e.left,s=t.clientY-e.top,a=1/Math.min(n,i);switch(this.offsetPosition=[r-this.prevPosition[0],s-this.prevPosition[1]],this.prevPosition=[r,s],t.buttons){case 1:this.rotateX+=this.offsetPosition[0]*a,this.rotateY+=this.offsetPosition[1]*a,this.rotateX=this.rotateX%1,this.rotateY=Math.min(Math.max(this.rotateY%1,-.25),.25);break;case 2:const t=2*Math.PI,e=this.offsetPosition[0]*a*this.moveScale,n=this.offsetPosition[1]*a*this.moveScale,i=this.defaultMoveX.slice(),r=this.defaultMoveZ.slice(),s=gt.identity(gt.create());gt.rotate(this.rotateX*t,[0,1,0],s),gt.toVecIII(i,s,this.moveX),gt.toVecIII(r,s,this.moveZ),this.movePosition[0]-=this.moveX[0]*e+this.moveZ[0]*n,this.movePosition[2]-=this.moveX[2]*e+this.moveZ[2]*n}}mouseInteractionEnd(t){this.isDown=!1}wheelScroll(t){const e=t.wheelDelta;e>0?this.scale=-.5:e<0&&(this.scale=.5)}update(){const t=2*Math.PI,e=[1,0,0];return this.scale*=.7,this.distance+=this.scale,this.distance=Math.min(Math.max(this.distance,this.minDistance),this.maxDistance),this.defaultPosition[2]=this.distance,gt.identity(this.qt),gt.identity(this.qtx),gt.identity(this.qty),gt.rotate(this.rotateX*t,[0,1,0],this.qtx),gt.toVecIII(e,this.qtx,e),gt.rotate(this.rotateY*t,e,this.qty),gt.multiply(this.qtx,this.qty,this.qt),gt.toVecIII(this.defaultPosition,this.qt,this.position),gt.toVecIII(this.defaultUpDirection,this.qt,this.upDirection),this.position[0]+=this.movePosition[0],this.position[1]+=this.movePosition[1],this.position[2]+=this.movePosition[2],this.center[0]=this.defaultCenter[0]+this.movePosition[0],this.center[1]=this.defaultCenter[1]+this.movePosition[1],this.center[2]=this.defaultCenter[2]+this.movePosition[2],ht.lookAt(this.position,this.center,this.upDirection)}}class ut{static get mat4(){return ht}static get vec3(){return dt}static get vec2(){return pt}static get qtn(){return gt}}class ht{static create(){return new Float32Array(16)}static identity(t){return t[0]=1,t[1]=0,t[2]=0,t[3]=0,t[4]=0,t[5]=1,t[6]=0,t[7]=0,t[8]=0,t[9]=0,t[10]=1,t[11]=0,t[12]=0,t[13]=0,t[14]=0,t[15]=1,t}static multiply(t,e,n){let i=n;null==n&&(i=ht.create());let r=t[0],s=t[1],a=t[2],o=t[3],l=t[4],c=t[5],u=t[6],h=t[7],d=t[8],p=t[9],g=t[10],m=t[11],f=t[12],b=t[13],x=t[14],v=t[15],E=e[0],y=e[1],_=e[2],T=e[3],w=e[4],A=e[5],R=e[6],M=e[7],k=e[8],P=e[9],L=e[10],$=e[11],B=e[12],C=e[13],S=e[14],U=e[15];return i[0]=E*r+y*l+_*d+T*f,i[1]=E*s+y*c+_*p+T*b,i[2]=E*a+y*u+_*g+T*x,i[3]=E*o+y*h+_*m+T*v,i[4]=w*r+A*l+R*d+M*f,i[5]=w*s+A*c+R*p+M*b,i[6]=w*a+A*u+R*g+M*x,i[7]=w*o+A*h+R*m+M*v,i[8]=k*r+P*l+L*d+$*f,i[9]=k*s+P*c+L*p+$*b,i[10]=k*a+P*u+L*g+$*x,i[11]=k*o+P*h+L*m+$*v,i[12]=B*r+C*l+S*d+U*f,i[13]=B*s+C*c+S*p+U*b,i[14]=B*a+C*u+S*g+U*x,i[15]=B*o+C*h+S*m+U*v,i}static scale(t,e,n){let i=n;return null==n&&(i=ht.create()),i[0]=t[0]*e[0],i[1]=t[1]*e[0],i[2]=t[2]*e[0],i[3]=t[3]*e[0],i[4]=t[4]*e[1],i[5]=t[5]*e[1],i[6]=t[6]*e[1],i[7]=t[7]*e[1],i[8]=t[8]*e[2],i[9]=t[9]*e[2],i[10]=t[10]*e[2],i[11]=t[11]*e[2],i[12]=t[12],i[13]=t[13],i[14]=t[14],i[15]=t[15],i}static translate(t,e,n){let i=n;return null==n&&(i=ht.create()),i[0]=t[0],i[1]=t[1],i[2]=t[2],i[3]=t[3],i[4]=t[4],i[5]=t[5],i[6]=t[6],i[7]=t[7],i[8]=t[8],i[9]=t[9],i[10]=t[10],i[11]=t[11],i[12]=t[0]*e[0]+t[4]*e[1]+t[8]*e[2]+t[12],i[13]=t[1]*e[0]+t[5]*e[1]+t[9]*e[2]+t[13],i[14]=t[2]*e[0]+t[6]*e[1]+t[10]*e[2]+t[14],i[15]=t[3]*e[0]+t[7]*e[1]+t[11]*e[2]+t[15],i}static rotate(t,e,n,i){let r=i;null==i&&(r=ht.create());let s=Math.sqrt(n[0]*n[0]+n[1]*n[1]+n[2]*n[2]);if(!s)return null;let a=n[0],o=n[1],l=n[2];1!=s&&(s=1/s,a*=s,o*=s,l*=s);let c=Math.sin(e),u=Math.cos(e),h=1-u,d=t[0],p=t[1],g=t[2],m=t[3],f=t[4],b=t[5],x=t[6],v=t[7],E=t[8],y=t[9],_=t[10],T=t[11],w=a*a*h+u,A=o*a*h+l*c,R=l*a*h-o*c,M=a*o*h-l*c,k=o*o*h+u,P=l*o*h+a*c,L=a*l*h+o*c,$=o*l*h-a*c,B=l*l*h+u;return e?t!=r&&(r[12]=t[12],r[13]=t[13],r[14]=t[14],r[15]=t[15]):r=t,r[0]=d*w+f*A+E*R,r[1]=p*w+b*A+y*R,r[2]=g*w+x*A+_*R,r[3]=m*w+v*A+T*R,r[4]=d*M+f*k+E*P,r[5]=p*M+b*k+y*P,r[6]=g*M+x*k+_*P,r[7]=m*M+v*k+T*P,r[8]=d*L+f*$+E*B,r[9]=p*L+b*$+y*B,r[10]=g*L+x*$+_*B,r[11]=m*L+v*$+T*B,r}static lookAt(t,e,n,i){let r=t[0],s=t[1],a=t[2],o=e[0],l=e[1],c=e[2],u=n[0],h=n[1],d=n[2];if(r==o&&s==l&&a==c)return ht.identity(i);let p,g,m,f,b,x,v,E,y,_,T=i;return null==i&&(T=ht.create()),v=r-e[0],E=s-e[1],y=a-e[2],_=1/Math.sqrt(v*v+E*E+y*y),v*=_,E*=_,y*=_,p=h*y-d*E,g=d*v-u*y,m=u*E-h*v,_=Math.sqrt(p*p+g*g+m*m),_?(_=1/_,p*=_,g*=_,m*=_):(p=0,g=0,m=0),f=E*m-y*g,b=y*p-v*m,x=v*g-E*p,_=Math.sqrt(f*f+b*b+x*x),_?(_=1/_,f*=_,b*=_,x*=_):(f=0,b=0,x=0),T[0]=p,T[1]=f,T[2]=v,T[3]=0,T[4]=g,T[5]=b,T[6]=E,T[7]=0,T[8]=m,T[9]=x,T[10]=y,T[11]=0,T[12]=-(p*r+g*s+m*a),T[13]=-(f*r+b*s+x*a),T[14]=-(v*r+E*s+y*a),T[15]=1,T}static perspective(t,e,n,i,r){let s=r;null==r&&(s=ht.create());let a=n*Math.tan(t*Math.PI/360),o=2*(a*e),l=2*a,c=i-n;return s[0]=2*n/o,s[1]=0,s[2]=0,s[3]=0,s[4]=0,s[5]=2*n/l,s[6]=0,s[7]=0,s[8]=0,s[9]=0,s[10]=-(i+n)/c,s[11]=-1,s[12]=0,s[13]=0,s[14]=-i*n*2/c,s[15]=0,s}static ortho(t,e,n,i,r,s,a){let o=a;null==a&&(o=ht.create());let l=e-t,c=n-i,u=s-r;return o[0]=2/l,o[1]=0,o[2]=0,o[3]=0,o[4]=0,o[5]=2/c,o[6]=0,o[7]=0,o[8]=0,o[9]=0,o[10]=-2/u,o[11]=0,o[12]=-(t+e)/l,o[13]=-(n+i)/c,o[14]=-(s+r)/u,o[15]=1,o}static transpose(t,e){let n=e;return null==e&&(n=ht.create()),n[0]=t[0],n[1]=t[4],n[2]=t[8],n[3]=t[12],n[4]=t[1],n[5]=t[5],n[6]=t[9],n[7]=t[13],n[8]=t[2],n[9]=t[6],n[10]=t[10],n[11]=t[14],n[12]=t[3],n[13]=t[7],n[14]=t[11],n[15]=t[15],n}static inverse(t,e){let n=e;null==e&&(n=ht.create());let i=t[0],r=t[1],s=t[2],a=t[3],o=t[4],l=t[5],c=t[6],u=t[7],h=t[8],d=t[9],p=t[10],g=t[11],m=t[12],f=t[13],b=t[14],x=t[15],v=i*l-r*o,E=i*c-s*o,y=i*u-a*o,_=r*c-s*l,T=r*u-a*l,w=s*u-a*c,A=h*f-d*m,R=h*b-p*m,M=h*x-g*m,k=d*b-p*f,P=d*x-g*f,L=p*x-g*b,$=1/(v*L-E*P+y*k+_*M-T*R+w*A);return n[0]=(l*L-c*P+u*k)*$,n[1]=(-r*L+s*P-a*k)*$,n[2]=(f*w-b*T+x*_)*$,n[3]=(-d*w+p*T-g*_)*$,n[4]=(-o*L+c*M-u*R)*$,n[5]=(i*L-s*M+a*R)*$,n[6]=(-m*w+b*y-x*E)*$,n[7]=(h*w-p*y+g*E)*$,n[8]=(o*P-l*M+u*A)*$,n[9]=(-i*P+r*M-a*A)*$,n[10]=(m*T-f*y+x*v)*$,n[11]=(-h*T+d*y-g*v)*$,n[12]=(-o*k+l*R-c*A)*$,n[13]=(i*k-r*R+s*A)*$,n[14]=(-m*_+f*E-b*v)*$,n[15]=(h*_-d*E+p*v)*$,n}static toVecIV(t,e){let n=t[0],i=t[1],r=t[2],s=t[3],a=t[4],o=t[5],l=t[6],c=t[7],u=t[8],h=t[9],d=t[10],p=t[11],g=t[12],m=t[13],f=t[14],b=t[15],x=e[0],v=e[1],E=e[2],y=e[3],_=[];return _[0]=x*n+v*a+E*u+y*g,_[1]=x*i+v*o+E*h+y*m,_[2]=x*r+v*l+E*d+y*f,_[3]=x*s+v*c+E*p+y*b,e=_,_}static vpFromCameraProperty(t,e,n,i,r,s,a,o,l,c){ht.lookAt(t,e,n,o),ht.perspective(i,r,s,a,l),ht.multiply(l,o,c)}static screenPositionFromMvp(t,e,n,i){let r=.5*n,s=.5*i,a=ht.toVecIV(t,[e[0],e[1],e[2],1]);return a[3]<=0?[NaN,NaN]:(a[0]/=a[3],a[1]/=a[3],a[2]/=a[3],[r+a[0]*r,s-a[1]*s])}}class dt{static create(){return new Float32Array(3)}static len(t){return Math.sqrt(t[0]*t[0]+t[1]*t[1]+t[2]*t[2])}static distance(t,e){let n=dt.create();return n[0]=e[0]-t[0],n[1]=e[1]-t[1],n[2]=e[2]-t[2],n}static normalize(t){let e=dt.create(),n=dt.len(t);if(n>0){let i=1/n;e[0]=t[0]*i,e[1]=t[1]*i,e[2]=t[2]*i}else e[0]=0,e[1]=0,e[2]=0;return e}static dot(t,e){return t[0]*e[0]+t[1]*e[1]+t[2]*e[2]}static cross(t,e){let n=dt.create();return n[0]=t[1]*e[2]-t[2]*e[1],n[1]=t[2]*e[0]-t[0]*e[2],n[2]=t[0]*e[1]-t[1]*e[0],n}static faceNormal(t,e,n){let i=dt.create(),r=[e[0]-t[0],e[1]-t[1],e[2]-t[2]],s=[n[0]-t[0],n[1]-t[1],n[2]-t[2]];return i[0]=r[1]*s[2]-r[2]*s[1],i[1]=r[2]*s[0]-r[0]*s[2],i[2]=r[0]*s[1]-r[1]*s[0],dt.normalize(i)}}class pt{static create(){return new Float32Array(2)}static len(t){return Math.sqrt(t[0]*t[0]+t[1]*t[1])}static distance(t,e){let n=pt.create();return n[0]=e[0]-t[0],n[1]=e[1]-t[1],n}static normalize(t){let e=pt.create(),n=pt.len(t);if(n>0){let i=1/n;e[0]=t[0]*i,e[1]=t[1]*i}return e}static dot(t,e){return t[0]*e[0]+t[1]*e[1]}static cross(t,e){return pt.create(),t[0]*e[1]-t[1]*e[0]}}class gt{static create(){return new Float32Array(4)}static identity(t){return t[0]=0,t[1]=0,t[2]=0,t[3]=1,t}static inverse(t,e){let n=e;return null==e&&(n=gt.create()),n[0]=-t[0],n[1]=-t[1],n[2]=-t[2],n[3]=t[3],n}static normalize(t){let e=t[0],n=t[1],i=t[2],r=Math.sqrt(e*e+n*n+i*i);return 0===r?(t[0]=0,t[1]=0,t[2]=0):(r=1/r,t[0]=e*r,t[1]=n*r,t[2]=i*r),t}static multiply(t,e,n){let i=n;null==n&&(i=gt.create());let r=t[0],s=t[1],a=t[2],o=t[3],l=e[0],c=e[1],u=e[2],h=e[3];return i[0]=r*h+o*l+s*u-a*c,i[1]=s*h+o*c+a*l-r*u,i[2]=a*h+o*u+r*c-s*l,i[3]=o*h-r*l-s*c-a*u,i}static rotate(t,e,n){let i=n;null==n&&(i=gt.create());let r=e[0],s=e[1],a=e[2],o=Math.sqrt(e[0]*e[0]+e[1]*e[1]+e[2]*e[2]);if(0!==o){let t=1/o;r*=t,s*=t,a*=t}let l=Math.sin(.5*t);return i[0]=r*l,i[1]=s*l,i[2]=a*l,i[3]=Math.cos(.5*t),i}static toVecIII(t,e,n){let i=n;null==n&&(i=[0,0,0]);let r=gt.create(),s=gt.create(),a=gt.create();return gt.inverse(e,a),r[0]=t[0],r[1]=t[1],r[2]=t[2],gt.multiply(a,r,s),gt.multiply(s,e,a),i[0]=a[0],i[1]=a[1],i[2]=a[2],i}static toMatIV(t,e){let n=e;null==e&&(n=ht.create());let i=t[0],r=t[1],s=t[2],a=t[3],o=i+i,l=r+r,c=s+s,u=i*o,h=i*l,d=i*c,p=r*l,g=r*c,m=s*c,f=a*o,b=a*l,x=a*c;return n[0]=1-(p+m),n[1]=h-x,n[2]=d+b,n[3]=0,n[4]=h+x,n[5]=1-(u+m),n[6]=g-f,n[7]=0,n[8]=d-b,n[9]=g+f,n[10]=1-(u+p),n[11]=0,n[12]=0,n[13]=0,n[14]=0,n[15]=1,n}static slerp(t,e,n,i){let r=i;null==i&&(r=gt.create());let s=t[0]*e[0]+t[1]*e[1]+t[2]*e[2]+t[3]*e[3],a=1-s*s;if(a<=0)r[0]=t[0],r[1]=t[1],r[2]=t[2],r[3]=t[3];else if(a=Math.sqrt(a),Math.abs(a)<1e-4)r[0]=.5*t[0]+.5*e[0],r[1]=.5*t[1]+.5*e[1],r[2]=.5*t[2]+.5*e[2],r[3]=.5*t[3]+.5*e[3];else{let i=Math.acos(s),o=i*n,l=Math.sin(i-o)/a,c=Math.sin(o)/a;r[0]=t[0]*l+e[0]*c,r[1]=t[1]*l+e[1]*c,r[2]=t[2]*l+e[2]*c,r[3]=t[3]*l+e[3]*c}return r}}class mt{static plane(t,e,n){let i,r;i=t/2,r=e/2;return{position:[-i,r,0,i,r,0,-i,-r,0,i,-r,0],normal:[0,0,1,0,0,1,0,0,1,0,0,1],color:[n[0],n[1],n[2],n[3],n[0],n[1],n[2],n[3],n[0],n[1],n[2],n[3],n[0],n[1],n[2],n[3]],texCoord:[0,0,1,0,0,1,1,1],index:[0,2,1,1,2,3]}}static circle(t,e,n){let i,r=0,s=[],a=[],o=[],l=[],c=[];for(s.push(0,0,0),a.push(0,0,1),o.push(n[0],n[1],n[2],n[3]),l.push(.5,.5),i=0;i<t;i++){let u=2*Math.PI/t*i,h=Math.cos(u),d=Math.sin(u);s.push(h*e,d*e,0),a.push(0,0,1),o.push(n[0],n[1],n[2],n[3]),l.push(.5*(h+1),1-.5*(d+1)),i===t-1?c.push(0,r+1,1):c.push(0,r+1,r+2),++r}return{position:s,normal:a,color:o,texCoord:l,index:c}}static cube(t,e){let n=.5*t,i=[-n,-n,n,n,-n,n,n,n,n,-n,n,n,-n,-n,-n,-n,n,-n,n,n,-n,n,-n,-n,-n,n,-n,-n,n,n,n,n,n,n,n,-n,-n,-n,-n,n,-n,-n,n,-n,n,-n,-n,n,n,-n,-n,n,n,-n,n,n,n,n,-n,n,-n,-n,-n,-n,-n,n,-n,n,n,-n,n,-n],r=1/Math.sqrt(3),s=[-r,-r,r,r,-r,r,r,r,r,-r,r,r,-r,-r,-r,-r,r,-r,r,r,-r,r,-r,-r,-r,r,-r,-r,r,r,r,r,r,r,r,-r,-r,-r,-r,r,-r,-r,r,-r,r,-r,-r,r,r,-r,-r,r,r,-r,r,r,r,r,-r,r,-r,-r,-r,-r,-r,r,-r,r,r,-r,r,-r],a=[];for(let t=0;t<i.length/3;t++)a.push(e[0],e[1],e[2],e[3]);return{position:i,normal:s,color:a,texCoord:[0,0,1,0,1,1,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1,1,0,1],index:[0,1,2,0,2,3,4,5,6,4,6,7,8,9,10,8,10,11,12,13,14,12,14,15,16,17,18,16,18,19,20,21,22,20,22,23]}}static box(t,e,n,i){let r=.5*t,s=.5*e,a=.5*n,o=[-r,-s,a,r,-s,a,r,s,a,-r,s,a,-r,-s,-a,-r,s,-a,r,s,-a,r,-s,-a,-r,s,-a,-r,s,a,r,s,a,r,s,-a,-r,-s,-a,r,-s,-a,r,-s,a,-r,-s,a,r,-s,-a,r,s,-a,r,s,a,r,-s,a,-r,-s,-a,-r,-s,a,-r,s,a,-r,s,-a],l=1/Math.sqrt(3),c=[-l,-l,l,l,-l,l,l,l,l,-l,l,l,-l,-l,-l,-l,l,-l,l,l,-l,l,-l,-l,-l,l,-l,-l,l,l,l,l,l,l,l,-l,-l,-l,-l,l,-l,-l,l,-l,l,-l,-l,l,l,-l,-l,l,l,-l,l,l,l,l,-l,l,-l,-l,-l,-l,-l,l,-l,l,l,-l,l,-l],u=[];for(let t=0;t<o.length/3;t++)u.push(i[0],i[1],i[2],i[3]);return{position:o,normal:c,color:u,texCoord:[0,0,1,0,1,1,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1,1,0,1],index:[0,1,2,0,2,3,4,5,6,4,6,7,8,9,10,8,10,11,12,13,14,12,14,15,16,17,18,16,18,19,20,21,22,20,22,23]}}static boxLine(t,e,n,i){let r=.5*t,s=.5*e,a=.5*n,o=[-r,-s,a,r,-s,a,r,-s,a,r,s,a,r,s,a,-r,s,a,-r,s,a,-r,-s,a,-r,-s,-a,-r,s,-a,-r,s,-a,r,s,-a,r,s,-a,r,-s,-a,r,-s,-a,-r,-s,-a,-r,s,-a,-r,s,a,-r,s,a,r,s,a,r,s,a,r,s,-a,r,s,-a,-r,s,-a,-r,-s,-a,r,-s,-a,r,-s,-a,r,-s,a,r,-s,a,-r,-s,a,-r,-s,a,-r,-s,-a,r,-s,-a,r,s,-a,r,s,-a,r,s,a,r,s,a,r,-s,a,r,-s,a,r,-s,-a,-r,-s,-a,-r,-s,a,-r,-s,a,-r,s,a,-r,s,a,-r,s,-a],l=[];for(let t=0;t<o.length/3;t++)l.push(i[0],i[1],i[2],i[3]);return{position:o,color:l}}static axis(t,e){return{position:[-1*t,0,0,t,0,0,0,-1*t,0,0,t,0,0,0,t,0,0,-1*t],color:[.45,.45,.45,1,.45,.45,.45,1,.45,.45,.45,1,.45,.45,.45,1,.45,.45,.45,1,.45,.45,.45,1]}}}var ft;!function(t){t[t.R=0]="R",t[t.G=1]="G",t[t.B=2]="B"}(ft||(ft={}));var bt=function(t,e){this.imageData=t,this.options=e||{strict:!1},this.colors=this.__calculateColorCount(this.imageData.data),this.buckets=[],this.__bucketsPerStep=[]},xt={roundingBits:{configurable:!0},palette:{configurable:!0},bucketsPerStep:{configurable:!0}};bt.averageColor=function(t){for(var e=0,n=0,i=0,r=0,s=0,a=t.length;s<a;s=s+1|0){var o=t[s],l=o[0],c=o[1],u=o[2],h=o[3];n=l*h+n,i=c*h+i,r=u*h+r,e=e+h|0}return[Math.round(n/e),Math.round(i/e),Math.round(r/e)]},xt.roundingBits.get=function(){return this.options.strict?255:248},xt.palette.get=function(){for(var t=[],e=0,n=this.buckets.length;e<n;e=e+1|0)t[e]=bt.averageColor(this.buckets[e].colors);return t},xt.bucketsPerStep.get=function(){return this.__bucketsPerStep},bt.prototype.reduce=function(t){if(this.colors.length<=t)return console.warn("It has already been reduced color."),this.imageData;this.buckets=this.__mediancut([this.__generateBucket(this.colors)],t);for(var e=new Map,n=0,i=this.buckets.length;n<i;n=n+1|0)for(var r=this.buckets[n],s=bt.averageColor(r.colors),a=0,o=r.colors.length;a<o;a=a+1|0){var l=r.colors[a],c=l[0],u=l[1],h=l[2],d=c&this.roundingBits|(u&this.roundingBits)<<8|(h&this.roundingBits)<<16;e.set(d,s)}for(var p=this.imageData.data,g=p.length,m=new Uint8ClampedArray(g),f=0;f<g;){var b=p[f]&this.roundingBits|(p[f+1]&this.roundingBits)<<8|(p[f+2]&this.roundingBits)<<16,x=e.get(b),v=x[0],E=x[1],y=x[2];m[f]=v,m[f+1]=E,m[f+2]=y,m[f+3]=p[f+3],f=f+4|0}return new ImageData(m,this.imageData.width,this.imageData.height)},bt.prototype.__calculateColorCount=function(t){for(var e=new Map,n=t.length,i=0;i<n;){var r=t[i]&this.roundingBits,s=t[i+1]&this.roundingBits,a=t[i+2]&this.roundingBits,o=r|s<<8|a<<16,l=e.get(o),c=l?l[3]+1:1;e.set(o,[r,s,a,c]),i=i+4|0}var u=[];return e.forEach((function(t){u[u.length]=t})),u},bt.prototype.__getTotalAnGreatestRangeChannel=function(t){for(var e=0,n=0,i=0,r=0,s=255,a=255,o=255,l=t.length,c=0;c<l;){var u=t[c],h=u[0],d=u[1],p=u[2],g=u[3];n=Math.max(h,n),i=Math.max(d,i),r=Math.max(p,r),s=Math.min(h,s),a=Math.min(d,a),o=Math.min(p,o),e+=g,c=c+1|0}var m=1.2*(n-s),f=1.2*(i-a),b=r-o,x=Math.max(m,f,b),v=ft.R;return m===x&&(v=ft.R),f===x&&(v=ft.G),b===x&&(v=ft.B),{total:e,channel:v,minR:s,minG:a,minB:o,maxR:n,maxG:i,maxB:r}},bt.prototype.__mediancut=function(t,e){this.__bucketsPerStep.push([].concat(t));var n=0,i=0;if(t.length+1>e)return t;for(var r=0,s=t.length;r<s;r=r+1|0)t[r].total>n&&1!==t[r].colors.length&&(i=r,n=t[r].total);var a=t[i];if(1===a.total||1===a.colors.length)return console.error("Cube could not be split."),t;var o=a.channel;a.colors.sort((function(t,e){return t[o]-e[o]}));var l=Math.floor((a.colors.length+1)/2),c=this.__generateBucket(a.colors.slice(0,l)),u=this.__generateBucket(a.colors.slice(l));return t.splice(i,1,c,u),this.__mediancut(t,e)},bt.prototype.__generateBucket=function(t){var e=this.__getTotalAnGreatestRangeChannel(t);return{colors:t,total:e.total,channel:e.channel,minR:e.minR,minG:e.minG,minB:e.minB,maxR:e.maxR,maxG:e.maxG,maxB:e.maxB}},Object.defineProperties(bt.prototype,xt);var vt=class extends HTMLElement{constructor(t,e,n=!0){super(),this.editing=!1,this.attachShadow({mode:"open"}),this.axes=t,this.totalTime=e,this.debug=n,this.shadowRoot.innerHTML=this.template(t,e),this.$pane=this.shadowRoot.querySelector("#pane"),this.$timeline=this.shadowRoot.querySelector("#timeline"),this.$current=this.shadowRoot.querySelector("#current"),this.$progress=this.shadowRoot.querySelector("#progress"),this.$labels=this.shadowRoot.querySelectorAll(".label"),this.$bars=this.shadowRoot.querySelectorAll(".bar"),this.$barsBegin=this.shadowRoot.querySelectorAll(".begin"),this.$barsEnd=this.shadowRoot.querySelectorAll(".end"),this.$previous=this.shadowRoot.querySelector("#previous"),this.$playPause=this.shadowRoot.querySelector("#play-pause"),this.$next=this.shadowRoot.querySelector("#next"),this.playing=!0,this.previous=!1,this.next=!1,this.skip=-1,this.$previous.addEventListener("click",(t=>{this.previous=!0})),this.$playPause.addEventListener("click",(t=>{this.playing=!this.playing})),this.$next.addEventListener("click",(t=>{this.next=!0}));for(let t=0,e=this.$bars.length;t<e;t++){if(this.$bars[t].addEventListener("click",(t=>{let e=t.currentTarget,n=Number(e.getAttribute("idx"));this.skip=n})),!this.debug)continue;let e=this.$barsBegin[t],n=this.$barsEnd[t];e.addEventListener("input",(n=>{let i=Number(e.value);if(Number(this.$barsEnd[t].value)<i)n.preventDefault();else if(Number.isFinite(this.axes[t].position))this.axes[t].position=i,this.axes[t].duration=this.axes[t].endAt-(this.axes[t].delay+this.axes[t].position);else{let e=this.axes.find((e=>e.key===this.axes[t].position));this.axes[t].delay=i-e.endAt,this.axes[t].duration=this.axes[t].endAt-(this.axes[t].delay+e.endAt)}})),n.addEventListener("input",(e=>{let i=Number(n.value);if(i<Number(this.$barsBegin[t].value))e.preventDefault();else if(Number.isFinite(this.axes[t].position))this.axes[t].duration=i-(this.axes[t].position+this.axes[t].delay);else{let e=this.axes.find((e=>e.key===this.axes[t].position));this.axes[t].duration=i-e.endAt-this.axes[t].delay}}))}this.$labels.forEach((t=>{t.addEventListener("click",(t=>{let e=t.currentTarget,n=Number(e.getAttribute("idx"));this.skip=n}))})),this.$current.addEventListener("input",(t=>{this.editing=!0;let e=Number(this.$current.value);this.__updateProgressPosition(e),this.__updateBar(this.totalTime)})),this.$current.addEventListener("change",(t=>{this.editing=!1}))}attributeChangedCallback(){}connectedCallback(){}disconnectedCallback(){}getAxes(){return this.axes}get(t){let e=Date.now(),n=Number(this.$current.value),i=e-t;if(this.playing||(t=e-n,i=n),this.editing&&(t=e-n,i=n),-1<this.skip){let n=this.axes[this.skip];t=e-n.beginAt,i=n.beginAt,this.skip=-1}return this.previous&&(this.previous=!1,t=e,i=0),this.next&&(this.next=!1,t=e-this.totalTime,i=this.totalTime),{beginAt:t,elapsedTime:i,editing:this.editing}}update(t,e,n){this.axes=n,this.totalTime=e,this.$current.setAttribute("max",e),this.$current.value=t,this.__updateProgressPosition(t),this.__updateBar(e),this.debug&&this.__updateBarRange(e),this.__updateScale(e)}template(t,e){let n="",i="",r="";for(let e=0;e<t.length;e++){let r=t[e];n+=`<div class="row" id="row-${e}"><div class="label" idx="${e}">${r.key}</div></div>`;let s="";this.debug&&(s=`\n          <input class="begin" type="range" min="0" max="0" step="10" value="${r.beginAt}">\n          <input class="end" type="range" min="0" max="0" step="10" value="${r.endAt}">\n        `),i+=`\n        <div class="row">\n          <div class="bar bar--${this.debug?"debug":"default"}" idx="${e}"></div>\n          ${s}\n        </div>`,this.debug}for(let t=0,n=Math.floor(e/1e3);t<n;t++)r+=`<div class="scale-label" style="--sec: ${t+1}">${t+1}s</div>`;return`\n      <style>\n        * {\n          box-sizing: border-box;\n        }\n        :host {\n          display: block;\n          height: 100%;\n        }\n        .container {\n          display: flex;\n          flex-direction: column;\n          height: 100%;\n          background-color: #313131;\n          color: #eeeeee;\n          position: relative;\n          --tools-height: 40px;\n          --controls-height: 40px;\n        }\n        .tools {\n          display: flex;\n          align-items: center;\n          justify-content: center;\n          flex-shrink: 0;\n          height: var(--tools-height);\n          border-bottom: 1px solid #202020;\n        }\n        .tools__item {\n          display: flex;\n          align-items: center;\n          justify-content: center;\n          width: 20px;\n          margin: 0 8px;\n          color: #eeeeee;\n        }\n        .tools__item div {\n          width: 100%;\n          cursor: pointer;\n        }\n        .tools__item div:hover {\n          opacity: .6;\n        }\n        .tools__item svg {\n          fill: currentColor;\n        }\n        .controls {\n          display: flex;\n          flex-shrink: 0;\n          height: var(--controls-height);\n          border-bottom: 1px solid #202020;\n        }\n        .pane {\n          display: flex;\n          flex: 1;\n          overflow: scroll;\n          scroll-behavior: smooth;\n        }\n        .head {\n          flex-shrink: 0;\n          flex-basis: 20%;\n          max-width: 200px;\n          min-width: 0;\n        }\n        .body {\n          flex: 1;\n          position: relative;\n        }\n        .actions {\n          height: 100%;\n          border-right: 1px solid #222322;\n        }\n        .rows {\n          border-right: 1px solid #222322;\n        }\n        .row {\n          display: flex;\n          align-items: center;\n          height: 24px;\n          border-bottom: 1px solid #202020;\n          position: relative;\n        }\n        .row input[type="range"] {\n          position: absolute;\n          inset: 0;\n        }\n        .label {\n          padding-left: 12px;\n          font-size: 12px;\n          overflow: hidden;\n          text-overflow: ellipsis;\n          white-space: nowrap;\n          cursor: pointer;\n        }\n        .bar {\n          height: 100%;\n          background-color: #545454;\n          opacity: .5;\n          transform-origin: left;\n          cursor: pointer;\n          position: relative;\n        }\n        .bar.bar--debug::before {\n          content: "";\n          display: block;\n          width: 6px;\n          position: absolute;\n          left: 0;\n          top: 0;\n          bottom: 0;\n          margin: 4px;\n          border-radius: 2px;\n          background-color: darkgray;\n        }\n        .bar.bar--debug::after {\n          content: "";\n          display: block;\n          width: 6px;\n          position: absolute;\n          right: 0;\n          top: 0;\n          bottom: 0;\n          margin: 4px;\n          border-radius: 2px;\n          background-color: darkgray;\n        }\n        .bar.bar--active {\n          opacity: 1;\n        }\n        .progress {\n          position: absolute;\n          top: var(--tools-height);\n          bottom: 0;\n          left: 0;\n          width: 2px;\n          margin-left: min(20%, 200px);\n          background-color: #71A0EB;\n          opacity: 0.6;\n        }\n        .progress::before {\n          content: "";\n          display: block;\n          width: 20px;\n          height: 30px;\n          background-color: #53aeff;\n          margin-left: -9px;\n        }\n        .progress::after {\n          content: "";\n          display: block;\n          border-top: 10px solid #53aeff;\n          border-left: 10px solid transparent;\n          border-right: 10px solid transparent;\n          margin-left: -9px;\n        }\n        .current {\n          position: absolute;\n          top: var(--tools-height);\n          height: var(--controls-height);\n          left: -12px;\n          right: -12px;\n          margin-left: min(20%, 200px);\n        }\n        input[type="range"] {\n          -webkit-appearance: none;\n          appearance: none;\n          margin: 0;\n          cursor: pointer;\n          outline: none;\n        }\n        input[type="range"]::-webkit-slider-thumb {\n          opacity: 0;\n        }\n        input[type="range"]::-moz-range-thumb {\n          opacity: 0;\n        }\n        /* Firefoxで点線が周りに表示されてしまう問題の解消 */\n        input[type="range"]::-moz-focus-outer {\n          border: 0;\n        }\n        .current input[type="range"] {\n          height: var(--controls-height);\n          width: 100%;\n          background: transparent;\n        }\n        input.begin[type="range"],\n        input.end[type="range"] {\n          height: 100%;\n          width: calc(100% + 12px);\n          background: transparent;\n          pointer-events: none;\n          margin-left: -6px;\n        }\n        input.begin[type="range"]::-webkit-slider-thumb,\n        input.end[type="range"]::-webkit-slider-thumb {\n          -webkit-appearance: none;\n          appearance: none;\n          pointer-events: auto;\n          opacity: 0;   \n          width: 12px;\n          height: 100%;\n          cursor: ew-resize;\n        }\n        input.begin[type="range"]::-moz-range-thumb,\n        input.end[type="range"]::-moz-range-thumb {\n          -webkit-appearance: none;\n          appearance: none;\n          pointer-events: auto;\n          opacity: 0;   \n          width: 12px;\n          height: 100%;\n          cursor: ew-resize;\n        }\n        input.begin[type="range"]::-webkit-slider-thumb {\n          background: darkgreen;\n          transform: translateX(50%);\n        }\n        input.begin[type="range"]::-moz-range-thumb {\n          background: darkgreen;\n          transform: translateX(50%);\n        }\n        input.end[type="range"]::-webkit-slider-thumb {\n          background: indianred;\n          transform: translateX(-50%);\n        }\n        input.end[type="range"]::-moz-range-thumb {\n          background: indianred;\n          transform: translateX(-50%);\n        }\n        .scale {\n          position: relative;\n          height: 100%;\n        }\n        .scale-s,\n        .scale-100ms {\n          height: 50%;\n        }\n        .scale-s {\n          /*\n            total / 1s \n            e.g. 6000 / 1000\n            x / 1000 = 6\n            calc(100% / calc(var(--total) / 1000))\n           */\n          --x: calc(100% / calc(var(--total) / 1000));\n          background: repeating-linear-gradient(90deg, transparent 0, transparent calc(var(--x) - 1px), #202020 calc(var(--x) - 1px), #202020 var(--x));\n          border-bottom: 1px solid #202020;\n        }\n        .scale-100ms {\n          --x: calc(100% / calc(var(--total) / 1000) / 10);\n          background: repeating-linear-gradient(90deg, transparent 0, transparent calc(var(--x) - 1px), #202020 calc(var(--x) - 1px), #202020 var(--x));\n        }\n        .scale-label {\n          --x: calc(100% / calc(var(--total) / 1000));\n          position: absolute;\n          top: 0;\n          left: calc(var(--x) * var(--sec));\n          font-size: 10px;\n          font-style: italic;\n          transform: translateX(calc(-100% - 4px));\n        }\n      </style>\n      <div class="container">\n        <div class="tools">\n          <div class="tools__item">\n            <div id="previous">\n              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">\n                <path d="M2.75 20C2.75 20.5523 3.19772 21 3.75 21C4.30228 21 4.75 20.5523 4.75 20L4.75 4C4.75 3.44772 4.30229 3 3.75 3C3.19772 3 2.75 3.44772 2.75 4V20Z"/>\n                <path d="M20.75 19.0526C20.75 20.4774 19.1383 21.305 17.9803 20.4748L7.51062 12.9682C6.50574 12.2477 6.54467 10.7407 7.5854 10.073L18.0551 3.35665C19.2198 2.60946 20.75 3.44583 20.75 4.82961L20.75 19.0526Z"/>\n              </svg>\n            </div>\n          </div>\n          <div class="tools__item">\n            <div id="play-pause">\n              <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n                \x3c!-- Generator: Sketch 59.1 (86144) - https://sketch.com --\x3e\n                <title>ic_fluent_video_play_pause_24_filled</title>\n                <desc>Created with Sketch.</desc>\n                <g id="🔍-Product-Icons" stroke="none" stroke-width="1" >\n                    <g id="ic_fluent_video_play_pause_24_filled" fill-rule="nonzero">\n                        <path d="M3.65140982,6.61646219 L11.1528787,11.3693959 C11.3672679,11.5052331 11.4827597,11.722675 11.4993749,11.9464385 L11.4984593,7.25 C11.4984593,6.83578644 11.8342458,6.5 12.2484593,6.5 L15.2484593,6.5 C15.6626729,6.5 15.9984593,6.83578644 15.9984593,7.25 L15.9984593,16.75 C15.9984593,17.1642136 15.6626729,17.5 15.2484593,17.5 L12.2484593,17.5 C11.8342458,17.5 11.4984593,17.1642136 11.4984593,16.75 L11.4993494,12.0597632 C11.4826318,12.2835468 11.3670166,12.5009613 11.1525249,12.6366956 L3.65105604,17.3837618 C3.15168144,17.6997752 2.5,17.3409648 2.5,16.75 L2.5,7.25 C2.5,6.65884683 3.15205264,6.30006928 3.65140982,6.61646219 Z M21.2477085,6.50037474 C21.661922,6.50037474 21.9977085,6.83616118 21.9977085,7.25037474 L21.9977085,16.7496253 C21.9977085,17.1638388 21.661922,17.4996253 21.2477085,17.4996253 L18.2477085,17.4996253 C17.8334949,17.4996253 17.4977085,17.1638388 17.4977085,16.7496253 L17.4977085,7.25037474 C17.4977085,6.83616118 17.8334949,6.50037474 18.2477085,6.50037474 L21.2477085,6.50037474 Z" id="🎨-Color"></path>\n                    </g>\n                </g>\n              </svg>\n            </div>\n          </div>\n          <div class="tools__item">\n            <div id="next">\n              <svg   viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">\n                <path d="M21 4C21 3.44772 20.5523 3 20 3C19.4477 3 19 3.44772 19 4V20C19 20.5523 19.4477 21 20 21C20.5523 21 21 20.5523 21 20V4Z"/>\n                <path d="M3 4.94743C3 3.5226 4.61175 2.69498 5.7697 3.52521L16.2394 11.0318C17.2443 11.7523 17.2053 13.2593 16.1646 13.927L5.69492 20.6434C4.53019 21.3905 3 20.5542 3 19.1704V4.94743Z"/>\n              </svg>\n            </div>\n          </div>\n        </div>\n        <div class="controls">\n          <div class="head"><div class="actions"></div></div>\n          <div class="body">\n            <div class="scale" id="scale" style="--total: ${e}">\n              <div class="scale-s"></div>\n              <div class="scale-100ms"></div>\n              ${r}\n            </div>\n          </div>\n        </div>\n        <div id="pane" class="pane">\n          <div class="head">\n            <div class="rows">\n              ${n}\n            </div>\n          </div>\n          <div id="timeline" class="body">\n            <div class="rows">\n              ${i}\n            </div>\n          </div>\n        </div>\n        <div class="current">\n          <input id="current" type="range" min="0" max="0" step="any" value="0">\n        </div>\n        <div id="progress" class="progress"></div>\n      </div>\n    `}__updateScale(t){let e=this.shadowRoot.querySelector(".test");e&&e.remove(),this.shadowRoot.querySelectorAll(".scale-label").forEach((t=>{t.remove()})),this.shadowRoot.querySelector(".scale").style.setProperty("--total",t);let n="";for(let e=0,i=Math.floor(t/1e3);e<i;e++)n+=`<div class="scale-label" style="--sec: ${e+1}">${e+1}s</div>`;let i=document.createElement("div");i.className="test",i.innerHTML=n,this.shadowRoot.querySelector(".scale").appendChild(i)}__updateProgressPosition(t){let e=this.$timeline.clientWidth,n=Math.min(t/this.totalTime,1)*e;this.$progress.style.transform=`translateX(${n}px)`}__updateBarRange(t){for(let e=0;e<this.$bars.length;e++){let n=this.axes[e];this.$barsBegin[e].setAttribute("max",t),this.$barsBegin[e].value=n.beginAt,this.$barsEnd[e].setAttribute("max",t),this.$barsEnd[e].value=n.endAt}}__updateBar(t){let e=this.$timeline.clientWidth/t;for(let t=0;t<this.$bars.length;t++){let n=this.axes[t],i=n.beginAt*e,r=(n.endAt-n.beginAt)*e;this.$bars[t].style.transform=`translateX(${i}px)`,this.$bars[t].style.width=`${r}px`,0<n.progress&&!n.pass?this.$bars[t].classList.add("bar--active"):this.$bars[t].classList.remove("bar--active")}}};window.customElements.define("taxis-timeline",vt);var Et={key:"",beginAt:0,endAt:0,duration:0,delay:0,position:0,progress:0,enter:!1,pass:!1};const yt={bucketsCount:8};const _t=function(){const{subscribe:t,set:e,update:n}=H(yt);return{subscribe:t,reset:()=>e(yt),set:t=>e(t)}}(),Tt=128,wt=.5;let At=[-1.5,0,0],Rt=[1.5,0,0],Mt=[0,0,0];const kt=t=>{const e=new lt,n=new class{constructor(t={}){this.option=t,this.axes=[]}get totalTime(){return this.axes.length?Math.max(...this.axes.map((t=>t.endAt))):0}get totalTimeForTimeline(){return this.totalTime+500}get everyPassed(){return this.axes.every((t=>t.pass))}restart(){this.beginAt=Date.now()}getAxis({key:t}){return this.axes.find((e=>e.key===t))}getAxes(){return this.axes}add(t,e,n=0,i){let r=this.totalTime+n;if(void 0!==i)r=Number.isFinite(i)?i+n:this.getAxis({key:i}).endAt+n;else{let t=this.axes[this.axes.length-1];i=t?t.key:0}return this.axes.push({...Et,key:t,beginAt:r,endAt:r+e,duration:e,delay:n,position:i}),this.sort(),this}begin(){this.option.timeline&&(this.timeline=new vt(this.axes,this.totalTimeForTimeline,this.option.timeline.debug),this.option.timeline.container.appendChild(this.timeline)),this.beginAt=Date.now(),this.__tick()}reset(){cancelAnimationFrame(this.requestID)}ticker(t){this.tickerFn=t}__tick(){let t=this.beginAt,e=Date.now()-t,n=!1;if(this.option.timeline){this.axes=this.recalculation(this.timeline.getAxes());let{beginAt:i,elapsedTime:r,editing:s}=this.timeline.get(this.beginAt);t=i,e=r,n=s}this.beginAt=t,this.axes.forEach(((t,n)=>{let i=e-t.beginAt,r=Math.max(0,Math.min(i/t.duration,1)),s=t.beginAt<=e,a=t.endAt<e;t.progress=r,t.enter=s,t.pass=a})),this.option.timeline&&!n&&this.timeline.update(e,this.totalTimeForTimeline,this.axes),this.tickerFn&&this.tickerFn(e,this.toMap(this.axes)),this.requestID=requestAnimationFrame(this.__tick.bind(this))}calculation(){let t=[];for(let e=0;e<this.axes.length;e++){let n=this.axes[e],{key:i,duration:r,position:s,delay:a}=n,o=Math.max(...t.map((t=>t.endAt)))+a;void 0!==s?o=Number.isFinite(s)?s+a:this.getAxis({key:s}).endAt+a:s=o,t.push({...Et,key:i,beginAt:o,endAt:o+r,duration:r,delay:a,position:s})}}recalculation(t){let e=[];for(let n=0;n<t.length;n++){let i=t[n],{key:r,duration:s,position:a,delay:o}=i,l=Math.max(...e.map((t=>t.endAt)))+o;void 0!==a?l=Number.isFinite(a)?a+o:this.getAxis({key:a}).endAt+o:a=l,e.push({...Et,key:r,beginAt:l,endAt:l+s,duration:s,delay:o,position:a})}return e}sort(){this.axes.sort(((t,e)=>t.beginAt-e.beginAt))}toMap(t){let e=new Map;return t.forEach((t=>{e[t.key]=t,e.set(t.key,t)})),e}}({timeline:{container:document.querySelector("#timeline"),debug:!1}});n.add("Sampling",3e3);for(let t=0;t<o(_t).bucketsCount;t++)0===t?n.add(`split#${t}`,500,500):n.add(`split#${t}`,500);for(let t=0;t<o(_t).bucketsCount;t++)n.add(`Average color#${t}`,500);let i;n.add("Mapping",3e3,500);let r=[],s=0,a=-1;e.initialize(t);let l,c,u,h,d,p,g,m,f,b,x,v,E=null,y=null,_=[],T=[],w=[],A=[],R=[],M=[],k=[],P=[],L=[],$=[],B=[],C=[],S=[],U=[],I=null,D=null,F=null,N=null,X=null,O=null;const q={distance:7.5,min:1,max:20,move:2},V=new ct(t,q);function j(){e.width=window.innerWidth,e.height=window.innerHeight,window.innerWidth<window.innerHeight?(V.distance=1e3/window.innerHeight*q.distance,At=[0,1.5,0],Rt=[0,-1.5,0],Mt=[0,0,0]):(V.distance=900/window.innerWidth*q.distance,At=[-1.5,0,0],Rt=[1.5,0,0],Mt=[0,0,0])}function G(t){const n=e.gl;let i=ut.mat4.identity(ut.mat4.create());i=ut.mat4.translate(i,t);const r=ut.mat4.multiply(O,i);n.uniformMatrix4fv(I.mvpMatrix,!1,r)}function H(t){const n=e.gl;let i=ut.mat4.identity(ut.mat4.create());i=ut.mat4.translate(i,t),n.uniformMatrix4fv(D.mMatrix,!1,i);const r=ut.mat4.multiply(O,i);n.uniformMatrix4fv(D.mvpMatrix,!1,r)}e.width=window.innerWidth,e.height=window.innerHeight,j(),window.addEventListener("resize",j),window.Promise.resolve().then((t=>{t=o(Y).file;const n=document.createElement("canvas");n.width=Tt,n.height=Tt;const s=n.getContext("2d");s.drawImage(t,0,0,t.width,t.height,0,0,Tt,Tt),x=s.getImageData(0,0,n.width,n.height),i=new bt(x,{strict:!0}),v=i.reduce(o(_t).bucketsCount),r=i.bucketsPerStep,F=e.createTexture(t,e.gl.TEXTURE0),e.createTexture(v,e.gl.TEXTURE1)})).then((()=>window.Promise.all([lt.loadFile("./shader/main.vert"),lt.loadFile("./shader/main.frag"),lt.loadFile("./shader/sub.vert"),lt.loadFile("./shader/sub.frag")]))).then((t=>{const[i,q,j,z]=t,Y=e.createShaderObject(i,e.gl.VERTEX_SHADER),W=e.createShaderObject(q,e.gl.FRAGMENT_SHADER);E=e.createProgramObject(Y,W);const J=e.createShaderObject(j,e.gl.VERTEX_SHADER),K=e.createShaderObject(z,e.gl.FRAGMENT_SHADER);y=e.createProgramObject(J,K),e.program=E;const Q=e.gl;Q.enable(Q.DEPTH_TEST),Q.disable(Q.CULL_FACE),Q.enable(Q.BLEND),Q.blendFuncSeparate(Q.SRC_ALPHA,Q.ONE_MINUS_SRC_ALPHA,Q.ONE,Q.ONE),l=mt.plane(1,1,0,[1,.1,0,1]),c=[e.createVBO(l.position),e.createVBO(l.color),e.createVBO(l.texCoord)],u=e.createIBO(l.index),h=mt.plane(1,1,0,[1,.1,0,1]),e.createVBO(h.position),e.createVBO(h.color),e.createVBO(h.texCoord),e.createIBO(h.index),function(){const t=x.data.length/4;for(let e=0;e<t;e++){const t=x.data[4*e],n=x.data[4*e+1],i=x.data[4*e+2],r=x.data[4*e+3],s=e,a=s%x.width,o=Math.floor(s/x.width);k.push(a/Tt-wt+At[0],-1*(o/Tt-wt)+At[1],At[2]),P.push(t/255-wt+Mt[0],n/255-wt+Mt[1],i/255-wt+Mt[2]),L.push(t/255,n/255,i/255,r/255)}$=[e.createVBO(k),e.createVBO(P),e.createVBO(L)]}(),function(){const t=x.data.length/4;for(let e=0;e<t;e++){const t=x.data[4*e],n=x.data[4*e+1],i=x.data[4*e+2];x.data[4*e+3];const r=e,s=r%x.width,a=Math.floor(r/x.width);B.push(t/255-wt+Mt[0],n/255-wt+Mt[1],i/255-wt+Mt[2]),C.push(s/Tt-wt+Rt[0],-1*(a/Tt-wt)+Rt[1],Rt[2]);const o=v.data[4*e],l=v.data[4*e+1],c=v.data[4*e+2],u=v.data[4*e+3];S.push(o/255,l/255,c/255,u/255)}U=[e.createVBO(B),e.createVBO(C),e.createVBO(S)]}(),r.forEach(((t,n)=>{_[n]=[],T[n]=[],w[n]=[],A[n]=[],R[n]=[],M[n]=[],t.forEach(((t,i)=>{const{total:s,colors:a,channel:o,minR:l,minG:c,minB:u,maxR:h,maxG:d,maxB:p}=r[n][i],g=(h-l)/255,m=(d-c)/255,f=(p-u)/255,b=bt.averageColor(a),x=mt.box(g,m,f,[b[0]/255,b[1]/255,b[2]/255,.8]),v=mt.boxLine(g,m,f,[.65,.65,.65,1]);R[n][i]=v,M[n][i]=[e.createVBO(v.position),e.createVBO(v.color)],_[n][i]=x,T[n][i]=[l/255-(1-g)/2,c/255-(1-m)/2,u/255-(1-f)/2],w[n][i]=[e.createVBO(x.position),e.createVBO(x.color)],A[n][i]=e.createIBO(x.index)}))})),d=mt.axis(10,[.45,.45,.45,1]),p=[e.createVBO(d.position),e.createVBO(d.color)],function(){const t=e.gl;e.program=E,g=[t.getAttribLocation(e.program,"position"),t.getAttribLocation(e.program,"color"),t.getAttribLocation(e.program,"texCoord")],m=[3,4,2],I={mvpMatrix:t.getUniformLocation(e.program,"mvpMatrix"),textureUnit:t.getUniformLocation(e.program,"textureUnit"),isTexture:t.getUniformLocation(e.program,"isTexture")}}(),function(){const t=e.gl;e.program=y,f=[t.getAttribLocation(e.program,"fromPosition"),t.getAttribLocation(e.program,"toPosition"),t.getAttribLocation(e.program,"color")],b=[3,3,4],D={mMatrix:t.getUniformLocation(e.program,"mMatrix"),mvpMatrix:t.getUniformLocation(e.program,"mvpMatrix"),interporation:t.getUniformLocation(e.program,"interporation"),eyePosition:t.getUniformLocation(e.program,"eyePosition")}}(),n.begin(),function(){const t=e.gl;n.ticker(((i,r)=>{let h=0;r.get("Sampling").pass&&(h=1),r.get("split#7").pass&&(h=2),r.get("Average color#7").pass&&(h=3);for(let t=0;t<o(_t).bucketsCount;t++)r.get(`split#${t}`).enter&&s<t&&(s=t),r.get(`Average color#${t}`).enter&&a<t&&(a=t),r.get(`split#${t}`).progress<=0&&t<=s&&(s=t-1),r.get(`Average color#${t}`).progress<=0&&t<=a&&(a=t-1);Z.update(h),function(){const t=e.gl;t.viewport(0,0,e.width,e.height),t.clearColor(.1,.12,.14,1),t.clear(t.COLOR_BUFFER_BIT),N=V.update();const n=45,i=e.width/e.height,r=.1,s=20;X=ut.mat4.perspective(n,i,r,s),O=ut.mat4.multiply(X,N)}(),e.program=y,t.uniform3fv(D.eyePosition,V.position),function(t){const i=e.gl,r=n.getAxis({key:"Sampling"});i.uniform1f(D.interporation,r.progress),e.enableAttribute($,f,b),H(t),i.drawArrays(i.POINTS,0,P.length/3)}([0,0,0]),function(t){const i=e.gl,r=n.getAxis({key:"Mapping"});if(0===r.progress)return;i.uniform1f(D.interporation,r.progress),e.enableAttribute(U,f,b),H(t),i.drawArrays(i.POINTS,0,C.length/3)}([0,0,0]),e.program=E,function(){const t=e.gl;t.uniform1i(I.isTexture,0),t.disableVertexAttribArray(g[2]),e.enableAttribute(p,g,m),G([0,0,0]),t.drawArrays(t.LINES,0,d.position.length/3)}(),function(t){const n=e.gl;e.enableAttribute(c,g,m),n.bindBuffer(n.ELEMENT_ARRAY_BUFFER,u),n.activeTexture(e.gl.TEXTURE0),n.bindTexture(e.gl.TEXTURE_2D,F),n.uniform1i(I.textureUnit,0),n.uniform1i(I.isTexture,1),n.enableVertexAttribArray(g[2]),G(t),n.drawElements(n.TRIANGLES,l.index.length,n.UNSIGNED_SHORT,0)}(At),r.get("split#0").enter&&(function(t){const n=e.gl;n.disableVertexAttribArray(g[2]),n.uniform1i(I.isTexture,0);for(let i=0;i<_[s].length;i++){e.enableAttribute(M[s][i],g,m);G([t[0]+T[s][i][0],t[1]+T[s][i][1],t[2]+T[s][i][2]]),n.drawArrays(n.LINES,0,R[s][i].position.length/3)}}(Mt),-1<a&&function(t){const n=e.gl;n.disableVertexAttribArray(g[2]),n.uniform1i(I.isTexture,0);const i=_.length-1;for(let r=0;r<=a;r++){e.enableAttribute(w[i][r],g,m),n.bindBuffer(n.ELEMENT_ARRAY_BUFFER,A[i][r]);G([t[0]+T[i][r][0],t[1]+T[i][r][1],t[2]+T[i][r][2]]),n.drawElements(n.TRIANGLES,_[i][r].index.length,n.UNSIGNED_SHORT,0)}}(Mt))}))}()}))};function Pt(e){let n;return{c(){n=g("canvas"),x(n,"class","w-full h-full")},m(t,i){h(t,n,i),e[1](n)},p:t,i:t,o:t,d(t){t&&d(n),e[1](null)}}}function Lt(t,e,n){let i;return T((()=>{kt(i)})),[i,function(t){A[t?"unshift":"push"]((()=>{i=t,n(0,i)}))}]}class $t extends j{constructor(t){super(),V(this,t,Lt,Pt,s,{})}}function Bt(e){let n,r,s,a,o,l,c,p,m,v,E,y,_,T,w,A,R,M,k,P,L,$,B,C,S,U,I,D,F,N,X,O,q,V,j,G,H;return{c(){n=g("div"),r=g("div"),r.innerHTML='<div class="w-full h-full"><div id="upload-area" class="h-full flex flex-col justify-center relative shadow-lg sm:overflow-hidden"><div class="absolute inset-0"><div class="h-full w-full bg-gray-100"></div></div> \n        <div class="relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8"><h1 class="text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl"><span class="block text-gray-800">Visualize color reduction</span> \n            <span class="block text-gray-500">Any image you like.</span></h1> \n          <p class="mt-6 max-w-lg mx-auto text-center text-xl text-gray-500 sm:max-w-4xl">The logic of color reduction is difficult.\n            I hope that visualizing it will help you understand it.\n            Implemented with reference to Median cut.\n            It is implemented using webgl.<br/>\n            Sorry, maybe only chrome is supported.</p> \n\n          <div id="upload" class="px-4 py-8 sm:px-0"><form action=""><div class="sm:mt-0 sm:col-span-2"><div class="text-center"><svg class="mx-auto h-12 w-12 text-gray-500" stroke="currentColor" fill="none" viewBox="0 0 48 48"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg> \n                  <p class="mt-1 text-sm text-gray-500"><label id="original-image-label" for="original-image-file" class="cursor-pointer font-medium text-pink-600 hover:text-pink-500 focus:outline-none focus:underline transition duration-150 ease-in-out">Upload a file\n                      <input type="file" id="original-image-file" class="hidden"/></label>\n                    or drag and drop</p> \n                  <p class="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p></div></div></form></div></div></div></div>',s=f(),a=g("div"),o=g("div"),l=g("p"),l.textContent="Or try one of these:",c=f(),p=g("div"),m=g("div"),v=g("img"),y=f(),_=g("span"),_.innerHTML='Photo by <a href="https://unsplash.com/@vincentledvina?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Vincent Ledvina</a>\n            on\n            <a href="https://unsplash.com/s/visual/4050ed5c-59f1-4b72-965f-8d82efcfbc94?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>',T=f(),w=g("div"),A=g("img"),M=f(),k=g("span"),k.innerHTML='Photo by <a href="https://unsplash.com/@greysonjoralemon?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Greyson Joralemon</a>\n            on\n            <a href="https://unsplash.com/s/photos/colorful?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>',P=f(),L=g("div"),$=g("img"),C=f(),S=g("span"),S.innerHTML='Photo by <a href="https://unsplash.com/@jezael?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jezael Melgoza</a>\n            on\n            <a href="https://unsplash.com/s/photos/japan?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>',U=f(),I=g("div"),D=g("img"),N=f(),X=g("span"),X.innerHTML='Photo by <a href="https://unsplash.com/@jannerboy62?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Nick Fewings</a>\n            on\n            <a href="https://unsplash.com/s/photos/red?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>',O=f(),q=g("div"),V=g("img"),x(r,"class","relative flex-grow"),x(l,"class","text-center text-sm font-semibold uppercase text-gray-500 tracking-wide"),v.src!==(E="./assets/bison.jpg")&&x(v,"src","./assets/bison.jpg"),x(v,"alt",""),x(v,"class","cursor-pointer"),x(m,"class","col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1"),A.src!==(R="./assets/colorful.jpg")&&x(A,"src","./assets/colorful.jpg"),x(A,"alt",""),x(A,"class","cursor-pointer"),x(w,"class","col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1"),$.src!==(B="./assets/shibuya.jpg")&&x($,"src","./assets/shibuya.jpg"),x($,"alt",""),x($,"class","cursor-pointer"),x(L,"class","col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1"),D.src!==(F="./assets/telephone_booth.jpg")&&x(D,"src","./assets/telephone_booth.jpg"),x(D,"alt",""),x(D,"class","cursor-pointer"),x(I,"class","col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1"),V.src!==(j="./assets/pineapple.jpg")&&x(V,"src","./assets/pineapple.jpg"),x(V,"alt",""),x(V,"class","cursor-pointer"),x(q,"class","col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1"),x(p,"class","mt-6 grid grid-cols-2 gap-8 md:grid-cols-6 lg:grid-cols-5"),x(o,"class","max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8"),x(a,"class","bg-gray-100"),x(n,"class","h-full flex flex-col")},m(t,i){h(t,n,i),u(n,r),u(n,s),u(n,a),u(a,o),u(o,l),u(o,c),u(o,p),u(p,m),u(m,v),u(m,y),u(m,_),u(p,T),u(p,w),u(w,A),u(w,M),u(w,k),u(p,P),u(p,L),u(L,$),u(L,C),u(L,S),u(p,U),u(p,I),u(I,D),u(I,N),u(I,X),u(p,O),u(p,q),u(q,V),G||(H=[b(v,"click",e[0]),b(A,"click",e[0]),b($,"click",e[0]),b(D,"click",e[0]),b(V,"click",e[0])],G=!0)},p:t,i:t,o:t,d(t){t&&d(n),G=!1,i(H)}}}function Ct(t,e,n){let i;l(t,Y,(t=>n(1,i=t))),T((()=>{const t=document.getElementById("upload-area");t.addEventListener("change",(t=>{e({e:t,data:void 0,callback:t=>{c(Y,i.file=t,i)}})})),t.addEventListener("drop",(t=>{t.preventDefault(),e({e:t,data:t.dataTransfer.files[0],callback:t=>{c(Y,i.file=t,i)}})})),t.addEventListener("dragenter",(t=>{t.preventDefault()})),t.addEventListener("dragover",(t=>{t.preventDefault()})),t.addEventListener("dragleave",(t=>{t.preventDefault()}));const e=({e:t,data:e,callback:n})=>{let i=void 0===e?t.target.files[0]:e;if(!i.type.match(/^image\/(png|jpg|jpeg|gif)$/))return;if(10485760<=i.size)return;let r=new Image,s=new FileReader;s.onload=t=>{let e=t.target.result;r.onload=()=>{n(r)},r.src=e},s.readAsDataURL(i)}}));return[t=>{c(Y,i.file=t.currentTarget,i)}]}class St extends j{constructor(t){super(),V(this,t,Ct,Bt,s,{})}}function Ut(e){let n,i,r,s,a,o,l,c,u,p,m;return n=new $t({props:{class:"w-full h-full"}}),s=new ot({}),{c(){N(n.$$.fragment),i=f(),r=g("div"),N(s.$$.fragment),a=f(),o=g("div"),o.innerHTML='<div id="timeline" class="h-full"></div>',l=f(),c=g("div"),c.innerHTML='<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 text-gray-800"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>',x(r,"class","fixed right-8 top-8 hidden md:block"),x(o,"class","fixed left-0 right-0 bottom-0 h-1/5"),x(c,"class","fixed left-8 top-8 bg-gray-100 p-2 cursor-pointer rounded-full")},m(t,d){X(n,t,d),h(t,i,d),h(t,r,d),X(s,r,null),h(t,a,d),h(t,o,d),h(t,l,d),h(t,c,d),u=!0,p||(m=b(c,"click",e[1]),p=!0)},p:t,i(t){u||(D(n.$$.fragment,t),D(s.$$.fragment,t),u=!0)},o(t){F(n.$$.fragment,t),F(s.$$.fragment,t),u=!1},d(t){O(n,t),t&&d(i),t&&d(r),O(s),t&&d(a),t&&d(o),t&&d(l),t&&d(c),p=!1,m()}}}function It(e){let n,i;return n=new St({}),{c(){N(n.$$.fragment)},m(t,e){X(n,t,e),i=!0},p:t,i(t){i||(D(n.$$.fragment,t),i=!0)},o(t){F(n.$$.fragment,t),i=!1},d(t){O(n,t)}}}function Dt(t){let e,n,r,s;const a=[It,Ut],o=[];function l(t,e){return t[0].file?1:0}return n=l(t),r=o[n]=a[n](t),{c(){e=g("main"),r.c(),x(e,"class","w-full h-full")},m(t,i){h(t,e,i),o[n].m(e,null),s=!0},p(t,[s]){let c=n;n=l(t),n===c?o[n].p(t,s):(I={r:0,c:[],p:I},F(o[c],1,1,(()=>{o[c]=null})),I.r||i(I.c),I=I.p,r=o[n],r?r.p(t,s):(r=o[n]=a[n](t),r.c()),D(r,1),r.m(e,null))},i(t){s||(D(r),s=!0)},o(t){F(r),s=!1},d(t){t&&d(e),o[n].d()}}}function Ft(t,e,n){let i;l(t,Y,(t=>n(0,i=t)));return[i,()=>{c(Y,i.file=null,i)}]}return new class extends j{constructor(t){super(),V(this,t,Ft,Dt,s,{})}}({target:document.body,props:{name:"world"}})}();
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
+var app = (function () {
+    'use strict';
+
+    function noop() { }
+    function add_location(element, file, line, column, char) {
+        element.__svelte_meta = {
+            loc: { file, line, column, char }
+        };
+    }
+    function run(fn) {
+        return fn();
+    }
+    function blank_object() {
+        return Object.create(null);
+    }
+    function run_all(fns) {
+        fns.forEach(run);
+    }
+    function is_function(thing) {
+        return typeof thing === 'function';
+    }
+    function safe_not_equal(a, b) {
+        return a != a ? b == b : a !== b || ((a && typeof a === 'object') || typeof a === 'function');
+    }
+    let src_url_equal_anchor;
+    function src_url_equal(element_src, url) {
+        if (!src_url_equal_anchor) {
+            src_url_equal_anchor = document.createElement('a');
+        }
+        src_url_equal_anchor.href = url;
+        return element_src === src_url_equal_anchor.href;
+    }
+    function is_empty(obj) {
+        return Object.keys(obj).length === 0;
+    }
+    function validate_store(store, name) {
+        if (store != null && typeof store.subscribe !== 'function') {
+            throw new Error(`'${name}' is not a store with a 'subscribe' method`);
+        }
+    }
+    function subscribe(store, ...callbacks) {
+        if (store == null) {
+            return noop;
+        }
+        const unsub = store.subscribe(...callbacks);
+        return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
+    }
+    function get_store_value(store) {
+        let value;
+        subscribe(store, _ => value = _)();
+        return value;
+    }
+    function component_subscribe(component, store, callback) {
+        component.$$.on_destroy.push(subscribe(store, callback));
+    }
+    function set_store_value(store, ret, value) {
+        store.set(value);
+        return ret;
+    }
+    function append(target, node) {
+        target.appendChild(node);
+    }
+    function insert(target, node, anchor) {
+        target.insertBefore(node, anchor || null);
+    }
+    function detach(node) {
+        node.parentNode.removeChild(node);
+    }
+    function destroy_each(iterations, detaching) {
+        for (let i = 0; i < iterations.length; i += 1) {
+            if (iterations[i])
+                iterations[i].d(detaching);
+        }
+    }
+    function element(name) {
+        return document.createElement(name);
+    }
+    function svg_element(name) {
+        return document.createElementNS('http://www.w3.org/2000/svg', name);
+    }
+    function text(data) {
+        return document.createTextNode(data);
+    }
+    function space() {
+        return text(' ');
+    }
+    function listen(node, event, handler, options) {
+        node.addEventListener(event, handler, options);
+        return () => node.removeEventListener(event, handler, options);
+    }
+    function attr(node, attribute, value) {
+        if (value == null)
+            node.removeAttribute(attribute);
+        else if (node.getAttribute(attribute) !== value)
+            node.setAttribute(attribute, value);
+    }
+    function children(element) {
+        return Array.from(element.childNodes);
+    }
+    function toggle_class(element, name, toggle) {
+        element.classList[toggle ? 'add' : 'remove'](name);
+    }
+    function custom_event(type, detail, bubbles = false) {
+        const e = document.createEvent('CustomEvent');
+        e.initCustomEvent(type, bubbles, false, detail);
+        return e;
+    }
+
+    let current_component;
+    function set_current_component(component) {
+        current_component = component;
+    }
+    function get_current_component() {
+        if (!current_component)
+            throw new Error('Function called outside component initialization');
+        return current_component;
+    }
+    function onMount(fn) {
+        get_current_component().$$.on_mount.push(fn);
+    }
+    function onDestroy(fn) {
+        get_current_component().$$.on_destroy.push(fn);
+    }
+
+    const dirty_components = [];
+    const binding_callbacks = [];
+    const render_callbacks = [];
+    const flush_callbacks = [];
+    const resolved_promise = Promise.resolve();
+    let update_scheduled = false;
+    function schedule_update() {
+        if (!update_scheduled) {
+            update_scheduled = true;
+            resolved_promise.then(flush);
+        }
+    }
+    function add_render_callback(fn) {
+        render_callbacks.push(fn);
+    }
+    // flush() calls callbacks in this order:
+    // 1. All beforeUpdate callbacks, in order: parents before children
+    // 2. All bind:this callbacks, in reverse order: children before parents.
+    // 3. All afterUpdate callbacks, in order: parents before children. EXCEPT
+    //    for afterUpdates called during the initial onMount, which are called in
+    //    reverse order: children before parents.
+    // Since callbacks might update component values, which could trigger another
+    // call to flush(), the following steps guard against this:
+    // 1. During beforeUpdate, any updated components will be added to the
+    //    dirty_components array and will cause a reentrant call to flush(). Because
+    //    the flush index is kept outside the function, the reentrant call will pick
+    //    up where the earlier call left off and go through all dirty components. The
+    //    current_component value is saved and restored so that the reentrant call will
+    //    not interfere with the "parent" flush() call.
+    // 2. bind:this callbacks cannot trigger new flush() calls.
+    // 3. During afterUpdate, any updated components will NOT have their afterUpdate
+    //    callback called a second time; the seen_callbacks set, outside the flush()
+    //    function, guarantees this behavior.
+    const seen_callbacks = new Set();
+    let flushidx = 0; // Do *not* move this inside the flush() function
+    function flush() {
+        const saved_component = current_component;
+        do {
+            // first, call beforeUpdate functions
+            // and update components
+            while (flushidx < dirty_components.length) {
+                const component = dirty_components[flushidx];
+                flushidx++;
+                set_current_component(component);
+                update(component.$$);
+            }
+            set_current_component(null);
+            dirty_components.length = 0;
+            flushidx = 0;
+            while (binding_callbacks.length)
+                binding_callbacks.pop()();
+            // then, once components are updated, call
+            // afterUpdate functions. This may cause
+            // subsequent updates...
+            for (let i = 0; i < render_callbacks.length; i += 1) {
+                const callback = render_callbacks[i];
+                if (!seen_callbacks.has(callback)) {
+                    // ...so guard against infinite loops
+                    seen_callbacks.add(callback);
+                    callback();
+                }
+            }
+            render_callbacks.length = 0;
+        } while (dirty_components.length);
+        while (flush_callbacks.length) {
+            flush_callbacks.pop()();
+        }
+        update_scheduled = false;
+        seen_callbacks.clear();
+        set_current_component(saved_component);
+    }
+    function update($$) {
+        if ($$.fragment !== null) {
+            $$.update();
+            run_all($$.before_update);
+            const dirty = $$.dirty;
+            $$.dirty = [-1];
+            $$.fragment && $$.fragment.p($$.ctx, dirty);
+            $$.after_update.forEach(add_render_callback);
+        }
+    }
+    const outroing = new Set();
+    let outros;
+    function group_outros() {
+        outros = {
+            r: 0,
+            c: [],
+            p: outros // parent group
+        };
+    }
+    function check_outros() {
+        if (!outros.r) {
+            run_all(outros.c);
+        }
+        outros = outros.p;
+    }
+    function transition_in(block, local) {
+        if (block && block.i) {
+            outroing.delete(block);
+            block.i(local);
+        }
+    }
+    function transition_out(block, local, detach, callback) {
+        if (block && block.o) {
+            if (outroing.has(block))
+                return;
+            outroing.add(block);
+            outros.c.push(() => {
+                outroing.delete(block);
+                if (callback) {
+                    if (detach)
+                        block.d(1);
+                    callback();
+                }
+            });
+            block.o(local);
+        }
+    }
+    function create_component(block) {
+        block && block.c();
+    }
+    function mount_component(component, target, anchor, customElement) {
+        const { fragment, on_mount, on_destroy, after_update } = component.$$;
+        fragment && fragment.m(target, anchor);
+        if (!customElement) {
+            // onMount happens before the initial afterUpdate
+            add_render_callback(() => {
+                const new_on_destroy = on_mount.map(run).filter(is_function);
+                if (on_destroy) {
+                    on_destroy.push(...new_on_destroy);
+                }
+                else {
+                    // Edge case - component was destroyed immediately,
+                    // most likely as a result of a binding initialising
+                    run_all(new_on_destroy);
+                }
+                component.$$.on_mount = [];
+            });
+        }
+        after_update.forEach(add_render_callback);
+    }
+    function destroy_component(component, detaching) {
+        const $$ = component.$$;
+        if ($$.fragment !== null) {
+            run_all($$.on_destroy);
+            $$.fragment && $$.fragment.d(detaching);
+            // TODO null out other refs, including component.$$ (but need to
+            // preserve final state?)
+            $$.on_destroy = $$.fragment = null;
+            $$.ctx = [];
+        }
+    }
+    function make_dirty(component, i) {
+        if (component.$$.dirty[0] === -1) {
+            dirty_components.push(component);
+            schedule_update();
+            component.$$.dirty.fill(0);
+        }
+        component.$$.dirty[(i / 31) | 0] |= (1 << (i % 31));
+    }
+    function init(component, options, instance, create_fragment, not_equal, props, append_styles, dirty = [-1]) {
+        const parent_component = current_component;
+        set_current_component(component);
+        const $$ = component.$$ = {
+            fragment: null,
+            ctx: null,
+            // state
+            props,
+            update: noop,
+            not_equal,
+            bound: blank_object(),
+            // lifecycle
+            on_mount: [],
+            on_destroy: [],
+            on_disconnect: [],
+            before_update: [],
+            after_update: [],
+            context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
+            // everything else
+            callbacks: blank_object(),
+            dirty,
+            skip_bound: false,
+            root: options.target || parent_component.$$.root
+        };
+        append_styles && append_styles($$.root);
+        let ready = false;
+        $$.ctx = instance
+            ? instance(component, options.props || {}, (i, ret, ...rest) => {
+                const value = rest.length ? rest[0] : ret;
+                if ($$.ctx && not_equal($$.ctx[i], $$.ctx[i] = value)) {
+                    if (!$$.skip_bound && $$.bound[i])
+                        $$.bound[i](value);
+                    if (ready)
+                        make_dirty(component, i);
+                }
+                return ret;
+            })
+            : [];
+        $$.update();
+        ready = true;
+        run_all($$.before_update);
+        // `false` as a special case of no DOM component
+        $$.fragment = create_fragment ? create_fragment($$.ctx) : false;
+        if (options.target) {
+            if (options.hydrate) {
+                const nodes = children(options.target);
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                $$.fragment && $$.fragment.l(nodes);
+                nodes.forEach(detach);
+            }
+            else {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                $$.fragment && $$.fragment.c();
+            }
+            if (options.intro)
+                transition_in(component.$$.fragment);
+            mount_component(component, options.target, options.anchor, options.customElement);
+            flush();
+        }
+        set_current_component(parent_component);
+    }
+    /**
+     * Base class for Svelte components. Used when dev=false.
+     */
+    class SvelteComponent {
+        $destroy() {
+            destroy_component(this, 1);
+            this.$destroy = noop;
+        }
+        $on(type, callback) {
+            const callbacks = (this.$$.callbacks[type] || (this.$$.callbacks[type] = []));
+            callbacks.push(callback);
+            return () => {
+                const index = callbacks.indexOf(callback);
+                if (index !== -1)
+                    callbacks.splice(index, 1);
+            };
+        }
+        $set($$props) {
+            if (this.$$set && !is_empty($$props)) {
+                this.$$.skip_bound = true;
+                this.$$set($$props);
+                this.$$.skip_bound = false;
+            }
+        }
+    }
+
+    function dispatch_dev(type, detail) {
+        document.dispatchEvent(custom_event(type, Object.assign({ version: '3.46.3' }, detail), true));
+    }
+    function append_dev(target, node) {
+        dispatch_dev('SvelteDOMInsert', { target, node });
+        append(target, node);
+    }
+    function insert_dev(target, node, anchor) {
+        dispatch_dev('SvelteDOMInsert', { target, node, anchor });
+        insert(target, node, anchor);
+    }
+    function detach_dev(node) {
+        dispatch_dev('SvelteDOMRemove', { node });
+        detach(node);
+    }
+    function listen_dev(node, event, handler, options, has_prevent_default, has_stop_propagation) {
+        const modifiers = options === true ? ['capture'] : options ? Array.from(Object.keys(options)) : [];
+        if (has_prevent_default)
+            modifiers.push('preventDefault');
+        if (has_stop_propagation)
+            modifiers.push('stopPropagation');
+        dispatch_dev('SvelteDOMAddEventListener', { node, event, handler, modifiers });
+        const dispose = listen(node, event, handler, options);
+        return () => {
+            dispatch_dev('SvelteDOMRemoveEventListener', { node, event, handler, modifiers });
+            dispose();
+        };
+    }
+    function attr_dev(node, attribute, value) {
+        attr(node, attribute, value);
+        if (value == null)
+            dispatch_dev('SvelteDOMRemoveAttribute', { node, attribute });
+        else
+            dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value });
+    }
+    function set_data_dev(text, data) {
+        data = '' + data;
+        if (text.wholeText === data)
+            return;
+        dispatch_dev('SvelteDOMSetData', { node: text, data });
+        text.data = data;
+    }
+    function validate_each_argument(arg) {
+        if (typeof arg !== 'string' && !(arg && typeof arg === 'object' && 'length' in arg)) {
+            let msg = '{#each} only iterates over array-like objects.';
+            if (typeof Symbol === 'function' && arg && Symbol.iterator in arg) {
+                msg += ' You can use a spread to convert this iterable into an array.';
+            }
+            throw new Error(msg);
+        }
+    }
+    function validate_slots(name, slot, keys) {
+        for (const slot_key of Object.keys(slot)) {
+            if (!~keys.indexOf(slot_key)) {
+                console.warn(`<${name}> received an unexpected slot "${slot_key}".`);
+            }
+        }
+    }
+    /**
+     * Base class for Svelte components with some minor dev-enhancements. Used when dev=true.
+     */
+    class SvelteComponentDev extends SvelteComponent {
+        constructor(options) {
+            if (!options || (!options.target && !options.$$inline)) {
+                throw new Error("'target' is a required option");
+            }
+            super();
+        }
+        $destroy() {
+            super.$destroy();
+            this.$destroy = () => {
+                console.warn('Component was already destroyed'); // eslint-disable-line no-console
+            };
+        }
+        $capture_state() { }
+        $inject_state() { }
+    }
+
+    const subscriber_queue = [];
+    /**
+     * Create a `Writable` store that allows both updating and reading by subscription.
+     * @param {*=}value initial value
+     * @param {StartStopNotifier=}start start and stop notifications for subscriptions
+     */
+    function writable(value, start = noop) {
+        let stop;
+        const subscribers = new Set();
+        function set(new_value) {
+            if (safe_not_equal(value, new_value)) {
+                value = new_value;
+                if (stop) { // store is ready
+                    const run_queue = !subscriber_queue.length;
+                    for (const subscriber of subscribers) {
+                        subscriber[1]();
+                        subscriber_queue.push(subscriber, value);
+                    }
+                    if (run_queue) {
+                        for (let i = 0; i < subscriber_queue.length; i += 2) {
+                            subscriber_queue[i][0](subscriber_queue[i + 1]);
+                        }
+                        subscriber_queue.length = 0;
+                    }
+                }
+            }
+        }
+        function update(fn) {
+            set(fn(value));
+        }
+        function subscribe(run, invalidate = noop) {
+            const subscriber = [run, invalidate];
+            subscribers.add(subscriber);
+            if (subscribers.size === 1) {
+                stop = start(set) || noop;
+            }
+            run(value);
+            return () => {
+                subscribers.delete(subscriber);
+                if (subscribers.size === 0) {
+                    stop();
+                    stop = null;
+                }
+            };
+        }
+        return { set, update, subscribe };
+    }
+
+    const initialState$2 = {
+        file: null
+    };
+    function createApp() {
+        const { subscribe, set, update } = writable(initialState$2);
+        return {
+            subscribe,
+            reset: () => set(initialState$2),
+            set: (val) => set(val),
+        };
+    }
+    const app$1 = createApp();
+
+    const Steps = [
+        {
+            title: 'Sampling',
+            list: [
+                'Sampling the original image for color statistics.'
+            ]
+        },
+        {
+            title: 'Splitting',
+            list: [
+                'Put all the pixels of the image (that is, their RGB values) in a bucket.',
+                'Find out which color channel (red, green, or blue) among the pixels in the bucket has the greatest range, then sort the pixels according to that channel\'s values.',
+                'After the bucket has been sorted, move the upper half of the pixels into a new bucket.'
+            ]
+        },
+        {
+            title: 'Calculate the average color',
+            list: [
+                'Average the pixels in each bucket and you have a palette of 16 colors.'
+            ]
+        },
+        {
+            title: 'Mapping',
+            list: [
+                'Mapping the colors to their representative in the color map.'
+            ]
+        },
+    ];
+    const initialState$1 = {
+        steps: Steps,
+        current: 0
+    };
+    function createSteps() {
+        const { subscribe, set, update } = writable(initialState$1);
+        return {
+            subscribe,
+            reset: () => set(initialState$1),
+            update: (val) => set(Object.assign(Object.assign({}, initialState$1), { current: val })),
+            set: (val) => set(val),
+        };
+    }
+    const steps = createSteps();
+
+    /* src/components/Nav.svelte generated by Svelte v3.46.3 */
+    const file$3 = "src/components/Nav.svelte";
+
+    function get_each_context(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[1] = list[i];
+    	child_ctx[3] = i;
+    	return child_ctx;
+    }
+
+    function get_each_context_1(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[4] = list[i];
+    	child_ctx[6] = i;
+    	return child_ctx;
+    }
+
+    // (9:8) {#if i < $steps.steps.length - 1}
+    function create_if_block_3(ctx) {
+    	let div;
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			attr_dev(div, "class", "-ml-px absolute mt-0.5 top-4 left-4 w-0.5 h-full bg-gray-600");
+    			attr_dev(div, "aria-hidden", "true");
+    			add_location(div, file$3, 9, 10, 305);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_3.name,
+    		type: "if",
+    		source: "(9:8) {#if i < $steps.steps.length - 1}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (14:10) {#if i < $steps.current}
+    function create_if_block_2(ctx) {
+    	let span1;
+    	let span0;
+    	let svg;
+    	let path;
+
+    	const block = {
+    		c: function create() {
+    			span1 = element("span");
+    			span0 = element("span");
+    			svg = svg_element("svg");
+    			path = svg_element("path");
+    			attr_dev(path, "fill-rule", "evenodd");
+    			attr_dev(path, "d", "M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z");
+    			attr_dev(path, "clip-rule", "evenodd");
+    			add_location(path, file$3, 24, 18, 1034);
+    			attr_dev(svg, "class", "w-5 h-5 text-white");
+    			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
+    			attr_dev(svg, "viewBox", "0 0 20 20");
+    			attr_dev(svg, "fill", "currentColor");
+    			attr_dev(svg, "aria-hidden", "true");
+    			add_location(svg, file$3, 18, 16, 799);
+    			attr_dev(span0, "class", "relative z-10 w-8 h-8 flex items-center justify-center bg-gray-600 rounded-full group-hover:bg-gray-800");
+    			add_location(span0, file$3, 15, 14, 602);
+    			attr_dev(span1, "class", "h-9 flex items-center");
+    			add_location(span1, file$3, 14, 12, 551);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, span1, anchor);
+    			append_dev(span1, span0);
+    			append_dev(span0, svg);
+    			append_dev(svg, path);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(span1);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_2.name,
+    		type: "if",
+    		source: "(14:10) {#if i < $steps.current}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (33:10) {#if i === $steps.current}
+    function create_if_block_1(ctx) {
+    	let span2;
+    	let span1;
+    	let span0;
+
+    	const block = {
+    		c: function create() {
+    			span2 = element("span");
+    			span1 = element("span");
+    			span0 = element("span");
+    			attr_dev(span0, "class", "h-2.5 w-2.5 bg-gray-600 rounded-full");
+    			add_location(span0, file$3, 36, 16, 1616);
+    			attr_dev(span1, "class", "relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-600 rounded-full");
+    			add_location(span1, file$3, 34, 14, 1467);
+    			attr_dev(span2, "class", "h-9 flex items-center");
+    			attr_dev(span2, "aria-hidden", "true");
+    			add_location(span2, file$3, 33, 12, 1397);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, span2, anchor);
+    			append_dev(span2, span1);
+    			append_dev(span1, span0);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(span2);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_1.name,
+    		type: "if",
+    		source: "(33:10) {#if i === $steps.current}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (41:10) {#if $steps.current < i}
+    function create_if_block$1(ctx) {
+    	let span2;
+    	let span1;
+    	let span0;
+
+    	const block = {
+    		c: function create() {
+    			span2 = element("span");
+    			span1 = element("span");
+    			span0 = element("span");
+    			attr_dev(span0, "class", "h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300");
+    			add_location(span0, file$3, 44, 16, 2027);
+    			attr_dev(span1, "class", "relative z-10 w-8 h-8 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400");
+    			add_location(span1, file$3, 42, 14, 1850);
+    			attr_dev(span2, "class", "h-9 flex items-center");
+    			attr_dev(span2, "aria-hidden", "true");
+    			add_location(span2, file$3, 41, 12, 1780);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, span2, anchor);
+    			append_dev(span2, span1);
+    			append_dev(span1, span0);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(span2);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block$1.name,
+    		type: "if",
+    		source: "(41:10) {#if $steps.current < i}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (51:12) {#each item.list as children, j}
+    function create_each_block_1(ctx) {
+    	let span;
+    	let t_value = /*children*/ ctx[4] + "";
+    	let t;
+
+    	const block = {
+    		c: function create() {
+    			span = element("span");
+    			t = text(t_value);
+    			attr_dev(span, "class", "text-sm text-gray-500");
+    			add_location(span, file$3, 51, 14, 2398);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, span, anchor);
+    			append_dev(span, t);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*$steps*/ 1 && t_value !== (t_value = /*children*/ ctx[4] + "")) set_data_dev(t, t_value);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(span);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_each_block_1.name,
+    		type: "each",
+    		source: "(51:12) {#each item.list as children, j}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (7:4) {#each $steps.steps as item, i}
+    function create_each_block(ctx) {
+    	let li;
+    	let t0;
+    	let div;
+    	let t1;
+    	let t2;
+    	let t3;
+    	let span1;
+    	let span0;
+    	let t4_value = /*item*/ ctx[1].title + "";
+    	let t4;
+    	let t5;
+    	let t6;
+    	let if_block0 = /*i*/ ctx[3] < /*$steps*/ ctx[0].steps.length - 1 && create_if_block_3(ctx);
+    	let if_block1 = /*i*/ ctx[3] < /*$steps*/ ctx[0].current && create_if_block_2(ctx);
+    	let if_block2 = /*i*/ ctx[3] === /*$steps*/ ctx[0].current && create_if_block_1(ctx);
+    	let if_block3 = /*$steps*/ ctx[0].current < /*i*/ ctx[3] && create_if_block$1(ctx);
+    	let each_value_1 = /*item*/ ctx[1].list;
+    	validate_each_argument(each_value_1);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value_1.length; i += 1) {
+    		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+    	}
+
+    	const block = {
+    		c: function create() {
+    			li = element("li");
+    			if (if_block0) if_block0.c();
+    			t0 = space();
+    			div = element("div");
+    			if (if_block1) if_block1.c();
+    			t1 = space();
+    			if (if_block2) if_block2.c();
+    			t2 = space();
+    			if (if_block3) if_block3.c();
+    			t3 = space();
+    			span1 = element("span");
+    			span0 = element("span");
+    			t4 = text(t4_value);
+    			t5 = space();
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			t6 = space();
+    			attr_dev(span0, "class", "text-xs font-semibold uppercase tracking-wide text-gray-300");
+    			add_location(span0, file$3, 49, 12, 2245);
+    			attr_dev(span1, "class", "ml-4 min-w-0 flex flex-col space-y-1");
+    			add_location(span1, file$3, 48, 10, 2181);
+    			attr_dev(div, "class", "relative flex items-start group");
+    			add_location(div, file$3, 12, 8, 458);
+    			attr_dev(li, "class", "relative pb-10");
+    			toggle_class(li, "pb-10", /*i*/ ctx[3] < /*$steps*/ ctx[0].steps.length - 1);
+    			add_location(li, file$3, 7, 6, 179);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, li, anchor);
+    			if (if_block0) if_block0.m(li, null);
+    			append_dev(li, t0);
+    			append_dev(li, div);
+    			if (if_block1) if_block1.m(div, null);
+    			append_dev(div, t1);
+    			if (if_block2) if_block2.m(div, null);
+    			append_dev(div, t2);
+    			if (if_block3) if_block3.m(div, null);
+    			append_dev(div, t3);
+    			append_dev(div, span1);
+    			append_dev(span1, span0);
+    			append_dev(span0, t4);
+    			append_dev(span1, t5);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(span1, null);
+    			}
+
+    			append_dev(li, t6);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (/*i*/ ctx[3] < /*$steps*/ ctx[0].steps.length - 1) {
+    				if (if_block0) ; else {
+    					if_block0 = create_if_block_3(ctx);
+    					if_block0.c();
+    					if_block0.m(li, t0);
+    				}
+    			} else if (if_block0) {
+    				if_block0.d(1);
+    				if_block0 = null;
+    			}
+
+    			if (/*i*/ ctx[3] < /*$steps*/ ctx[0].current) {
+    				if (if_block1) ; else {
+    					if_block1 = create_if_block_2(ctx);
+    					if_block1.c();
+    					if_block1.m(div, t1);
+    				}
+    			} else if (if_block1) {
+    				if_block1.d(1);
+    				if_block1 = null;
+    			}
+
+    			if (/*i*/ ctx[3] === /*$steps*/ ctx[0].current) {
+    				if (if_block2) ; else {
+    					if_block2 = create_if_block_1(ctx);
+    					if_block2.c();
+    					if_block2.m(div, t2);
+    				}
+    			} else if (if_block2) {
+    				if_block2.d(1);
+    				if_block2 = null;
+    			}
+
+    			if (/*$steps*/ ctx[0].current < /*i*/ ctx[3]) {
+    				if (if_block3) ; else {
+    					if_block3 = create_if_block$1(ctx);
+    					if_block3.c();
+    					if_block3.m(div, t3);
+    				}
+    			} else if (if_block3) {
+    				if_block3.d(1);
+    				if_block3 = null;
+    			}
+
+    			if (dirty & /*$steps*/ 1 && t4_value !== (t4_value = /*item*/ ctx[1].title + "")) set_data_dev(t4, t4_value);
+
+    			if (dirty & /*$steps*/ 1) {
+    				each_value_1 = /*item*/ ctx[1].list;
+    				validate_each_argument(each_value_1);
+    				let i;
+
+    				for (i = 0; i < each_value_1.length; i += 1) {
+    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks[i] = create_each_block_1(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(span1, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+
+    				each_blocks.length = each_value_1.length;
+    			}
+
+    			if (dirty & /*$steps*/ 1) {
+    				toggle_class(li, "pb-10", /*i*/ ctx[3] < /*$steps*/ ctx[0].steps.length - 1);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(li);
+    			if (if_block0) if_block0.d();
+    			if (if_block1) if_block1.d();
+    			if (if_block2) if_block2.d();
+    			if (if_block3) if_block3.d();
+    			destroy_each(each_blocks, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_each_block.name,
+    		type: "each",
+    		source: "(7:4) {#each $steps.steps as item, i}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment$3(ctx) {
+    	let nav;
+    	let ol;
+    	let each_value = /*$steps*/ ctx[0].steps;
+    	validate_each_argument(each_value);
+    	let each_blocks = [];
+
+    	for (let i = 0; i < each_value.length; i += 1) {
+    		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+    	}
+
+    	const block = {
+    		c: function create() {
+    			nav = element("nav");
+    			ol = element("ol");
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].c();
+    			}
+
+    			attr_dev(ol, "class", "overflow-hidden");
+    			add_location(ol, file$3, 5, 2, 108);
+    			attr_dev(nav, "aria-label", "Progress");
+    			attr_dev(nav, "class", "max-w-sm");
+    			add_location(nav, file$3, 4, 0, 61);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, nav, anchor);
+    			append_dev(nav, ol);
+
+    			for (let i = 0; i < each_blocks.length; i += 1) {
+    				each_blocks[i].m(ol, null);
+    			}
+    		},
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*$steps*/ 1) {
+    				each_value = /*$steps*/ ctx[0].steps;
+    				validate_each_argument(each_value);
+    				let i;
+
+    				for (i = 0; i < each_value.length; i += 1) {
+    					const child_ctx = get_each_context(ctx, each_value, i);
+
+    					if (each_blocks[i]) {
+    						each_blocks[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks[i] = create_each_block(child_ctx);
+    						each_blocks[i].c();
+    						each_blocks[i].m(ol, null);
+    					}
+    				}
+
+    				for (; i < each_blocks.length; i += 1) {
+    					each_blocks[i].d(1);
+    				}
+
+    				each_blocks.length = each_value.length;
+    			}
+    		},
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(nav);
+    			destroy_each(each_blocks, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$3.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$3($$self, $$props, $$invalidate) {
+    	let $steps;
+    	validate_store(steps, 'steps');
+    	component_subscribe($$self, steps, $$value => $$invalidate(0, $steps = $$value));
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('Nav', slots, []);
+    	const writable_props = [];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Nav> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$capture_state = () => ({ steps, $steps });
+    	return [$steps];
+    }
+
+    class Nav extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance$3, create_fragment$3, safe_not_equal, {});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "Nav",
+    			options,
+    			id: create_fragment$3.name
+    		});
+    	}
+    }
+
+    var t;!function(t){t[t.R=0]="R",t[t.G=1]="G",t[t.B=2]="B";}(t||(t={}));var e=function(t,e){this.imageData=t,this.options=e||{strict:!1},this.colors=this.__calculateColorCount(this.imageData.data),this.buckets=[],this.__bucketsPerStep=[];},n={roundingBits:{configurable:!0},palette:{configurable:!0},bucketsPerStep:{configurable:!0}};e.averageColor=function(t){for(var e=0,n=0,r=0,a=0,o=0,i=t.length;o<i;o=o+1|0){var s=t[o],h=s[0],c=s[1],u=s[2],l=s[3];n=h*l+n,r=c*l+r,a=u*l+a,e=e+l|0;}return [Math.round(n/e),Math.round(r/e),Math.round(a/e)]},n.roundingBits.get=function(){return this.options.strict?255:248},n.palette.get=function(){for(var t=[],n=0,r=this.buckets.length;n<r;n=n+1|0)t[n]=e.averageColor(this.buckets[n].colors);return t},n.bucketsPerStep.get=function(){return this.__bucketsPerStep},e.prototype.reduce=function(t){if(this.colors.length<=t)return console.warn("It has already been reduced color."),this.imageData;this.buckets=this.__mediancut([this.__generateBucket(this.colors)],t);for(var n=new Map,r=0,a=this.buckets.length;r<a;r=r+1|0)for(var o=this.buckets[r],i=e.averageColor(o.colors),s=0,h=o.colors.length;s<h;s=s+1|0){var c=o.colors[s],u=c[0],l=c[1],g=c[2],m=u&this.roundingBits|(l&this.roundingBits)<<8|(g&this.roundingBits)<<16;n.set(m,i);}for(var f=this.imageData.data,p=f.length,d=new Uint8ClampedArray(p),_=0;_<p;){var v=f[_]&this.roundingBits|(f[_+1]&this.roundingBits)<<8|(f[_+2]&this.roundingBits)<<16,B=n.get(v),b=B[0],k=B[1],x=B[2];d[_]=b,d[_+1]=k,d[_+2]=x,d[_+3]=f[_+3],_=_+4|0;}return new ImageData(d,this.imageData.width,this.imageData.height)},e.prototype.__calculateColorCount=function(t){for(var e=new Map,n=t.length,r=0;r<n;){var a=t[r]&this.roundingBits,o=t[r+1]&this.roundingBits,i=t[r+2]&this.roundingBits,s=a|o<<8|i<<16,h=e.get(s),c=h?h[3]+1:1;e.set(s,[a,o,i,c]),r=r+4|0;}var u=[];return e.forEach((function(t){u[u.length]=t;})),u},e.prototype.__getTotalAnGreatestRangeChannel=function(e){for(var n=0,r=0,a=0,o=0,i=255,s=255,h=255,c=e.length,u=0;u<c;){var l=e[u],g=l[0],m=l[1],f=l[2],p=l[3];r=Math.max(g,r),a=Math.max(m,a),o=Math.max(f,o),i=Math.min(g,i),s=Math.min(m,s),h=Math.min(f,h),n+=p,u=u+1|0;}var d=1.2*(r-i),_=1.2*(a-s),v=o-h,B=Math.max(d,_,v),b=t.R;return d===B&&(b=t.R),_===B&&(b=t.G),v===B&&(b=t.B),{total:n,channel:b,minR:i,minG:s,minB:h,maxR:r,maxG:a,maxB:o}},e.prototype.__mediancut=function(t,e){this.__bucketsPerStep.push([].concat(t));var n=0,r=0;if(t.length+1>e)return t;for(var a=0,o=t.length;a<o;a=a+1|0)t[a].total>n&&1!==t[a].colors.length&&(r=a,n=t[a].total);var i=t[r];if(1===i.total||1===i.colors.length)return console.error("Cube could not be split."),t;var s=i.channel;i.colors.sort((function(t,e){return t[s]-e[s]}));var h=Math.floor((i.colors.length+1)/2),c=this.__generateBucket(i.colors.slice(0,h)),u=this.__generateBucket(i.colors.slice(h));return t.splice(r,1,c,u),this.__mediancut(t,e)},e.prototype.__generateBucket=function(t){var e=this.__getTotalAnGreatestRangeChannel(t);return {colors:t,total:e.total,channel:e.channel,minR:e.minR,minG:e.minG,minB:e.minB,maxR:e.maxR,maxG:e.maxG,maxB:e.maxB}},Object.defineProperties(e.prototype,n);
+
+    var p=class extends HTMLElement{constructor(i,t,a=!0){super();this.editing=!1;this.attachShadow({mode:"open"}),this.axes=i,this.totalTime=t,this.debug=a,this.shadowRoot.innerHTML=this.template(i,t),this.$pane=this.shadowRoot.querySelector("#pane"),this.$timeline=this.shadowRoot.querySelector("#timeline"),this.$current=this.shadowRoot.querySelector("#current"),this.$progress=this.shadowRoot.querySelector("#progress"),this.$labels=this.shadowRoot.querySelectorAll(".label"),this.$bars=this.shadowRoot.querySelectorAll(".bar"),this.$barsBegin=this.shadowRoot.querySelectorAll(".begin"),this.$barsEnd=this.shadowRoot.querySelectorAll(".end"),this.$previous=this.shadowRoot.querySelector("#previous"),this.$playPause=this.shadowRoot.querySelector("#play-pause"),this.$next=this.shadowRoot.querySelector("#next"),this.playing=!0,this.previous=!1,this.next=!1,this.skip=-1,this.$previous.addEventListener("click",e=>{this.previous=!0;}),this.$playPause.addEventListener("click",e=>{this.playing=!this.playing;}),this.$next.addEventListener("click",e=>{this.next=!0;});for(let e=0,n=this.$bars.length;e<n;e++){if(this.$bars[e].addEventListener("click",l=>{let o=l.currentTarget,h=Number(o.getAttribute("idx"));this.skip=h;}),!this.debug)continue;let r=this.$barsBegin[e],d=this.$barsEnd[e];r.addEventListener("input",l=>{let o=Number(r.value);if(Number(this.$barsEnd[e].value)<o){l.preventDefault();return}if(Number.isFinite(this.axes[e].position))this.axes[e].position=o,this.axes[e].duration=this.axes[e].endAt-(this.axes[e].delay+this.axes[e].position);else {let h=this.axes.find(c=>c.key===this.axes[e].position);this.axes[e].delay=o-h.endAt,this.axes[e].duration=this.axes[e].endAt-(this.axes[e].delay+h.endAt);}}),d.addEventListener("input",l=>{let o=Number(d.value);if(o<Number(this.$barsBegin[e].value)){l.preventDefault();return}if(Number.isFinite(this.axes[e].position))this.axes[e].duration=o-(this.axes[e].position+this.axes[e].delay);else {let h=this.axes.find(c=>c.key===this.axes[e].position);this.axes[e].duration=o-h.endAt-this.axes[e].delay;}});}this.$labels.forEach(e=>{e.addEventListener("click",n=>{let s=n.currentTarget,r=Number(s.getAttribute("idx"));this.skip=r;});}),this.$current.addEventListener("input",e=>{this.editing=!0;let n=Number(this.$current.value);this.__updateProgressPosition(n),this.__updateBar(this.totalTime);}),this.$current.addEventListener("change",e=>{this.editing=!1;});}attributeChangedCallback(){}connectedCallback(){}disconnectedCallback(){}getAxes(){return this.axes}get(i){let t=Date.now(),a=Number(this.$current.value),e=t-i;if(this.playing||(i=t-a,e=a),this.editing&&(i=t-a,e=a),-1<this.skip){let n=this.axes[this.skip];i=t-n.beginAt,e=n.beginAt,this.skip=-1;}return this.previous&&(this.previous=!1,i=t,e=0),this.next&&(this.next=!1,i=t-this.totalTime,e=this.totalTime),{beginAt:i,elapsedTime:e,editing:this.editing}}update(i,t,a){this.axes=a,this.totalTime=t,this.$current.setAttribute("max",t),this.$current.value=i,this.__updateProgressPosition(i),this.__updateBar(t),this.debug&&this.__updateBarRange(t),this.__updateScale(t);}template(i,t){let a="",e="",n="";for(let s=0;s<i.length;s++){let r=i[s];a+=`<div class="row" id="row-${s}"><div class="label" idx="${s}">${r.key}</div></div>`;let d="";this.debug&&(d=`
+          <input class="begin" type="range" min="0" max="0" step="10" value="${r.beginAt}">
+          <input class="end" type="range" min="0" max="0" step="10" value="${r.endAt}">
+        `),e+=`
+        <div class="row">
+          <div class="bar bar--${this.debug?"debug":"default"}" idx="${s}"></div>
+          ${d}
+        </div>`,this.debug;}for(let s=0,r=Math.floor(t/1e3);s<r;s++)n+=`<div class="scale-label" style="--sec: ${s+1}">${s+1}s</div>`;return `
+      <style>
+        * {
+          box-sizing: border-box;
+        }
+        :host {
+          display: block;
+          height: 100%;
+        }
+        .container {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          background-color: #313131;
+          color: #eeeeee;
+          position: relative;
+          --tools-height: 40px;
+          --controls-height: 40px;
+        }
+        .tools {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          height: var(--tools-height);
+          border-bottom: 1px solid #202020;
+        }
+        .tools__item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 20px;
+          margin: 0 8px;
+          color: #eeeeee;
+        }
+        .tools__item div {
+          width: 100%;
+          cursor: pointer;
+        }
+        .tools__item div:hover {
+          opacity: .6;
+        }
+        .tools__item svg {
+          fill: currentColor;
+        }
+        .controls {
+          display: flex;
+          flex-shrink: 0;
+          height: var(--controls-height);
+          border-bottom: 1px solid #202020;
+        }
+        .pane {
+          display: flex;
+          flex: 1;
+          overflow: scroll;
+          scroll-behavior: smooth;
+        }
+        .head {
+          flex-shrink: 0;
+          flex-basis: 20%;
+          max-width: 200px;
+          min-width: 0;
+        }
+        .body {
+          flex: 1;
+          position: relative;
+        }
+        .actions {
+          height: 100%;
+          border-right: 1px solid #222322;
+        }
+        .rows {
+          border-right: 1px solid #222322;
+        }
+        .row {
+          display: flex;
+          align-items: center;
+          height: 24px;
+          border-bottom: 1px solid #202020;
+          position: relative;
+        }
+        .row input[type="range"] {
+          position: absolute;
+          inset: 0;
+        }
+        .label {
+          padding-left: 12px;
+          font-size: 12px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          cursor: pointer;
+        }
+        .bar {
+          height: 100%;
+          background-color: #545454;
+          opacity: .5;
+          transform-origin: left;
+          cursor: pointer;
+          position: relative;
+        }
+        .bar.bar--debug::before {
+          content: "";
+          display: block;
+          width: 6px;
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          margin: 4px;
+          border-radius: 2px;
+          background-color: darkgray;
+        }
+        .bar.bar--debug::after {
+          content: "";
+          display: block;
+          width: 6px;
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          margin: 4px;
+          border-radius: 2px;
+          background-color: darkgray;
+        }
+        .bar.bar--active {
+          opacity: 1;
+        }
+        .progress {
+          position: absolute;
+          top: var(--tools-height);
+          bottom: 0;
+          left: 0;
+          width: 2px;
+          margin-left: min(20%, 200px);
+          background-color: #71A0EB;
+          opacity: 0.6;
+        }
+        .progress::before {
+          content: "";
+          display: block;
+          width: 20px;
+          height: 30px;
+          background-color: #53aeff;
+          margin-left: -9px;
+        }
+        .progress::after {
+          content: "";
+          display: block;
+          border-top: 10px solid #53aeff;
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+          margin-left: -9px;
+        }
+        .current {
+          position: absolute;
+          top: var(--tools-height);
+          height: var(--controls-height);
+          left: -12px;
+          right: -12px;
+          margin-left: min(20%, 200px);
+        }
+        input[type="range"] {
+          -webkit-appearance: none;
+          appearance: none;
+          margin: 0;
+          cursor: pointer;
+          outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+          opacity: 0;
+        }
+        input[type="range"]::-moz-range-thumb {
+          opacity: 0;
+        }
+        /* Firefox\u3067\u70B9\u7DDA\u304C\u5468\u308A\u306B\u8868\u793A\u3055\u308C\u3066\u3057\u307E\u3046\u554F\u984C\u306E\u89E3\u6D88 */
+        input[type="range"]::-moz-focus-outer {
+          border: 0;
+        }
+        .current input[type="range"] {
+          height: var(--controls-height);
+          width: 100%;
+          background: transparent;
+        }
+        input.begin[type="range"],
+        input.end[type="range"] {
+          height: 100%;
+          width: calc(100% + 12px);
+          background: transparent;
+          pointer-events: none;
+          margin-left: -6px;
+        }
+        input.begin[type="range"]::-webkit-slider-thumb,
+        input.end[type="range"]::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          pointer-events: auto;
+          opacity: 0;   
+          width: 12px;
+          height: 100%;
+          cursor: ew-resize;
+        }
+        input.begin[type="range"]::-moz-range-thumb,
+        input.end[type="range"]::-moz-range-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          pointer-events: auto;
+          opacity: 0;   
+          width: 12px;
+          height: 100%;
+          cursor: ew-resize;
+        }
+        input.begin[type="range"]::-webkit-slider-thumb {
+          background: darkgreen;
+          transform: translateX(50%);
+        }
+        input.begin[type="range"]::-moz-range-thumb {
+          background: darkgreen;
+          transform: translateX(50%);
+        }
+        input.end[type="range"]::-webkit-slider-thumb {
+          background: indianred;
+          transform: translateX(-50%);
+        }
+        input.end[type="range"]::-moz-range-thumb {
+          background: indianred;
+          transform: translateX(-50%);
+        }
+        .scale {
+          position: relative;
+          height: 100%;
+        }
+        .scale-s,
+        .scale-100ms {
+          height: 50%;
+        }
+        .scale-s {
+          /*
+            total / 1s 
+            e.g. 6000 / 1000
+            x / 1000 = 6
+            calc(100% / calc(var(--total) / 1000))
+           */
+          --x: calc(100% / calc(var(--total) / 1000));
+          background: repeating-linear-gradient(90deg, transparent 0, transparent calc(var(--x) - 1px), #202020 calc(var(--x) - 1px), #202020 var(--x));
+          border-bottom: 1px solid #202020;
+        }
+        .scale-100ms {
+          --x: calc(100% / calc(var(--total) / 1000) / 10);
+          background: repeating-linear-gradient(90deg, transparent 0, transparent calc(var(--x) - 1px), #202020 calc(var(--x) - 1px), #202020 var(--x));
+        }
+        .scale-label {
+          --x: calc(100% / calc(var(--total) / 1000));
+          position: absolute;
+          top: 0;
+          left: calc(var(--x) * var(--sec));
+          font-size: 10px;
+          font-style: italic;
+          transform: translateX(calc(-100% - 4px));
+        }
+      </style>
+      <div class="container">
+        <div class="tools">
+          <div class="tools__item">
+            <div id="previous">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.75 20C2.75 20.5523 3.19772 21 3.75 21C4.30228 21 4.75 20.5523 4.75 20L4.75 4C4.75 3.44772 4.30229 3 3.75 3C3.19772 3 2.75 3.44772 2.75 4V20Z"/>
+                <path d="M20.75 19.0526C20.75 20.4774 19.1383 21.305 17.9803 20.4748L7.51062 12.9682C6.50574 12.2477 6.54467 10.7407 7.5854 10.073L18.0551 3.35665C19.2198 2.60946 20.75 3.44583 20.75 4.82961L20.75 19.0526Z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="tools__item">
+            <div id="play-pause">
+              <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+                <title>ic_fluent_video_play_pause_24_filled</title>
+                <desc>Created with Sketch.</desc>
+                <g id="\u{1F50D}-Product-Icons" stroke="none" stroke-width="1" >
+                    <g id="ic_fluent_video_play_pause_24_filled" fill-rule="nonzero">
+                        <path d="M3.65140982,6.61646219 L11.1528787,11.3693959 C11.3672679,11.5052331 11.4827597,11.722675 11.4993749,11.9464385 L11.4984593,7.25 C11.4984593,6.83578644 11.8342458,6.5 12.2484593,6.5 L15.2484593,6.5 C15.6626729,6.5 15.9984593,6.83578644 15.9984593,7.25 L15.9984593,16.75 C15.9984593,17.1642136 15.6626729,17.5 15.2484593,17.5 L12.2484593,17.5 C11.8342458,17.5 11.4984593,17.1642136 11.4984593,16.75 L11.4993494,12.0597632 C11.4826318,12.2835468 11.3670166,12.5009613 11.1525249,12.6366956 L3.65105604,17.3837618 C3.15168144,17.6997752 2.5,17.3409648 2.5,16.75 L2.5,7.25 C2.5,6.65884683 3.15205264,6.30006928 3.65140982,6.61646219 Z M21.2477085,6.50037474 C21.661922,6.50037474 21.9977085,6.83616118 21.9977085,7.25037474 L21.9977085,16.7496253 C21.9977085,17.1638388 21.661922,17.4996253 21.2477085,17.4996253 L18.2477085,17.4996253 C17.8334949,17.4996253 17.4977085,17.1638388 17.4977085,16.7496253 L17.4977085,7.25037474 C17.4977085,6.83616118 17.8334949,6.50037474 18.2477085,6.50037474 L21.2477085,6.50037474 Z" id="\u{1F3A8}-Color"></path>
+                    </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="tools__item">
+            <div id="next">
+              <svg   viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 4C21 3.44772 20.5523 3 20 3C19.4477 3 19 3.44772 19 4V20C19 20.5523 19.4477 21 20 21C20.5523 21 21 20.5523 21 20V4Z"/>
+                <path d="M3 4.94743C3 3.5226 4.61175 2.69498 5.7697 3.52521L16.2394 11.0318C17.2443 11.7523 17.2053 13.2593 16.1646 13.927L5.69492 20.6434C4.53019 21.3905 3 20.5542 3 19.1704V4.94743Z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="controls">
+          <div class="head"><div class="actions"></div></div>
+          <div class="body">
+            <div class="scale" id="scale" style="--total: ${t}">
+              <div class="scale-s"></div>
+              <div class="scale-100ms"></div>
+              ${n}
+            </div>
+          </div>
+        </div>
+        <div id="pane" class="pane">
+          <div class="head">
+            <div class="rows">
+              ${a}
+            </div>
+          </div>
+          <div id="timeline" class="body">
+            <div class="rows">
+              ${e}
+            </div>
+          </div>
+        </div>
+        <div class="current">
+          <input id="current" type="range" min="0" max="0" step="any" value="0">
+        </div>
+        <div id="progress" class="progress"></div>
+      </div>
+    `}__updateScale(i){let t=this.shadowRoot.querySelector(".test");t&&t.remove(),this.shadowRoot.querySelectorAll(".scale-label").forEach(s=>{s.remove();}),this.shadowRoot.querySelector(".scale").style.setProperty("--total",i);let e="";for(let s=0,r=Math.floor(i/1e3);s<r;s++)e+=`<div class="scale-label" style="--sec: ${s+1}">${s+1}s</div>`;let n=document.createElement("div");n.className="test",n.innerHTML=e,this.shadowRoot.querySelector(".scale").appendChild(n);}__updateProgressPosition(i){let t=this.$timeline.clientWidth,a=Math.min(i/this.totalTime,1)*t;this.$progress.style.transform=`translateX(${a}px)`;}__updateBarRange(i){for(let t=0;t<this.$bars.length;t++){let a=this.axes[t];this.$barsBegin[t].setAttribute("max",i),this.$barsBegin[t].value=a.beginAt,this.$barsEnd[t].setAttribute("max",i),this.$barsEnd[t].value=a.endAt;}}__updateBar(i){let a=this.$timeline.clientWidth/i;for(let e=0;e<this.$bars.length;e++){let n=this.axes[e],s=n.beginAt*a,r=(n.endAt-n.beginAt)*a;this.$bars[e].style.transform=`translateX(${s}px)`,this.$bars[e].style.width=`${r}px`,0<n.progress&&!n.pass?this.$bars[e].classList.add("bar--active"):this.$bars[e].classList.remove("bar--active");}}};window.customElements.define("taxis-timeline",p);var u={key:"",beginAt:0,endAt:0,duration:0,delay:0,position:0,progress:0,enter:!1,pass:!1};var g=class{constructor(i={}){this.option=i;this.axes=[];}get totalTime(){return this.axes.length?Math.max(...this.axes.map(i=>i.endAt)):0}get totalTimeForTimeline(){return this.totalTime+500}get everyPassed(){return this.axes.every(i=>i.pass)}restart(){this.beginAt=Date.now();}getAxis({key:i}){return this.axes.find(t=>t.key===i)}getAxes(){return this.axes}add(i,t,a=0,e){let n=this.totalTime+a;if(e!==void 0)Number.isFinite(e)?n=e+a:n=this.getAxis({key:e}).endAt+a;else {let s=this.axes[this.axes.length-1];e=s?s.key:0;}return this.axes.push({...u,key:i,beginAt:n,endAt:n+t,duration:t,delay:a,position:e}),this.sort(),this}begin(){this.option.timeline&&(this.timeline=new p(this.axes,this.totalTimeForTimeline,this.option.timeline.debug),this.option.timeline.container.appendChild(this.timeline)),this.beginAt=Date.now(),this.__tick();}reset(){cancelAnimationFrame(this.requestID);}ticker(i){this.tickerFn=i;}__tick(){let i=this.beginAt,t=Date.now()-i,a=!1;if(this.option.timeline){this.axes=this.recalculation(this.timeline.getAxes());let{beginAt:e,elapsedTime:n,editing:s}=this.timeline.get(this.beginAt);i=e,t=n,a=s;}this.beginAt=i,this.axes.forEach((e,n)=>{let s=t-e.beginAt,r=Math.max(0,Math.min(s/e.duration,1)),d=e.beginAt<=t,l=e.endAt<t;e.progress=r,e.enter=d,e.pass=l;}),this.option.timeline&&!a&&this.timeline.update(t,this.totalTimeForTimeline,this.axes),this.tickerFn&&this.tickerFn(t,this.toMap(this.axes)),this.requestID=requestAnimationFrame(this.__tick.bind(this));}calculation(){let i=[];for(let t=0;t<this.axes.length;t++){let a=this.axes[t],{key:e,duration:n,position:s,delay:r}=a,l=Math.max(...i.map(o=>o.endAt))+r;s!==void 0?Number.isFinite(s)?l=s+r:l=this.getAxis({key:s}).endAt+r:s=l,i.push({...u,key:e,beginAt:l,endAt:l+n,duration:n,delay:r,position:s});}}recalculation(i){let t=[];for(let a=0;a<i.length;a++){let e=i[a],{key:n,duration:s,position:r,delay:d}=e,o=Math.max(...t.map(h=>h.endAt))+d;r!==void 0?Number.isFinite(r)?o=r+d:o=this.getAxis({key:r}).endAt+d:r=o,t.push({...u,key:n,beginAt:o,endAt:o+s,duration:s,delay:d,position:r});}return t}sort(){this.axes.sort((i,t)=>i.beginAt-t.beginAt);}toMap(i){let t=new Map;return i.forEach(a=>{t[a.key]=a,t.set(a.key,a);}),t}};
+
+    /**
+     * Common utilities
+     * @module glMatrix
+     */
+    // Configuration Constants
+    var EPSILON = 0.000001;
+    var ARRAY_TYPE = typeof Float32Array !== 'undefined' ? Float32Array : Array;
+    if (!Math.hypot) Math.hypot = function () {
+      var y = 0,
+          i = arguments.length;
+
+      while (i--) {
+        y += arguments[i] * arguments[i];
+      }
+
+      return Math.sqrt(y);
+    };
+
+    /**
+     * 3x3 Matrix
+     * @module mat3
+     */
+
+    /**
+     * Creates a new identity mat3
+     *
+     * @returns {mat3} a new 3x3 matrix
+     */
+
+    function create$4() {
+      var out = new ARRAY_TYPE(9);
+
+      if (ARRAY_TYPE != Float32Array) {
+        out[1] = 0;
+        out[2] = 0;
+        out[3] = 0;
+        out[5] = 0;
+        out[6] = 0;
+        out[7] = 0;
+      }
+
+      out[0] = 1;
+      out[4] = 1;
+      out[8] = 1;
+      return out;
+    }
+
+    /**
+     * 4x4 Matrix<br>Format: column-major, when typed out it looks like row-major<br>The matrices are being post multiplied.
+     * @module mat4
+     */
+
+    /**
+     * Creates a new identity mat4
+     *
+     * @returns {mat4} a new 4x4 matrix
+     */
+
+    function create$3() {
+      var out = new ARRAY_TYPE(16);
+
+      if (ARRAY_TYPE != Float32Array) {
+        out[1] = 0;
+        out[2] = 0;
+        out[3] = 0;
+        out[4] = 0;
+        out[6] = 0;
+        out[7] = 0;
+        out[8] = 0;
+        out[9] = 0;
+        out[11] = 0;
+        out[12] = 0;
+        out[13] = 0;
+        out[14] = 0;
+      }
+
+      out[0] = 1;
+      out[5] = 1;
+      out[10] = 1;
+      out[15] = 1;
+      return out;
+    }
+    /**
+     * Inverts a mat4
+     *
+     * @param {mat4} out the receiving matrix
+     * @param {ReadonlyMat4} a the source matrix
+     * @returns {mat4} out
+     */
+
+    function invert(out, a) {
+      var a00 = a[0],
+          a01 = a[1],
+          a02 = a[2],
+          a03 = a[3];
+      var a10 = a[4],
+          a11 = a[5],
+          a12 = a[6],
+          a13 = a[7];
+      var a20 = a[8],
+          a21 = a[9],
+          a22 = a[10],
+          a23 = a[11];
+      var a30 = a[12],
+          a31 = a[13],
+          a32 = a[14],
+          a33 = a[15];
+      var b00 = a00 * a11 - a01 * a10;
+      var b01 = a00 * a12 - a02 * a10;
+      var b02 = a00 * a13 - a03 * a10;
+      var b03 = a01 * a12 - a02 * a11;
+      var b04 = a01 * a13 - a03 * a11;
+      var b05 = a02 * a13 - a03 * a12;
+      var b06 = a20 * a31 - a21 * a30;
+      var b07 = a20 * a32 - a22 * a30;
+      var b08 = a20 * a33 - a23 * a30;
+      var b09 = a21 * a32 - a22 * a31;
+      var b10 = a21 * a33 - a23 * a31;
+      var b11 = a22 * a33 - a23 * a32; // Calculate the determinant
+
+      var det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+
+      if (!det) {
+        return null;
+      }
+
+      det = 1.0 / det;
+      out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
+      out[1] = (a02 * b10 - a01 * b11 - a03 * b09) * det;
+      out[2] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
+      out[3] = (a22 * b04 - a21 * b05 - a23 * b03) * det;
+      out[4] = (a12 * b08 - a10 * b11 - a13 * b07) * det;
+      out[5] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
+      out[6] = (a32 * b02 - a30 * b05 - a33 * b01) * det;
+      out[7] = (a20 * b05 - a22 * b02 + a23 * b01) * det;
+      out[8] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
+      out[9] = (a01 * b08 - a00 * b10 - a03 * b06) * det;
+      out[10] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
+      out[11] = (a21 * b02 - a20 * b04 - a23 * b00) * det;
+      out[12] = (a11 * b07 - a10 * b09 - a12 * b06) * det;
+      out[13] = (a00 * b09 - a01 * b07 + a02 * b06) * det;
+      out[14] = (a31 * b01 - a30 * b03 - a32 * b00) * det;
+      out[15] = (a20 * b03 - a21 * b01 + a22 * b00) * det;
+      return out;
+    }
+    /**
+     * Multiplies two mat4s
+     *
+     * @param {mat4} out the receiving matrix
+     * @param {ReadonlyMat4} a the first operand
+     * @param {ReadonlyMat4} b the second operand
+     * @returns {mat4} out
+     */
+
+    function multiply$1(out, a, b) {
+      var a00 = a[0],
+          a01 = a[1],
+          a02 = a[2],
+          a03 = a[3];
+      var a10 = a[4],
+          a11 = a[5],
+          a12 = a[6],
+          a13 = a[7];
+      var a20 = a[8],
+          a21 = a[9],
+          a22 = a[10],
+          a23 = a[11];
+      var a30 = a[12],
+          a31 = a[13],
+          a32 = a[14],
+          a33 = a[15]; // Cache only the current line of the second matrix
+
+      var b0 = b[0],
+          b1 = b[1],
+          b2 = b[2],
+          b3 = b[3];
+      out[0] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+      out[1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+      out[2] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+      out[3] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+      b0 = b[4];
+      b1 = b[5];
+      b2 = b[6];
+      b3 = b[7];
+      out[4] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+      out[5] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+      out[6] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+      out[7] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+      b0 = b[8];
+      b1 = b[9];
+      b2 = b[10];
+      b3 = b[11];
+      out[8] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+      out[9] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+      out[10] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+      out[11] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+      b0 = b[12];
+      b1 = b[13];
+      b2 = b[14];
+      b3 = b[15];
+      out[12] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+      out[13] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+      out[14] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+      out[15] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+      return out;
+    }
+    /**
+     * Translate a mat4 by the given vector
+     *
+     * @param {mat4} out the receiving matrix
+     * @param {ReadonlyMat4} a the matrix to translate
+     * @param {ReadonlyVec3} v vector to translate by
+     * @returns {mat4} out
+     */
+
+    function translate(out, a, v) {
+      var x = v[0],
+          y = v[1],
+          z = v[2];
+      var a00, a01, a02, a03;
+      var a10, a11, a12, a13;
+      var a20, a21, a22, a23;
+
+      if (a === out) {
+        out[12] = a[0] * x + a[4] * y + a[8] * z + a[12];
+        out[13] = a[1] * x + a[5] * y + a[9] * z + a[13];
+        out[14] = a[2] * x + a[6] * y + a[10] * z + a[14];
+        out[15] = a[3] * x + a[7] * y + a[11] * z + a[15];
+      } else {
+        a00 = a[0];
+        a01 = a[1];
+        a02 = a[2];
+        a03 = a[3];
+        a10 = a[4];
+        a11 = a[5];
+        a12 = a[6];
+        a13 = a[7];
+        a20 = a[8];
+        a21 = a[9];
+        a22 = a[10];
+        a23 = a[11];
+        out[0] = a00;
+        out[1] = a01;
+        out[2] = a02;
+        out[3] = a03;
+        out[4] = a10;
+        out[5] = a11;
+        out[6] = a12;
+        out[7] = a13;
+        out[8] = a20;
+        out[9] = a21;
+        out[10] = a22;
+        out[11] = a23;
+        out[12] = a00 * x + a10 * y + a20 * z + a[12];
+        out[13] = a01 * x + a11 * y + a21 * z + a[13];
+        out[14] = a02 * x + a12 * y + a22 * z + a[14];
+        out[15] = a03 * x + a13 * y + a23 * z + a[15];
+      }
+
+      return out;
+    }
+    /**
+     * Generates a perspective projection matrix with the given bounds.
+     * Passing null/undefined/no value for far will generate infinite projection matrix.
+     *
+     * @param {mat4} out mat4 frustum matrix will be written into
+     * @param {number} fovy Vertical field of view in radians
+     * @param {number} aspect Aspect ratio. typically viewport width/height
+     * @param {number} near Near bound of the frustum
+     * @param {number} far Far bound of the frustum, can be null or Infinity
+     * @returns {mat4} out
+     */
+
+    function perspective(out, fovy, aspect, near, far) {
+      var f = 1.0 / Math.tan(fovy / 2),
+          nf;
+      out[0] = f / aspect;
+      out[1] = 0;
+      out[2] = 0;
+      out[3] = 0;
+      out[4] = 0;
+      out[5] = f;
+      out[6] = 0;
+      out[7] = 0;
+      out[8] = 0;
+      out[9] = 0;
+      out[11] = -1;
+      out[12] = 0;
+      out[13] = 0;
+      out[15] = 0;
+
+      if (far != null && far !== Infinity) {
+        nf = 1 / (near - far);
+        out[10] = (far + near) * nf;
+        out[14] = 2 * far * near * nf;
+      } else {
+        out[10] = -1;
+        out[14] = -2 * near;
+      }
+
+      return out;
+    }
+    /**
+     * Generates a matrix that makes something look at something else.
+     *
+     * @param {mat4} out mat4 frustum matrix will be written into
+     * @param {ReadonlyVec3} eye Position of the viewer
+     * @param {ReadonlyVec3} center Point the viewer is looking at
+     * @param {ReadonlyVec3} up vec3 pointing up
+     * @returns {mat4} out
+     */
+
+    function targetTo(out, eye, target, up) {
+      var eyex = eye[0],
+          eyey = eye[1],
+          eyez = eye[2],
+          upx = up[0],
+          upy = up[1],
+          upz = up[2];
+      var z0 = eyex - target[0],
+          z1 = eyey - target[1],
+          z2 = eyez - target[2];
+      var len = z0 * z0 + z1 * z1 + z2 * z2;
+
+      if (len > 0) {
+        len = 1 / Math.sqrt(len);
+        z0 *= len;
+        z1 *= len;
+        z2 *= len;
+      }
+
+      var x0 = upy * z2 - upz * z1,
+          x1 = upz * z0 - upx * z2,
+          x2 = upx * z1 - upy * z0;
+      len = x0 * x0 + x1 * x1 + x2 * x2;
+
+      if (len > 0) {
+        len = 1 / Math.sqrt(len);
+        x0 *= len;
+        x1 *= len;
+        x2 *= len;
+      }
+
+      out[0] = x0;
+      out[1] = x1;
+      out[2] = x2;
+      out[3] = 0;
+      out[4] = z1 * x2 - z2 * x1;
+      out[5] = z2 * x0 - z0 * x2;
+      out[6] = z0 * x1 - z1 * x0;
+      out[7] = 0;
+      out[8] = z0;
+      out[9] = z1;
+      out[10] = z2;
+      out[11] = 0;
+      out[12] = eyex;
+      out[13] = eyey;
+      out[14] = eyez;
+      out[15] = 1;
+      return out;
+    }
+
+    /**
+     * 3 Dimensional Vector
+     * @module vec3
+     */
+
+    /**
+     * Creates a new, empty vec3
+     *
+     * @returns {vec3} a new 3D vector
+     */
+
+    function create$2() {
+      var out = new ARRAY_TYPE(3);
+
+      if (ARRAY_TYPE != Float32Array) {
+        out[0] = 0;
+        out[1] = 0;
+        out[2] = 0;
+      }
+
+      return out;
+    }
+    /**
+     * Calculates the length of a vec3
+     *
+     * @param {ReadonlyVec3} a vector to calculate length of
+     * @returns {Number} length of a
+     */
+
+    function length(a) {
+      var x = a[0];
+      var y = a[1];
+      var z = a[2];
+      return Math.hypot(x, y, z);
+    }
+    /**
+     * Creates a new vec3 initialized with the given values
+     *
+     * @param {Number} x X component
+     * @param {Number} y Y component
+     * @param {Number} z Z component
+     * @returns {vec3} a new 3D vector
+     */
+
+    function fromValues(x, y, z) {
+      var out = new ARRAY_TYPE(3);
+      out[0] = x;
+      out[1] = y;
+      out[2] = z;
+      return out;
+    }
+    /**
+     * Scales a vec3 by a scalar number
+     *
+     * @param {vec3} out the receiving vector
+     * @param {ReadonlyVec3} a the vector to scale
+     * @param {Number} b amount to scale the vector by
+     * @returns {vec3} out
+     */
+
+    function scale(out, a, b) {
+      out[0] = a[0] * b;
+      out[1] = a[1] * b;
+      out[2] = a[2] * b;
+      return out;
+    }
+    /**
+     * Normalize a vec3
+     *
+     * @param {vec3} out the receiving vector
+     * @param {ReadonlyVec3} a vector to normalize
+     * @returns {vec3} out
+     */
+
+    function normalize$2(out, a) {
+      var x = a[0];
+      var y = a[1];
+      var z = a[2];
+      var len = x * x + y * y + z * z;
+
+      if (len > 0) {
+        //TODO: evaluate use of glm_invsqrt here?
+        len = 1 / Math.sqrt(len);
+      }
+
+      out[0] = a[0] * len;
+      out[1] = a[1] * len;
+      out[2] = a[2] * len;
+      return out;
+    }
+    /**
+     * Calculates the dot product of two vec3's
+     *
+     * @param {ReadonlyVec3} a the first operand
+     * @param {ReadonlyVec3} b the second operand
+     * @returns {Number} dot product of a and b
+     */
+
+    function dot(a, b) {
+      return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    }
+    /**
+     * Computes the cross product of two vec3's
+     *
+     * @param {vec3} out the receiving vector
+     * @param {ReadonlyVec3} a the first operand
+     * @param {ReadonlyVec3} b the second operand
+     * @returns {vec3} out
+     */
+
+    function cross(out, a, b) {
+      var ax = a[0],
+          ay = a[1],
+          az = a[2];
+      var bx = b[0],
+          by = b[1],
+          bz = b[2];
+      out[0] = ay * bz - az * by;
+      out[1] = az * bx - ax * bz;
+      out[2] = ax * by - ay * bx;
+      return out;
+    }
+    /**
+     * Transforms the vec3 with a quat
+     * Can also be used for dual quaternions. (Multiply it with the real part)
+     *
+     * @param {vec3} out the receiving vector
+     * @param {ReadonlyVec3} a the vector to transform
+     * @param {ReadonlyQuat} q quaternion to transform with
+     * @returns {vec3} out
+     */
+
+    function transformQuat(out, a, q) {
+      // benchmarks: https://jsperf.com/quaternion-transform-vec3-implementations-fixed
+      var qx = q[0],
+          qy = q[1],
+          qz = q[2],
+          qw = q[3];
+      var x = a[0],
+          y = a[1],
+          z = a[2]; // var qvec = [qx, qy, qz];
+      // var uv = vec3.cross([], qvec, a);
+
+      var uvx = qy * z - qz * y,
+          uvy = qz * x - qx * z,
+          uvz = qx * y - qy * x; // var uuv = vec3.cross([], qvec, uv);
+
+      var uuvx = qy * uvz - qz * uvy,
+          uuvy = qz * uvx - qx * uvz,
+          uuvz = qx * uvy - qy * uvx; // vec3.scale(uv, uv, 2 * w);
+
+      var w2 = qw * 2;
+      uvx *= w2;
+      uvy *= w2;
+      uvz *= w2; // vec3.scale(uuv, uuv, 2);
+
+      uuvx *= 2;
+      uuvy *= 2;
+      uuvz *= 2; // return vec3.add(out, a, vec3.add(out, uv, uuv));
+
+      out[0] = x + uvx + uuvx;
+      out[1] = y + uvy + uuvy;
+      out[2] = z + uvz + uuvz;
+      return out;
+    }
+    /**
+     * Alias for {@link vec3.length}
+     * @function
+     */
+
+    var len = length;
+    /**
+     * Perform some operation over an array of vec3s.
+     *
+     * @param {Array} a the array of vectors to iterate over
+     * @param {Number} stride Number of elements between the start of each vec3. If 0 assumes tightly packed
+     * @param {Number} offset Number of elements to skip at the beginning of the array
+     * @param {Number} count Number of vec3s to iterate over. If 0 iterates over entire array
+     * @param {Function} fn Function to call for each vector in the array
+     * @param {Object} [arg] additional argument to pass to fn
+     * @returns {Array} a
+     * @function
+     */
+
+    (function () {
+      var vec = create$2();
+      return function (a, stride, offset, count, fn, arg) {
+        var i, l;
+
+        if (!stride) {
+          stride = 3;
+        }
+
+        if (!offset) {
+          offset = 0;
+        }
+
+        if (count) {
+          l = Math.min(count * stride + offset, a.length);
+        } else {
+          l = a.length;
+        }
+
+        for (i = offset; i < l; i += stride) {
+          vec[0] = a[i];
+          vec[1] = a[i + 1];
+          vec[2] = a[i + 2];
+          fn(vec, vec, arg);
+          a[i] = vec[0];
+          a[i + 1] = vec[1];
+          a[i + 2] = vec[2];
+        }
+
+        return a;
+      };
+    })();
+
+    /**
+     * 4 Dimensional Vector
+     * @module vec4
+     */
+
+    /**
+     * Creates a new, empty vec4
+     *
+     * @returns {vec4} a new 4D vector
+     */
+
+    function create$1() {
+      var out = new ARRAY_TYPE(4);
+
+      if (ARRAY_TYPE != Float32Array) {
+        out[0] = 0;
+        out[1] = 0;
+        out[2] = 0;
+        out[3] = 0;
+      }
+
+      return out;
+    }
+    /**
+     * Normalize a vec4
+     *
+     * @param {vec4} out the receiving vector
+     * @param {ReadonlyVec4} a vector to normalize
+     * @returns {vec4} out
+     */
+
+    function normalize$1(out, a) {
+      var x = a[0];
+      var y = a[1];
+      var z = a[2];
+      var w = a[3];
+      var len = x * x + y * y + z * z + w * w;
+
+      if (len > 0) {
+        len = 1 / Math.sqrt(len);
+      }
+
+      out[0] = x * len;
+      out[1] = y * len;
+      out[2] = z * len;
+      out[3] = w * len;
+      return out;
+    }
+    /**
+     * Perform some operation over an array of vec4s.
+     *
+     * @param {Array} a the array of vectors to iterate over
+     * @param {Number} stride Number of elements between the start of each vec4. If 0 assumes tightly packed
+     * @param {Number} offset Number of elements to skip at the beginning of the array
+     * @param {Number} count Number of vec4s to iterate over. If 0 iterates over entire array
+     * @param {Function} fn Function to call for each vector in the array
+     * @param {Object} [arg] additional argument to pass to fn
+     * @returns {Array} a
+     * @function
+     */
+
+    (function () {
+      var vec = create$1();
+      return function (a, stride, offset, count, fn, arg) {
+        var i, l;
+
+        if (!stride) {
+          stride = 4;
+        }
+
+        if (!offset) {
+          offset = 0;
+        }
+
+        if (count) {
+          l = Math.min(count * stride + offset, a.length);
+        } else {
+          l = a.length;
+        }
+
+        for (i = offset; i < l; i += stride) {
+          vec[0] = a[i];
+          vec[1] = a[i + 1];
+          vec[2] = a[i + 2];
+          vec[3] = a[i + 3];
+          fn(vec, vec, arg);
+          a[i] = vec[0];
+          a[i + 1] = vec[1];
+          a[i + 2] = vec[2];
+          a[i + 3] = vec[3];
+        }
+
+        return a;
+      };
+    })();
+
+    /**
+     * Quaternion
+     * @module quat
+     */
+
+    /**
+     * Creates a new identity quat
+     *
+     * @returns {quat} a new quaternion
+     */
+
+    function create() {
+      var out = new ARRAY_TYPE(4);
+
+      if (ARRAY_TYPE != Float32Array) {
+        out[0] = 0;
+        out[1] = 0;
+        out[2] = 0;
+      }
+
+      out[3] = 1;
+      return out;
+    }
+    /**
+     * Set a quat to the identity quaternion
+     *
+     * @param {quat} out the receiving quaternion
+     * @returns {quat} out
+     */
+
+    function identity(out) {
+      out[0] = 0;
+      out[1] = 0;
+      out[2] = 0;
+      out[3] = 1;
+      return out;
+    }
+    /**
+     * Sets a quat from the given angle and rotation axis,
+     * then returns it.
+     *
+     * @param {quat} out the receiving quaternion
+     * @param {ReadonlyVec3} axis the axis around which to rotate
+     * @param {Number} rad the angle in radians
+     * @returns {quat} out
+     **/
+
+    function setAxisAngle(out, axis, rad) {
+      rad = rad * 0.5;
+      var s = Math.sin(rad);
+      out[0] = s * axis[0];
+      out[1] = s * axis[1];
+      out[2] = s * axis[2];
+      out[3] = Math.cos(rad);
+      return out;
+    }
+    /**
+     * Multiplies two quat's
+     *
+     * @param {quat} out the receiving quaternion
+     * @param {ReadonlyQuat} a the first operand
+     * @param {ReadonlyQuat} b the second operand
+     * @returns {quat} out
+     */
+
+    function multiply(out, a, b) {
+      var ax = a[0],
+          ay = a[1],
+          az = a[2],
+          aw = a[3];
+      var bx = b[0],
+          by = b[1],
+          bz = b[2],
+          bw = b[3];
+      out[0] = ax * bw + aw * bx + ay * bz - az * by;
+      out[1] = ay * bw + aw * by + az * bx - ax * bz;
+      out[2] = az * bw + aw * bz + ax * by - ay * bx;
+      out[3] = aw * bw - ax * bx - ay * by - az * bz;
+      return out;
+    }
+    /**
+     * Performs a spherical linear interpolation between two quat
+     *
+     * @param {quat} out the receiving quaternion
+     * @param {ReadonlyQuat} a the first operand
+     * @param {ReadonlyQuat} b the second operand
+     * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
+     * @returns {quat} out
+     */
+
+    function slerp(out, a, b, t) {
+      // benchmarks:
+      //    http://jsperf.com/quaternion-slerp-implementations
+      var ax = a[0],
+          ay = a[1],
+          az = a[2],
+          aw = a[3];
+      var bx = b[0],
+          by = b[1],
+          bz = b[2],
+          bw = b[3];
+      var omega, cosom, sinom, scale0, scale1; // calc cosine
+
+      cosom = ax * bx + ay * by + az * bz + aw * bw; // adjust signs (if necessary)
+
+      if (cosom < 0.0) {
+        cosom = -cosom;
+        bx = -bx;
+        by = -by;
+        bz = -bz;
+        bw = -bw;
+      } // calculate coefficients
+
+
+      if (1.0 - cosom > EPSILON) {
+        // standard case (slerp)
+        omega = Math.acos(cosom);
+        sinom = Math.sin(omega);
+        scale0 = Math.sin((1.0 - t) * omega) / sinom;
+        scale1 = Math.sin(t * omega) / sinom;
+      } else {
+        // "from" and "to" quaternions are very close
+        //  ... so we can do a linear interpolation
+        scale0 = 1.0 - t;
+        scale1 = t;
+      } // calculate final values
+
+
+      out[0] = scale0 * ax + scale1 * bx;
+      out[1] = scale0 * ay + scale1 * by;
+      out[2] = scale0 * az + scale1 * bz;
+      out[3] = scale0 * aw + scale1 * bw;
+      return out;
+    }
+    /**
+     * Creates a quaternion from the given 3x3 rotation matrix.
+     *
+     * NOTE: The resultant quaternion is not normalized, so you should be sure
+     * to renormalize the quaternion yourself where necessary.
+     *
+     * @param {quat} out the receiving quaternion
+     * @param {ReadonlyMat3} m rotation matrix
+     * @returns {quat} out
+     * @function
+     */
+
+    function fromMat3(out, m) {
+      // Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
+      // article "Quaternion Calculus and Fast Animation".
+      var fTrace = m[0] + m[4] + m[8];
+      var fRoot;
+
+      if (fTrace > 0.0) {
+        // |w| > 1/2, may as well choose w > 1/2
+        fRoot = Math.sqrt(fTrace + 1.0); // 2w
+
+        out[3] = 0.5 * fRoot;
+        fRoot = 0.5 / fRoot; // 1/(4w)
+
+        out[0] = (m[5] - m[7]) * fRoot;
+        out[1] = (m[6] - m[2]) * fRoot;
+        out[2] = (m[1] - m[3]) * fRoot;
+      } else {
+        // |w| <= 1/2
+        var i = 0;
+        if (m[4] > m[0]) i = 1;
+        if (m[8] > m[i * 3 + i]) i = 2;
+        var j = (i + 1) % 3;
+        var k = (i + 2) % 3;
+        fRoot = Math.sqrt(m[i * 3 + i] - m[j * 3 + j] - m[k * 3 + k] + 1.0);
+        out[i] = 0.5 * fRoot;
+        fRoot = 0.5 / fRoot;
+        out[3] = (m[j * 3 + k] - m[k * 3 + j]) * fRoot;
+        out[j] = (m[j * 3 + i] + m[i * 3 + j]) * fRoot;
+        out[k] = (m[k * 3 + i] + m[i * 3 + k]) * fRoot;
+      }
+
+      return out;
+    }
+    /**
+     * Normalize a quat
+     *
+     * @param {quat} out the receiving quaternion
+     * @param {ReadonlyQuat} a quaternion to normalize
+     * @returns {quat} out
+     * @function
+     */
+
+    var normalize = normalize$1;
+    /**
+     * Sets a quaternion to represent the shortest rotation from one
+     * vector to another.
+     *
+     * Both vectors are assumed to be unit length.
+     *
+     * @param {quat} out the receiving quaternion.
+     * @param {ReadonlyVec3} a the initial vector
+     * @param {ReadonlyVec3} b the destination vector
+     * @returns {quat} out
+     */
+
+    (function () {
+      var tmpvec3 = create$2();
+      var xUnitVec3 = fromValues(1, 0, 0);
+      var yUnitVec3 = fromValues(0, 1, 0);
+      return function (out, a, b) {
+        var dot$1 = dot(a, b);
+
+        if (dot$1 < -0.999999) {
+          cross(tmpvec3, xUnitVec3, a);
+          if (len(tmpvec3) < 0.000001) cross(tmpvec3, yUnitVec3, a);
+          normalize$2(tmpvec3, tmpvec3);
+          setAxisAngle(out, tmpvec3, Math.PI);
+          return out;
+        } else if (dot$1 > 0.999999) {
+          out[0] = 0;
+          out[1] = 0;
+          out[2] = 0;
+          out[3] = 1;
+          return out;
+        } else {
+          cross(tmpvec3, a, b);
+          out[0] = tmpvec3[0];
+          out[1] = tmpvec3[1];
+          out[2] = tmpvec3[2];
+          out[3] = 1 + dot$1;
+          return normalize(out, out);
+        }
+      };
+    })();
+    /**
+     * Performs a spherical linear interpolation with two control points
+     *
+     * @param {quat} out the receiving quaternion
+     * @param {ReadonlyQuat} a the first operand
+     * @param {ReadonlyQuat} b the second operand
+     * @param {ReadonlyQuat} c the third operand
+     * @param {ReadonlyQuat} d the fourth operand
+     * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
+     * @returns {quat} out
+     */
+
+    (function () {
+      var temp1 = create();
+      var temp2 = create();
+      return function (out, a, b, c, d, t) {
+        slerp(temp1, a, d, t);
+        slerp(temp2, b, c, t);
+        slerp(out, temp1, temp2, 2 * t * (1 - t));
+        return out;
+      };
+    })();
+    /**
+     * Sets the specified quaternion with values corresponding to the given
+     * axes. Each axis is a vec3 and is expected to be unit length and
+     * perpendicular to all other specified axes.
+     *
+     * @param {ReadonlyVec3} view  the vector representing the viewing direction
+     * @param {ReadonlyVec3} right the vector representing the local "right" direction
+     * @param {ReadonlyVec3} up    the vector representing the local "up" direction
+     * @returns {quat} out
+     */
+
+    (function () {
+      var matr = create$4();
+      return function (out, view, right, up) {
+        matr[0] = right[0];
+        matr[3] = right[1];
+        matr[6] = right[2];
+        matr[1] = up[0];
+        matr[4] = up[1];
+        matr[7] = up[2];
+        matr[2] = -view[0];
+        matr[5] = -view[1];
+        matr[8] = -view[2];
+        return normalize(out, fromMat3(out, matr));
+      };
+    })();
+
+    const createProgram = (gl, vertexShader, fragmentShader) => {
+        const program = gl.createProgram();
+        if (!program) {
+            throw new Error(`Failed to create program`);
+        }
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+        gl.deleteShader(vertexShader);
+        gl.deleteShader(fragmentShader);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            throw new Error(`Failed to link: ${gl.getProgramInfoLog(program)}`);
+        }
+        gl.useProgram(program);
+        return program;
+    };
+    const createShaderObject = (gl, source, type) => {
+        const shader = gl.createShader(type);
+        if (!shader) {
+            throw new Error(`Failed to create shader`);
+        }
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            throw new Error(`Failed to compile: ${gl.getShaderInfoLog(shader)}`);
+        }
+        return shader;
+    };
+    const createVBO = (gl, vertexArray) => {
+        const vbo = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexArray), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, null);
+        return vbo;
+    };
+    const createIBO = (gl, index) => {
+        const ibo = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Int16Array(index), gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+        return ibo;
+    };
+    const enableAttribute = (gl, vbo, attribLocation, attribStride) => {
+        vbo.forEach((buffer, i) => {
+            gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+            gl.enableVertexAttribArray(attribLocation[i]);
+            gl.vertexAttribPointer(attribLocation[i], attribStride[i], gl.FLOAT, false, 0, 0);
+        });
+    };
+    const createTexture = (gl, source, unit) => {
+        const texture = gl.createTexture();
+        gl.activeTexture(unit);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        // WARNING: Image loading must be complete.
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source);
+        gl.generateMipmap(gl.TEXTURE_2D);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.bindTexture(gl.TEXTURE_2D, null);
+        return texture;
+    };
+
+    // TODO: scaleの挙動がなんか変
+    // TODO: オプション
+    // TODO: 移動系のメソッド
+    class Camera {
+        container;
+        option;
+        isMovable = true;
+        isScalable = true;
+        drag;
+        __distance = 10.0;
+        scale = 0.0;
+        rotateX = 0.0;
+        rotateY = 0.0;
+        // private rotateZ: number = 0.0;
+        prevPosition;
+        qt = create();
+        qtx = create();
+        qty = create();
+        // TODO: オプションでもらえるように
+        center = [0.0, 0.0, 0.0];
+        __position = [0.0, 7.0, this.__distance];
+        defaultPosition = [0.0, 7.0, this.__distance];
+        defaultUpDirection = [0.0, 1.0, 0.0];
+        upDirection = [0.0, 1.0, 0.0];
+        minDistance = 1.0;
+        maxDistance = 20.0;
+        get position() {
+            return this.__position;
+        }
+        get distance() {
+            return this.__distance;
+        }
+        set distance(value) {
+            this.__distance = value;
+        }
+        constructor(container, option) {
+            this.container = container;
+            this.option = option;
+            this.handleMousedown = this.handleMousedown.bind(this);
+            this.handleMousemove = this.handleMousemove.bind(this);
+            this.handleMouseup = this.handleMouseup.bind(this);
+            this.handleWheel = this.handleWheel.bind(this);
+            // TODO: option
+            if (this.option && 'isMovable' in this.option) {
+                this.isMovable = this.option.isMovable;
+            }
+            if (this.option && 'isScalable' in this.option) {
+                this.isScalable = this.option.isScalable;
+            }
+            if (this.option && this.option.center) {
+                this.center = this.option.center;
+            }
+            if (this.option && this.option.minDistance) {
+                this.minDistance = this.option.minDistance;
+            }
+            if (this.option && this.option.maxDistance) {
+                this.maxDistance = this.option.maxDistance;
+            }
+            // TODO: position
+            if (this.option && this.option.position) {
+                const v = create$2();
+                const n = create$2();
+                normalize$2(n, this.option.position.direction);
+                scale(v, n, this.option.position.distance);
+                this.__distance = this.option.position.distance;
+                this.__position = [...v];
+                this.defaultPosition = [...v];
+                // private position = [0.0, 7.0, this.distance];
+                // private defaultPosition = [0.0, 7.0, this.distance];
+                //
+                // private defaultUpDirection = [0.0, 1.0, 0.0];
+                // private upDirection = [0.0, 1.0, 0.0];
+            }
+            this.addEvent();
+        }
+        addEvent() {
+            if (this.isMovable) {
+                this.container.addEventListener('mousedown', this.handleMousedown, { passive: true });
+                this.container.addEventListener('mousemove', this.handleMousemove, { passive: true });
+                this.container.addEventListener('mouseup', this.handleMouseup, { passive: true });
+            }
+            if (this.isScalable) {
+                this.container.addEventListener('wheel', this.handleWheel, { passive: true });
+            }
+        }
+        removeEvent() {
+            if (this.isMovable) {
+                this.container.removeEventListener('mousedown', this.handleMousedown);
+                this.container.removeEventListener('mousemove', this.handleMousemove);
+                this.container.removeEventListener('mouseup', this.handleMouseup);
+            }
+            if (this.isScalable) {
+                this.container.removeEventListener('wheel', this.handleWheel);
+            }
+        }
+        handleMousedown(e) {
+            this.drag = true;
+            const rect = this.container.getBoundingClientRect();
+            this.prevPosition = [e.clientX - rect.left, e.clientY - rect.top];
+        }
+        handleMousemove(e) {
+            if (this.drag !== true) {
+                return;
+            }
+            if (e.buttons !== 1) {
+                return;
+            }
+            const rect = this.container.getBoundingClientRect();
+            const w = rect.width;
+            const h = rect.height;
+            // サイズの小さい辺を基準に計算する
+            const s = 1.0 / Math.min(w, h);
+            const x = e.clientX;
+            const y = e.clientY;
+            this.rotateX += (this.prevPosition[0] - x) * s;
+            this.rotateY += (this.prevPosition[1] - y) * s;
+            this.rotateX = this.rotateX % 1.0;
+            // // -0.25 ~ 0.25 ???
+            // this.rotateY = Math.min(Math.max(this.rotateY % 1.0, -0.25), 0.25);
+            this.prevPosition = [x, y];
+        }
+        handleMouseup() {
+            this.drag = false;
+        }
+        handleWheel(e) {
+            const w = e.wheelDelta;
+            if (w > 0) {
+                this.scale = -0.5;
+            }
+            else if (w < 0) {
+                this.scale = 0.5;
+            }
+        }
+        update() {
+            const PI2 = Math.PI * 2.0;
+            const v = [1.0, 0.0, 0.0];
+            // rotate
+            identity(this.qt);
+            identity(this.qtx);
+            identity(this.qty);
+            setAxisAngle(this.qtx, [0.0, 1.0, 0.0], this.rotateX * PI2);
+            transformQuat(v, v, this.qtx);
+            setAxisAngle(this.qty, v, this.rotateY * PI2);
+            multiply(this.qt, this.qty, this.qtx);
+            transformQuat(this.__position, this.defaultPosition, this.qt);
+            transformQuat(this.upDirection, this.defaultUpDirection, this.qt);
+            // scale
+            this.scale *= 0.7;
+            this.__distance += this.scale;
+            this.__distance = Math.min(Math.max(this.__distance, this.minDistance), this.maxDistance);
+            const d = create$2();
+            normalize$2(d, this.__position);
+            scale(this.__position, d, this.__distance);
+            return targetTo(create$3(), this.__position, this.center, this.upDirection);
+        }
+    }
+
+    /**
+     * @example
+     * // Render using drawArrays with mode gl.LINES.
+     * this.gl.drawArrays(this.gl.LINES, 0, this.axis.position.length / 3);
+     */
+    const axis = (size, color) => {
+        // prettier-ignore
+        const position = new Float32Array([
+            // X
+            size * -1, 0.0, 0.0,
+            size, 0.0, 0.0,
+            // Y
+            0.0, size * -1, 0.0,
+            0.0, size, 0.0,
+            // Z
+            0.0, 0.0, size,
+            0.0, 0.0, size * -1,
+        ]);
+        // prettier-ignore
+        const defaultColor = [
+            // x: red
+            1.0, 0.0, 0.0, 1.0,
+            1.0, 0.0, 0.0, 1.0,
+            // y: green
+            0.0, 1.0, 0.0, 1.0,
+            0.0, 1.0, 0.0, 1.0,
+            // z: blue
+            0.0, 0.0, 1.0, 1.0,
+            0.0, 0.0, 1.0, 1.0,
+        ];
+        // prettier-ignore
+        const col = color ? [
+            ...color,
+            ...color,
+            ...color,
+            ...color,
+            ...color,
+            ...color,
+        ] : defaultColor;
+        return { position, color: new Float32Array(col) };
+    };
+    const plane = (width, height, color) => {
+        const w = width / 2;
+        const h = height / 2;
+        // prettier-ignore
+        const position = new Float32Array([
+            -w, h, 0.0,
+            w, h, 0.0,
+            -w, -h, 0.0,
+            w, -h, 0.0
+        ]);
+        // prettier-ignore
+        const nor = new Float32Array([
+            0.0, 0.0, 1.0,
+            0.0, 0.0, 1.0,
+            0.0, 0.0, 1.0,
+            0.0, 0.0, 1.0
+        ]);
+        // prettier-ignore
+        const col = new Float32Array([
+            color[0], color[1], color[2], color[3],
+            color[0], color[1], color[2], color[3],
+            color[0], color[1], color[2], color[3],
+            color[0], color[1], color[2], color[3]
+        ]);
+        // prettier-ignore
+        // let st  = [
+        //   0.0, 0.0,
+        //   1.0, 0.0,
+        //   0.0, 1.0,
+        //   1.0, 1.0
+        // ];
+        // prettier-ignore
+        const idx = [
+            0, 2, 1,
+            1, 2, 3
+        ];
+        return { position, normal: nor, color: col, indices: idx };
+    };
+    const box = (width, height, depth, color) => {
+        let hw = width * 0.5;
+        let hh = height * 0.5;
+        let hd = depth * 0.5;
+        // prettier-ignore
+        const position = new Float32Array([
+            -hw, -hh, hd,
+            hw, -hh, hd,
+            hw, hh, hd,
+            -hw, hh, hd,
+            -hw, -hh, -hd,
+            -hw, hh, -hd,
+            hw, hh, -hd,
+            hw, -hh, -hd,
+            -hw, hh, -hd,
+            -hw, hh, hd,
+            hw, hh, hd,
+            hw, hh, -hd,
+            -hw, -hh, -hd,
+            hw, -hh, -hd,
+            hw, -hh, hd,
+            -hw, -hh, hd,
+            hw, -hh, -hd,
+            hw, hh, -hd,
+            hw, hh, hd,
+            hw, -hh, hd,
+            -hw, -hh, -hd,
+            -hw, -hh, hd,
+            -hw, hh, hd,
+            -hw, hh, -hd // 左上奥
+        ]);
+        let v = 1.0 / Math.sqrt(3.0);
+        // prettier-ignore
+        const normal = new Float32Array([
+            -v, -v, v, v, -v, v, v, v, v, -v, v, v,
+            -v, -v, -v, -v, v, -v, v, v, -v, v, -v, -v,
+            -v, v, -v, -v, v, v, v, v, v, v, v, -v,
+            -v, -v, -v, v, -v, -v, v, -v, v, -v, -v, v,
+            v, -v, -v, v, v, -v, v, v, v, v, -v, v,
+            -v, -v, -v, -v, -v, v, -v, v, v, -v, v, -v
+        ]);
+        const col = [];
+        for (let i = 0; i < position.length / 3; i++) {
+            col.push(color[0], color[1], color[2], color[3]);
+        }
+        // prettier-ignore
+        // let st = [
+        //   0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+        //   0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+        //   0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+        //   0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+        //   0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0,
+        //   0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0
+        // ];
+        // prettier-ignore
+        const indices = [
+            0, 1, 2, 0, 2, 3,
+            4, 5, 6, 4, 6, 7,
+            8, 9, 10, 8, 10, 11,
+            12, 13, 14, 12, 14, 15,
+            16, 17, 18, 16, 18, 19,
+            20, 21, 22, 20, 22, 23
+        ];
+        return { position, normal, color: new Float32Array(col), indices };
+    };
+    // TODO: 命名変更
+    const boxLine = (width, height, depth, color) => {
+        let hw = width * 0.5;
+        let hh = height * 0.5;
+        let hd = depth * 0.5;
+        // prettier-ignore
+        const position = new Float32Array([
+            // 前面
+            -hw, -hh, hd,
+            hw, -hh, hd,
+            hw, -hh, hd,
+            hw, hh, hd,
+            hw, hh, hd,
+            -hw, hh, hd,
+            -hw, hh, hd,
+            -hw, -hh, hd,
+            // 奥面
+            -hw, -hh, -hd,
+            -hw, hh, -hd,
+            -hw, hh, -hd,
+            hw, hh, -hd,
+            hw, hh, -hd,
+            hw, -hh, -hd,
+            hw, -hh, -hd,
+            -hw, -hh, -hd,
+            // 天井
+            -hw, hh, -hd,
+            -hw, hh, hd,
+            -hw, hh, hd,
+            hw, hh, hd,
+            hw, hh, hd,
+            hw, hh, -hd,
+            hw, hh, -hd,
+            -hw, hh, -hd,
+            // 下面
+            -hw, -hh, -hd,
+            hw, -hh, -hd,
+            hw, -hh, -hd,
+            hw, -hh, hd,
+            hw, -hh, hd,
+            -hw, -hh, hd,
+            -hw, -hh, hd,
+            -hw, -hh, -hd,
+            // 右面
+            hw, -hh, -hd,
+            hw, hh, -hd,
+            hw, hh, -hd,
+            hw, hh, hd,
+            hw, hh, hd,
+            hw, -hh, hd,
+            hw, -hh, hd,
+            hw, -hh, -hd,
+            // 左面
+            -hw, -hh, -hd,
+            -hw, -hh, hd,
+            -hw, -hh, hd,
+            -hw, hh, hd,
+            -hw, hh, hd,
+            -hw, hh, -hd // 左上奥
+            // -hw,  hh, -hd // 左上奥
+            // -hw, -hh, -hd, // 左下奥
+        ]);
+        const col = [];
+        for (let i = 0; i < position.length / 3; i++) {
+            col.push(color[0], color[1], color[2], color[3]);
+        }
+        return { position, color: new Float32Array(col) };
+    };
+
+    const stride = (type) => {
+        if (type === 'bool') {
+            return 1;
+        }
+        return Number(type[type.length - 1]);
+    };
+    const parseVariables = ({ vertex, fragment }) => {
+        const attribute = [];
+        const uniform = [];
+        const uniLocation = {};
+        // 変数宣言部分を抽出する正規表現
+        const attributeReg = /attribute (?<type>.*) (?<variable>.*);/;
+        const uniformReg = /uniform (?<type>.*) (?<variable>.*);/;
+        // vertexShader
+        vertex.split('\n').forEach((row) => {
+            const foundAttribute = row.match(attributeReg);
+            if (!!foundAttribute) {
+                const { variable, type } = foundAttribute.groups;
+                attribute.push({
+                    variable,
+                    type,
+                    attStride: stride(type),
+                });
+            }
+            const foundUniform = row.match(uniformReg);
+            if (!!foundUniform) {
+                const { variable, type } = foundUniform.groups;
+                uniform.push({
+                    variable,
+                    type,
+                });
+                uniLocation[variable] = null;
+            }
+        });
+        // fragmentShader
+        fragment.split('\n').forEach((row) => {
+            const foundUniform = row.match(uniformReg);
+            if (!!foundUniform) {
+                const { variable, type } = foundUniform.groups;
+                uniform.push({
+                    variable,
+                    type,
+                });
+                uniLocation[variable] = null;
+            }
+        });
+        return {
+            attribute,
+            uniform,
+            uniLocation,
+        };
+    };
+
+    var fragment = "precision mediump float;\n\nuniform sampler2D textureUnit;\nuniform bool isTexture;\n\nvarying vec4 vColor;\nvarying vec2 vTexCoord;\n\nvoid main(){\n    vec4 samplerColor = vec4(1.0);\n    if(isTexture == true){\n        samplerColor = texture2D(textureUnit, vTexCoord);\n        gl_FragColor = samplerColor;\n    } else {\n        gl_FragColor = vColor;\n    }\n}\n\n";
+
+    var vertex = "attribute vec3 position;\nattribute vec4 color;\nattribute vec2 texCoord;\n\nuniform mat4 mvpMatrix;\n\nvarying vec4 vColor;\nvarying vec2 vTexCoord;\n\n\nvoid main(){\n    vColor = color;\n\n    vTexCoord = texCoord;\n\n    gl_Position = mvpMatrix * vec4(position, 1.0);\n}\n\n";
+
+    var subFragment = "precision mediump float;\nvarying vec4 vColor;\n\nvoid main(){\n    gl_FragColor = vColor;\n}\n\n";
+
+    var subVertex = "attribute vec3 fromPosition;\nattribute vec3 toPosition;\nattribute vec4 color;\n\nuniform mat4 mMatrix;   // モデル座標変換\nuniform mat4 mvpMatrix;\nuniform float interporation;\nuniform vec3 eyePosition;   // カメラの位置\n\nvarying vec4 vColor;\n\n\nvoid main(){\n\n\n    vec3 position = mix(fromPosition, toPosition, interporation);\n\n    vColor = color;\n\n    gl_Position = mvpMatrix * vec4(position, 1.0);\n\n//    // ワールド空間（モデル座標変換後の空間）上の頂点の位置\n//    vec4 worldPosition = mMatrix * vec4(position, 1.0);\n//    // カメラからの距離\n//    float dist = length(worldPosition.xyz - eyePosition);\n\n    gl_PointSize = mix(1.0, 12.0 / gl_Position.w, interporation);\n}\n\n";
+
+    const { attribute, uniform, uniLocation } = parseVariables({ vertex, fragment });
+    const { attribute: subAttribute, uniform: subUniform, uniLocation: subUniLocation } = parseVariables({
+        vertex: subVertex,
+        fragment: subFragment,
+    });
+
+    const initialState = {
+        bucketsCount: 8,
+    };
+    function createSettings() {
+        const { subscribe, set, update } = writable(initialState);
+        return {
+            subscribe,
+            reset: () => set(initialState),
+            set: (val) => set(val),
+        };
+    }
+    const settings = createSettings();
+
+    const CANVAS_SIZE = 128;
+    const DISPLAY_TEXTURE_SIZE = 1.0;
+    const HALF_DISPLAY_TEXTURE_SIZE = DISPLAY_TEXTURE_SIZE / 2;
+    const CAMARA_DISTANCE = 7.5;
+    let BEFORE_TEXTURE_POSITION = [-1.5, 0.0, 0.0];
+    let AFTER_TEXTURE_POSITION = [1.5, 0.0, 0.0];
+    let BOXES_POSITION = [0.0, 0.0, 0.0];
+    // TODO: 検討
+    let currentBucket = 0;
+    let paintedBucket = -1;
+    let imageData = null;
+    let medianCut;
+    let reduceImageData;
+    let bucketsPerStep;
+    let beforeTexture;
+    class Scene {
+        constructor() {
+            this.programMain = null;
+            this.programSub = null;
+            this.pMatrix = create$3();
+            this.vMatrix = create$3();
+            this.vpMatrix = create$3();
+            this.attLocation = [];
+            this.attStride = [];
+            this.uniLocation = uniLocation;
+            this.attLocationSub = [];
+            this.attStrideSub = [];
+            this.uniLocationSub = subUniLocation;
+            // model系
+            // 減色前のテクスチャ
+            this.beforeImage = {
+                geometry: null,
+                VBO: [],
+                IBO: [],
+            };
+            // 減色後のテクスチャ
+            this.afterImage = {
+                geometry: null,
+                VBO: [],
+                IBO: [],
+            };
+            // buckets
+            this.boxes = [];
+            this.boxesPosition = [];
+            this.boxesVBO = [];
+            this.boxesIBO = [];
+            this.boxesLine = [];
+            this.boxesLineVBO = [];
+            // points
+            this.pointsFromPosition = [];
+            this.pointsToPosition = [];
+            this.pointsColor = [];
+            this.pointsVBO = [];
+            this.afterPointsFromPosition = [];
+            this.afterPointsToPosition = [];
+            this.afterPointsColor = [];
+            this.afterPointsVBO = [];
+        }
+        init(canvas, timeline) {
+            // Taxisの設定
+            this.taxis = new g({
+                timeline: {
+                    container: timeline,
+                    debug: false,
+                },
+            });
+            this.taxis.add('Sampling', 3 * 1000);
+            for (let i = 0; i < get_store_value(settings).bucketsCount; i++) {
+                if (i === 0) {
+                    this.taxis.add(`split#${i}`, 0.5 * 1000, 500);
+                }
+                else {
+                    this.taxis.add(`split#${i}`, 0.5 * 1000);
+                }
+            }
+            for (let i = 0; i < get_store_value(settings).bucketsCount; i++) {
+                this.taxis.add(`Average color#${i}`, 0.5 * 1000);
+            }
+            this.taxis.add('Mapping', 3 * 1000, 500);
+            this.canvas = canvas;
+            this.gl = canvas.getContext(`webgl`);
+            this.camera = new Camera(canvas, {
+                position: {
+                    direction: [0.0, 0.0, 1.0],
+                    distance: CAMARA_DISTANCE,
+                },
+            });
+            // 画像の減色
+            {
+                const image = get_store_value(app$1).file;
+                const canvas = document.createElement('canvas');
+                canvas.width = CANVAS_SIZE;
+                canvas.height = CANVAS_SIZE;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, CANVAS_SIZE, CANVAS_SIZE);
+                imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                // 圧縮処理のbucketsを取得
+                medianCut = new e(imageData, { strict: true });
+                reduceImageData = medianCut.reduce(get_store_value(settings).bucketsCount);
+                bucketsPerStep = medianCut.bucketsPerStep;
+                beforeTexture = createTexture(this.gl, image, this.gl.TEXTURE0);
+                createTexture(this.gl, reduceImageData, this.gl.TEXTURE1);
+            }
+            // resize
+            this.addResizeEvent();
+            this.resizeCanvas();
+            // programオブジェクトの設定
+            this.programMain = this.setupProgram(vertex, fragment);
+            this.programSub = this.setupProgram(subVertex, subFragment);
+            this.gl.useProgram(this.programMain);
+            this.setupBeforeTexture();
+            this.setupAfterTexture();
+            this.setupPointGeometry();
+            this.setupAfterPointGeometry();
+            this.setupBoxesGeometry();
+            this.setupAxisGeometry();
+            this.setupLocation();
+            this.setupLocationSub();
+            this.render();
+        }
+        /**
+         * Stop ticker
+         */
+        destroy() {
+            this.taxis.reset();
+        }
+        setupProgram(v, f) {
+            const mainVs = createShaderObject(this.gl, v, this.gl.VERTEX_SHADER);
+            const mainFs = createShaderObject(this.gl, f, this.gl.FRAGMENT_SHADER);
+            return createProgram(this.gl, mainVs, mainFs);
+        }
+        addResizeEvent() {
+            this.resizeCanvas();
+            window.addEventListener('resize', this.resizeCanvas.bind(this), { passive: true });
+        }
+        resizeCanvas() {
+            this.canvas.width = window.innerWidth;
+            this.canvas.height = window.innerHeight;
+            // TODO: mobile
+            if (window.innerWidth < window.innerHeight) {
+                this.camera.distance = (1000 / window.innerHeight) * CAMARA_DISTANCE;
+                BEFORE_TEXTURE_POSITION = [0.0, 1.5, 0.0];
+                AFTER_TEXTURE_POSITION = [0.0, -1.5, 0.0];
+                BOXES_POSITION = [0.0, 0.0, 0.0];
+            }
+            else {
+                this.camera.distance = (900 / window.innerWidth) * CAMARA_DISTANCE;
+                BEFORE_TEXTURE_POSITION = [-1.5, 0.0, 0.0];
+                AFTER_TEXTURE_POSITION = [1.5, 0.0, 0.0];
+                BOXES_POSITION = [0.0, 0.0, 0.0];
+            }
+        }
+        setupLocation() {
+            attribute.forEach((v, i) => {
+                this.attLocation[i] = this.gl.getAttribLocation(this.programMain, v.variable);
+                this.attStride[i] = v.attStride;
+            });
+            Object.keys(this.uniLocation).forEach((uniform) => {
+                this.uniLocation[uniform] = this.gl.getUniformLocation(this.programMain, uniform);
+            });
+        }
+        setupLocationSub() {
+            subAttribute.forEach((v, i) => {
+                this.attLocationSub[i] = this.gl.getAttribLocation(this.programSub, v.variable);
+                this.attStrideSub[i] = v.attStride;
+            });
+            Object.keys(this.uniLocationSub).forEach((uniform) => {
+                this.uniLocationSub[uniform] = this.gl.getUniformLocation(this.programSub, uniform);
+            });
+        }
+        setupRendering() {
+            // clear処理
+            this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+            this.gl.clearColor(0.1, 0.12, 0.14, 1.0);
+            this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+            // 震度テストを有効に
+            this.gl.enable(this.gl.DEPTH_TEST);
+            // 裏面も表示
+            this.gl.disable(this.gl.CULL_FACE);
+            this.gl.enable(this.gl.BLEND);
+            this.gl.blendFuncSeparate(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA, this.gl.ONE, this.gl.ONE); // アルファブレンディング
+            invert(this.vMatrix, this.camera.update());
+            perspective(this.pMatrix, 45, this.canvas.width / this.canvas.height, 0.1, 20.0);
+            multiply$1(this.vpMatrix, this.pMatrix, this.vMatrix);
+        }
+        setupBeforeTexture() {
+            this.beforeImage.geometry = plane(DISPLAY_TEXTURE_SIZE, DISPLAY_TEXTURE_SIZE, 0);
+            this.beforeImage.VBO = [
+                createVBO(this.gl, this.beforeImage.geometry.position),
+                createVBO(this.gl, this.beforeImage.geometry.color),
+                createVBO(this.gl, this.beforeImage.geometry.texCoord),
+            ];
+            // インデックスバッファを生成
+            this.beforeImage.IBO = createIBO(this.gl, this.beforeImage.geometry.indices);
+        }
+        setupAfterTexture() {
+            this.afterImage.geometry = plane(DISPLAY_TEXTURE_SIZE, DISPLAY_TEXTURE_SIZE, 0);
+            this.afterImage.VBO = [
+                createVBO(this.gl, this.afterImage.geometry.position),
+                createVBO(this.gl, this.afterImage.geometry.color),
+                createVBO(this.gl, this.afterImage.geometry.texCoord),
+            ];
+            // インデックスバッファを生成
+            this.afterImage.IBO = createIBO(this.gl, this.afterImage.geometry.indices);
+        }
+        setupPointGeometry() {
+            const len = imageData.data.length / 4;
+            for (let i = 0; i < len; i++) {
+                const r = imageData.data[i * 4];
+                const g = imageData.data[i * 4 + 1];
+                const b = imageData.data[i * 4 + 2];
+                const a = imageData.data[i * 4 + 3];
+                // 画像のst座標的なもの
+                const index = i;
+                const x = index % imageData.width;
+                const y = Math.floor(index / imageData.width);
+                this.pointsFromPosition.push(x / CANVAS_SIZE - HALF_DISPLAY_TEXTURE_SIZE + BEFORE_TEXTURE_POSITION[0], (y / CANVAS_SIZE - HALF_DISPLAY_TEXTURE_SIZE) * -1 + BEFORE_TEXTURE_POSITION[1], BEFORE_TEXTURE_POSITION[2]);
+                this.pointsToPosition.push(r / 255 - HALF_DISPLAY_TEXTURE_SIZE + BOXES_POSITION[0], g / 255 - HALF_DISPLAY_TEXTURE_SIZE + BOXES_POSITION[1], b / 255 - HALF_DISPLAY_TEXTURE_SIZE + BOXES_POSITION[2]);
+                this.pointsColor.push(r / 255, g / 255, b / 255, a / 255);
+            }
+            this.pointsVBO = [
+                createVBO(this.gl, this.pointsFromPosition),
+                createVBO(this.gl, this.pointsToPosition),
+                createVBO(this.gl, this.pointsColor),
+            ];
+        }
+        setupAfterPointGeometry() {
+            const len = imageData.data.length / 4;
+            for (let i = 0; i < len; i++) {
+                const r = imageData.data[i * 4];
+                const g = imageData.data[i * 4 + 1];
+                const b = imageData.data[i * 4 + 2];
+                imageData.data[i * 4 + 3];
+                // 画像のst座標的なもの
+                const index = i;
+                const x = index % imageData.width;
+                const y = Math.floor(index / imageData.width);
+                this.afterPointsFromPosition.push(r / 255 - HALF_DISPLAY_TEXTURE_SIZE + BOXES_POSITION[0], g / 255 - HALF_DISPLAY_TEXTURE_SIZE + BOXES_POSITION[1], b / 255 - HALF_DISPLAY_TEXTURE_SIZE + BOXES_POSITION[2]);
+                this.afterPointsToPosition.push(x / CANVAS_SIZE - HALF_DISPLAY_TEXTURE_SIZE + AFTER_TEXTURE_POSITION[0], (y / CANVAS_SIZE - HALF_DISPLAY_TEXTURE_SIZE) * -1 + AFTER_TEXTURE_POSITION[1], AFTER_TEXTURE_POSITION[2]);
+                const reduceR = reduceImageData.data[i * 4];
+                const reduceG = reduceImageData.data[i * 4 + 1];
+                const reduceB = reduceImageData.data[i * 4 + 2];
+                const reduceA = reduceImageData.data[i * 4 + 3];
+                this.afterPointsColor.push(reduceR / 255, reduceG / 255, reduceB / 255, reduceA / 255);
+            }
+            this.afterPointsVBO = [
+                createVBO(this.gl, this.afterPointsFromPosition),
+                createVBO(this.gl, this.afterPointsToPosition),
+                createVBO(this.gl, this.afterPointsColor),
+            ];
+        }
+        /**
+         *
+         */
+        setupBoxesGeometry() {
+            bucketsPerStep.forEach((bucketList, i) => {
+                this.boxes[i] = [];
+                this.boxesPosition[i] = [];
+                this.boxesVBO[i] = [];
+                this.boxesIBO[i] = [];
+                this.boxesLine[i] = [];
+                this.boxesLineVBO[i] = [];
+                bucketList.forEach((bucket, j) => {
+                    const { total, colors, channel, minR, minG, minB, maxR, maxG, maxB } = bucketsPerStep[i][j];
+                    const width = (maxR - minR) / 255;
+                    const height = (maxG - minG) / 255;
+                    const depth = (maxB - minB) / 255;
+                    const color = e.averageColor(colors);
+                    const box$1 = box(width, height, depth, [color[0] / 255, color[1] / 255, color[2] / 255, 0.8]);
+                    const boxLine$1 = boxLine(width, height, depth, [0.65, 0.65, 0.65, 1.0]);
+                    // boxの枠線を作る
+                    this.boxesLine[i][j] = boxLine$1;
+                    this.boxesLineVBO[i][j] = [createVBO(this.gl, boxLine$1.position), createVBO(this.gl, boxLine$1.color)];
+                    this.boxes[i][j] = box$1;
+                    this.boxesPosition[i][j] = [
+                        minR / 255 - (1 - width) / 2,
+                        minG / 255 - (1 - height) / 2,
+                        minB / 255 - (1 - depth) / 2,
+                    ];
+                    this.boxesVBO[i][j] = [createVBO(this.gl, box$1.position), createVBO(this.gl, box$1.color)];
+                    // インデックスバッファを生成
+                    this.boxesIBO[i][j] = createIBO(this.gl, box$1.indices);
+                });
+            });
+        }
+        setupAxisGeometry() {
+            this.axis = axis(10, [0.45, 0.45, 0.45, 1.0]);
+            this.axisVBO = [createVBO(this.gl, this.axis.position), createVBO(this.gl, this.axis.color)];
+        }
+        setupMvp(position) {
+            let mMatrix = create$3();
+            translate(mMatrix, mMatrix, position);
+            const mvpMatrix = create$3();
+            multiply$1(mvpMatrix, this.vpMatrix, mMatrix);
+            this.gl.uniformMatrix4fv(this.uniLocation.mvpMatrix, false, mvpMatrix);
+        }
+        /**
+         *
+         * @param position
+         */
+        setupMvpSub(position) {
+            let mMatrix = create$3();
+            translate(mMatrix, mMatrix, position);
+            this.gl.uniformMatrix4fv(this.uniLocationSub.mMatrix, false, mMatrix);
+            const mvpMatrix = create$3();
+            multiply$1(mvpMatrix, this.vpMatrix, mMatrix);
+            this.gl.uniformMatrix4fv(this.uniLocationSub.mvpMatrix, false, mvpMatrix);
+        }
+        renderBeforeTexture(position) {
+            enableAttribute(this.gl, this.beforeImage.VBO, this.attLocation, this.attStride);
+            this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.beforeImage.IBO);
+            // テクスチャを使うかどうかのフラグをシェーダに送る @@@
+            this.gl.activeTexture(this.gl.TEXTURE0);
+            this.gl.bindTexture(this.gl.TEXTURE_2D, beforeTexture);
+            this.gl.uniform1i(this.uniLocation.textureUnit, 0);
+            this.gl.uniform1i(this.uniLocation.isTexture, 1);
+            this.gl.enableVertexAttribArray(this.attLocation[2]);
+            this.setupMvp(position);
+            this.gl.drawElements(this.gl.TRIANGLES, this.beforeImage.geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
+        }
+        /**
+         *
+         * @param position
+         */
+        renderBoxes(position) {
+            this.gl.disableVertexAttribArray(this.attLocation[2]);
+            this.gl.uniform1i(this.uniLocation.isTexture, 0);
+            const lastIndex = this.boxes.length - 1;
+            for (let i = 0; i <= paintedBucket; i++) {
+                enableAttribute(this.gl, this.boxesVBO[lastIndex][i], this.attLocation, this.attStride);
+                this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.boxesIBO[lastIndex][i]);
+                const pos = [
+                    position[0] + this.boxesPosition[lastIndex][i][0],
+                    position[1] + this.boxesPosition[lastIndex][i][1],
+                    position[2] + this.boxesPosition[lastIndex][i][2],
+                ];
+                this.setupMvp(pos);
+                this.gl.drawElements(this.gl.TRIANGLES, this.boxes[lastIndex][i].indices.length, this.gl.UNSIGNED_SHORT, 0);
+            }
+        }
+        renderBoxesLine(position) {
+            this.gl.disableVertexAttribArray(this.attLocation[2]);
+            // テクスチャを使うかどうかのフラグをシェーダに送る @@@
+            this.gl.uniform1i(this.uniLocation.isTexture, 0);
+            for (let i = 0; i < this.boxes[currentBucket].length; i++) {
+                enableAttribute(this.gl, this.boxesLineVBO[currentBucket][i], this.attLocation, this.attStride);
+                const pos = [
+                    position[0] + this.boxesPosition[currentBucket][i][0],
+                    position[1] + this.boxesPosition[currentBucket][i][1],
+                    position[2] + this.boxesPosition[currentBucket][i][2],
+                ];
+                this.setupMvp(pos);
+                this.gl.drawArrays(this.gl.LINES, 0, this.boxesLine[currentBucket][i].position.length / 3);
+            }
+        }
+        renderAxis(position) {
+            this.gl.uniform1i(this.uniLocation.isTexture, 0);
+            this.gl.disableVertexAttribArray(this.attLocation[2]);
+            enableAttribute(this.gl, this.axisVBO, this.attLocation, this.attStride);
+            this.setupMvp(position);
+            this.gl.drawArrays(this.gl.LINES, 0, this.axis.position.length / 3);
+        }
+        /**
+         *
+         * @param position
+         */
+        renderMovePoints(position) {
+            const axis = this.taxis.getAxis({ key: 'Sampling' });
+            this.gl.uniform1f(this.uniLocationSub.interporation, axis.progress);
+            enableAttribute(this.gl, this.pointsVBO, this.attLocationSub, this.attStrideSub);
+            this.setupMvpSub(position);
+            this.gl.drawArrays(this.gl.POINTS, 0, this.pointsToPosition.length / 3);
+        }
+        renderMoveAfterPoints(position) {
+            const axis = this.taxis.getAxis({ key: 'Mapping' });
+            if (axis.progress === 0) {
+                return;
+            }
+            this.gl.uniform1f(this.uniLocationSub.interporation, axis.progress);
+            enableAttribute(this.gl, this.afterPointsVBO, this.attLocationSub, this.attStrideSub);
+            this.setupMvpSub(position);
+            this.gl.drawArrays(this.gl.POINTS, 0, this.afterPointsToPosition.length / 3);
+        }
+        /**
+         * render処理
+         */
+        render() {
+            this.taxis.begin();
+            this.taxis.ticker((delta, axes) => {
+                let currentStep = 0;
+                if (axes.get('Sampling').pass) {
+                    currentStep = 1;
+                }
+                if (axes.get('split#7').pass) {
+                    currentStep = 2;
+                }
+                if (axes.get('Average color#7').pass) {
+                    currentStep = 3;
+                }
+                for (let i = 0; i < get_store_value(settings).bucketsCount; i++) {
+                    if (axes.get(`split#${i}`).enter) {
+                        if (currentBucket < i) {
+                            currentBucket = i;
+                        }
+                    }
+                    if (axes.get(`Average color#${i}`).enter) {
+                        if (paintedBucket < i) {
+                            paintedBucket = i;
+                        }
+                    }
+                    if (axes.get(`split#${i}`).progress <= 0) {
+                        if (i <= currentBucket) {
+                            currentBucket = i - 1;
+                        }
+                    }
+                    if (axes.get(`Average color#${i}`).progress <= 0) {
+                        if (i <= paintedBucket) {
+                            paintedBucket = i - 1;
+                        }
+                    }
+                }
+                steps.update(currentStep);
+                this.setupRendering();
+                // subの描画
+                this.gl.useProgram(this.programSub);
+                this.gl.uniform3fv(this.uniLocationSub.eyePosition, this.camera.position);
+                this.renderMovePoints([0.0, 0.0, 0.0]);
+                this.renderMoveAfterPoints([0.0, 0.0, 0.0]);
+                // mainの描画
+                this.gl.useProgram(this.programMain);
+                this.renderAxis([0.0, 0.0, 0.0]);
+                this.renderBeforeTexture(BEFORE_TEXTURE_POSITION);
+                if (axes.get('split#0').enter) {
+                    this.renderBoxesLine(BOXES_POSITION);
+                    if (-1 < paintedBucket) {
+                        this.renderBoxes(BOXES_POSITION);
+                    }
+                }
+            });
+        }
+    }
+
+    /* src/components/Viewer/Viewer.svelte generated by Svelte v3.46.3 */
+    const file$2 = "src/components/Viewer/Viewer.svelte";
+
+    function create_fragment$2(ctx) {
+    	let canvas;
+    	let t;
+    	let div1;
+    	let div0;
+
+    	const block = {
+    		c: function create() {
+    			canvas = element("canvas");
+    			t = space();
+    			div1 = element("div");
+    			div0 = element("div");
+    			attr_dev(canvas, "class", "w-full h-full");
+    			add_location(canvas, file$2, 13, 0, 292);
+    			attr_dev(div0, "id", "timeline");
+    			attr_dev(div0, "class", "h-full");
+    			add_location(div0, file$2, 15, 2, 412);
+    			attr_dev(div1, "class", "fixed left-0 right-0 bottom-0 h-1/5");
+    			add_location(div1, file$2, 14, 0, 360);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, canvas, anchor);
+    			/*canvas_binding*/ ctx[2](canvas);
+    			insert_dev(target, t, anchor);
+    			insert_dev(target, div1, anchor);
+    			append_dev(div1, div0);
+    			/*div0_binding*/ ctx[3](div0);
+    		},
+    		p: noop,
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(canvas);
+    			/*canvas_binding*/ ctx[2](null);
+    			if (detaching) detach_dev(t);
+    			if (detaching) detach_dev(div1);
+    			/*div0_binding*/ ctx[3](null);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$2.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$2($$self, $$props, $$invalidate) {
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('Viewer', slots, []);
+    	let canvasElement;
+    	let timelineElement;
+    	const scene = new Scene();
+
+    	onMount(() => {
+    		scene.init(canvasElement, timelineElement);
+    	});
+
+    	onDestroy(() => {
+    		scene.destroy();
+    	});
+
+    	const writable_props = [];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Viewer> was created with unknown prop '${key}'`);
+    	});
+
+    	function canvas_binding($$value) {
+    		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+    			canvasElement = $$value;
+    			$$invalidate(0, canvasElement);
+    		});
+    	}
+
+    	function div0_binding($$value) {
+    		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+    			timelineElement = $$value;
+    			$$invalidate(1, timelineElement);
+    		});
+    	}
+
+    	$$self.$capture_state = () => ({
+    		onDestroy,
+    		onMount,
+    		Scene,
+    		canvasElement,
+    		timelineElement,
+    		scene
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('canvasElement' in $$props) $$invalidate(0, canvasElement = $$props.canvasElement);
+    		if ('timelineElement' in $$props) $$invalidate(1, timelineElement = $$props.timelineElement);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [canvasElement, timelineElement, canvas_binding, div0_binding];
+    }
+
+    class Viewer extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance$2, create_fragment$2, safe_not_equal, {});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "Viewer",
+    			options,
+    			id: create_fragment$2.name
+    		});
+    	}
+    }
+
+    /* src/components/Introduction.svelte generated by Svelte v3.46.3 */
+    const file$1 = "src/components/Introduction.svelte";
+
+    function create_fragment$1(ctx) {
+    	let div17;
+    	let div8;
+    	let div7;
+    	let div6;
+    	let div1;
+    	let div0;
+    	let t0;
+    	let div5;
+    	let h1;
+    	let span0;
+    	let t2;
+    	let span1;
+    	let t4;
+    	let p0;
+    	let t5;
+    	let br;
+    	let t6;
+    	let t7;
+    	let div4;
+    	let form;
+    	let div3;
+    	let div2;
+    	let svg;
+    	let path;
+    	let t8;
+    	let p1;
+    	let label;
+    	let t9;
+    	let input;
+    	let t10;
+    	let t11;
+    	let p2;
+    	let t13;
+    	let div16;
+    	let div15;
+    	let p3;
+    	let t15;
+    	let div14;
+    	let div9;
+    	let img0;
+    	let img0_src_value;
+    	let t16;
+    	let span2;
+    	let t17;
+    	let a0;
+    	let t19;
+    	let a1;
+    	let t21;
+    	let div10;
+    	let img1;
+    	let img1_src_value;
+    	let t22;
+    	let span3;
+    	let t23;
+    	let a2;
+    	let t25;
+    	let a3;
+    	let t27;
+    	let div11;
+    	let img2;
+    	let img2_src_value;
+    	let t28;
+    	let span4;
+    	let t29;
+    	let a4;
+    	let t31;
+    	let a5;
+    	let t33;
+    	let div12;
+    	let img3;
+    	let img3_src_value;
+    	let t34;
+    	let span5;
+    	let t35;
+    	let a6;
+    	let t37;
+    	let a7;
+    	let t39;
+    	let div13;
+    	let img4;
+    	let img4_src_value;
+    	let mounted;
+    	let dispose;
+
+    	const block = {
+    		c: function create() {
+    			div17 = element("div");
+    			div8 = element("div");
+    			div7 = element("div");
+    			div6 = element("div");
+    			div1 = element("div");
+    			div0 = element("div");
+    			t0 = space();
+    			div5 = element("div");
+    			h1 = element("h1");
+    			span0 = element("span");
+    			span0.textContent = "Visualize color reduction";
+    			t2 = space();
+    			span1 = element("span");
+    			span1.textContent = "Any image you like.";
+    			t4 = space();
+    			p0 = element("p");
+    			t5 = text("The logic of color reduction is difficult.\n            I hope that visualizing it will help you understand it.\n            Implemented with reference to Median cut.\n            It is implemented using webgl.");
+    			br = element("br");
+    			t6 = text("\n            Sorry, maybe only chrome is supported.");
+    			t7 = space();
+    			div4 = element("div");
+    			form = element("form");
+    			div3 = element("div");
+    			div2 = element("div");
+    			svg = svg_element("svg");
+    			path = svg_element("path");
+    			t8 = space();
+    			p1 = element("p");
+    			label = element("label");
+    			t9 = text("Upload a file\n                      ");
+    			input = element("input");
+    			t10 = text("\n                    or drag and drop");
+    			t11 = space();
+    			p2 = element("p");
+    			p2.textContent = "PNG, JPG, GIF up to 10MB";
+    			t13 = space();
+    			div16 = element("div");
+    			div15 = element("div");
+    			p3 = element("p");
+    			p3.textContent = "Or try one of these:";
+    			t15 = space();
+    			div14 = element("div");
+    			div9 = element("div");
+    			img0 = element("img");
+    			t16 = space();
+    			span2 = element("span");
+    			t17 = text("Photo by ");
+    			a0 = element("a");
+    			a0.textContent = "Vincent Ledvina";
+    			t19 = text("\n            on\n            ");
+    			a1 = element("a");
+    			a1.textContent = "Unsplash";
+    			t21 = space();
+    			div10 = element("div");
+    			img1 = element("img");
+    			t22 = space();
+    			span3 = element("span");
+    			t23 = text("Photo by ");
+    			a2 = element("a");
+    			a2.textContent = "Greyson Joralemon";
+    			t25 = text("\n            on\n            ");
+    			a3 = element("a");
+    			a3.textContent = "Unsplash";
+    			t27 = space();
+    			div11 = element("div");
+    			img2 = element("img");
+    			t28 = space();
+    			span4 = element("span");
+    			t29 = text("Photo by ");
+    			a4 = element("a");
+    			a4.textContent = "Jezael Melgoza";
+    			t31 = text("\n            on\n            ");
+    			a5 = element("a");
+    			a5.textContent = "Unsplash";
+    			t33 = space();
+    			div12 = element("div");
+    			img3 = element("img");
+    			t34 = space();
+    			span5 = element("span");
+    			t35 = text("Photo by ");
+    			a6 = element("a");
+    			a6.textContent = "Nick Fewings";
+    			t37 = text("\n            on\n            ");
+    			a7 = element("a");
+    			a7.textContent = "Unsplash";
+    			t39 = space();
+    			div13 = element("div");
+    			img4 = element("img");
+    			attr_dev(div0, "class", "h-full w-full bg-gray-100");
+    			add_location(div0, file$1, 68, 10, 2057);
+    			attr_dev(div1, "class", "absolute inset-0");
+    			add_location(div1, file$1, 67, 8, 2016);
+    			attr_dev(span0, "class", "block text-gray-800");
+    			add_location(span0, file$1, 72, 12, 2304);
+    			attr_dev(span1, "class", "block text-gray-500");
+    			add_location(span1, file$1, 73, 12, 2383);
+    			attr_dev(h1, "class", "text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl");
+    			add_location(h1, file$1, 71, 10, 2204);
+    			add_location(br, file$1, 79, 42, 2770);
+    			attr_dev(p0, "class", "mt-6 max-w-lg mx-auto text-center text-xl text-gray-500 sm:max-w-4xl");
+    			add_location(p0, file$1, 75, 10, 2470);
+    			attr_dev(path, "d", "M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02");
+    			attr_dev(path, "stroke-width", "2");
+    			attr_dev(path, "stroke-linecap", "round");
+    			attr_dev(path, "stroke-linejoin", "round");
+    			add_location(path, file$1, 88, 20, 3155);
+    			attr_dev(svg, "class", "mx-auto h-12 w-12 text-gray-500");
+    			attr_dev(svg, "stroke", "currentColor");
+    			attr_dev(svg, "fill", "none");
+    			attr_dev(svg, "viewBox", "0 0 48 48");
+    			add_location(svg, file$1, 87, 18, 3035);
+    			attr_dev(input, "type", "file");
+    			attr_dev(input, "id", "original-image-file");
+    			attr_dev(input, "class", "hidden");
+    			add_location(input, file$1, 100, 22, 3934);
+    			attr_dev(label, "id", "original-image-label");
+    			attr_dev(label, "for", "original-image-file");
+    			attr_dev(label, "class", "cursor-pointer font-medium text-pink-600 hover:text-pink-500 focus:outline-none focus:underline transition duration-150 ease-in-out");
+    			add_location(label, file$1, 95, 20, 3610);
+    			attr_dev(p1, "class", "mt-1 text-sm text-gray-500");
+    			add_location(p1, file$1, 94, 18, 3551);
+    			attr_dev(p2, "class", "mt-1 text-xs text-gray-500");
+    			add_location(p2, file$1, 104, 18, 4103);
+    			attr_dev(div2, "class", "text-center");
+    			add_location(div2, file$1, 86, 16, 2991);
+    			attr_dev(div3, "class", "sm:mt-0 sm:col-span-2");
+    			add_location(div3, file$1, 85, 14, 2939);
+    			attr_dev(form, "action", "");
+    			add_location(form, file$1, 84, 12, 2908);
+    			attr_dev(div4, "id", "upload");
+    			attr_dev(div4, "class", "px-4 py-8 sm:px-0");
+    			add_location(div4, file$1, 83, 10, 2852);
+    			attr_dev(div5, "class", "relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8");
+    			add_location(div5, file$1, 70, 8, 2126);
+    			attr_dev(div6, "id", "upload-area");
+    			attr_dev(div6, "class", "h-full flex flex-col justify-center relative shadow-lg sm:overflow-hidden");
+    			add_location(div6, file$1, 66, 6, 1902);
+    			attr_dev(div7, "class", "w-full h-full");
+    			add_location(div7, file$1, 65, 4, 1868);
+    			attr_dev(div8, "class", "relative flex-grow");
+    			add_location(div8, file$1, 64, 2, 1831);
+    			attr_dev(p3, "class", "text-center text-sm font-semibold uppercase text-gray-500 tracking-wide");
+    			add_location(p3, file$1, 117, 6, 4419);
+    			if (!src_url_equal(img0.src, img0_src_value = "./assets/bison.jpg")) attr_dev(img0, "src", img0_src_value);
+    			attr_dev(img0, "alt", "");
+    			attr_dev(img0, "class", "cursor-pointer");
+    			add_location(img0, file$1, 120, 10, 4704);
+    			attr_dev(a0, "href", "https://unsplash.com/@vincentledvina?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText");
+    			add_location(a0, file$1, 122, 22, 4831);
+    			attr_dev(a1, "href", "https://unsplash.com/s/visual/4050ed5c-59f1-4b72-965f-8d82efcfbc94?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText");
+    			add_location(a1, file$1, 126, 12, 5029);
+    			add_location(span2, file$1, 121, 10, 4803);
+    			attr_dev(div9, "class", "col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1");
+    			add_location(div9, file$1, 119, 8, 4613);
+    			if (!src_url_equal(img1.src, img1_src_value = "./assets/colorful.jpg")) attr_dev(img1, "src", img1_src_value);
+    			attr_dev(img1, "alt", "");
+    			attr_dev(img1, "class", "cursor-pointer");
+    			add_location(img1, file$1, 132, 10, 5357);
+    			attr_dev(a2, "href", "https://unsplash.com/@greysonjoralemon?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText");
+    			add_location(a2, file$1, 134, 22, 5487);
+    			attr_dev(a3, "href", "https://unsplash.com/s/photos/colorful?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText");
+    			add_location(a3, file$1, 138, 12, 5689);
+    			add_location(span3, file$1, 133, 10, 5459);
+    			attr_dev(div10, "class", "col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1");
+    			add_location(div10, file$1, 131, 8, 5266);
+    			if (!src_url_equal(img2.src, img2_src_value = "./assets/shibuya.jpg")) attr_dev(img2, "src", img2_src_value);
+    			attr_dev(img2, "alt", "");
+    			attr_dev(img2, "class", "cursor-pointer");
+    			add_location(img2, file$1, 144, 10, 5989);
+    			attr_dev(a4, "href", "https://unsplash.com/@jezael?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText");
+    			add_location(a4, file$1, 146, 22, 6118);
+    			attr_dev(a5, "href", "https://unsplash.com/s/photos/japan?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText");
+    			add_location(a5, file$1, 150, 12, 6307);
+    			add_location(span4, file$1, 145, 10, 6090);
+    			attr_dev(div11, "class", "col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1");
+    			add_location(div11, file$1, 143, 8, 5898);
+    			if (!src_url_equal(img3.src, img3_src_value = "./assets/telephone_booth.jpg")) attr_dev(img3, "src", img3_src_value);
+    			attr_dev(img3, "alt", "");
+    			attr_dev(img3, "class", "cursor-pointer");
+    			add_location(img3, file$1, 156, 10, 6604);
+    			attr_dev(a6, "href", "https://unsplash.com/@jannerboy62?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText");
+    			add_location(a6, file$1, 158, 22, 6741);
+    			attr_dev(a7, "href", "https://unsplash.com/s/photos/red?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText");
+    			add_location(a7, file$1, 162, 12, 6933);
+    			add_location(span5, file$1, 157, 10, 6713);
+    			attr_dev(div12, "class", "col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1");
+    			add_location(div12, file$1, 155, 8, 6513);
+    			if (!src_url_equal(img4.src, img4_src_value = "./assets/pineapple.jpg")) attr_dev(img4, "src", img4_src_value);
+    			attr_dev(img4, "alt", "");
+    			attr_dev(img4, "class", "cursor-pointer");
+    			add_location(img4, file$1, 168, 10, 7228);
+    			attr_dev(div13, "class", "col-span-1 flex flex-col justify-start md:col-span-2 lg:col-span-1");
+    			add_location(div13, file$1, 167, 8, 7137);
+    			attr_dev(div14, "class", "mt-6 grid grid-cols-2 gap-8 md:grid-cols-6 lg:grid-cols-5");
+    			add_location(div14, file$1, 118, 6, 4533);
+    			attr_dev(div15, "class", "max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8");
+    			add_location(div15, file$1, 116, 4, 4354);
+    			attr_dev(div16, "class", "bg-gray-100");
+    			add_location(div16, file$1, 115, 2, 4324);
+    			attr_dev(div17, "class", "h-full flex flex-col");
+    			add_location(div17, file$1, 62, 0, 1773);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div17, anchor);
+    			append_dev(div17, div8);
+    			append_dev(div8, div7);
+    			append_dev(div7, div6);
+    			append_dev(div6, div1);
+    			append_dev(div1, div0);
+    			append_dev(div6, t0);
+    			append_dev(div6, div5);
+    			append_dev(div5, h1);
+    			append_dev(h1, span0);
+    			append_dev(h1, t2);
+    			append_dev(h1, span1);
+    			append_dev(div5, t4);
+    			append_dev(div5, p0);
+    			append_dev(p0, t5);
+    			append_dev(p0, br);
+    			append_dev(p0, t6);
+    			append_dev(div5, t7);
+    			append_dev(div5, div4);
+    			append_dev(div4, form);
+    			append_dev(form, div3);
+    			append_dev(div3, div2);
+    			append_dev(div2, svg);
+    			append_dev(svg, path);
+    			append_dev(div2, t8);
+    			append_dev(div2, p1);
+    			append_dev(p1, label);
+    			append_dev(label, t9);
+    			append_dev(label, input);
+    			append_dev(p1, t10);
+    			append_dev(div2, t11);
+    			append_dev(div2, p2);
+    			append_dev(div17, t13);
+    			append_dev(div17, div16);
+    			append_dev(div16, div15);
+    			append_dev(div15, p3);
+    			append_dev(div15, t15);
+    			append_dev(div15, div14);
+    			append_dev(div14, div9);
+    			append_dev(div9, img0);
+    			append_dev(div9, t16);
+    			append_dev(div9, span2);
+    			append_dev(span2, t17);
+    			append_dev(span2, a0);
+    			append_dev(span2, t19);
+    			append_dev(span2, a1);
+    			append_dev(div14, t21);
+    			append_dev(div14, div10);
+    			append_dev(div10, img1);
+    			append_dev(div10, t22);
+    			append_dev(div10, span3);
+    			append_dev(span3, t23);
+    			append_dev(span3, a2);
+    			append_dev(span3, t25);
+    			append_dev(span3, a3);
+    			append_dev(div14, t27);
+    			append_dev(div14, div11);
+    			append_dev(div11, img2);
+    			append_dev(div11, t28);
+    			append_dev(div11, span4);
+    			append_dev(span4, t29);
+    			append_dev(span4, a4);
+    			append_dev(span4, t31);
+    			append_dev(span4, a5);
+    			append_dev(div14, t33);
+    			append_dev(div14, div12);
+    			append_dev(div12, img3);
+    			append_dev(div12, t34);
+    			append_dev(div12, span5);
+    			append_dev(span5, t35);
+    			append_dev(span5, a6);
+    			append_dev(span5, t37);
+    			append_dev(span5, a7);
+    			append_dev(div14, t39);
+    			append_dev(div14, div13);
+    			append_dev(div13, img4);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(img0, "click", /*handleSelect*/ ctx[0], false, false, false),
+    					listen_dev(img1, "click", /*handleSelect*/ ctx[0], false, false, false),
+    					listen_dev(img2, "click", /*handleSelect*/ ctx[0], false, false, false),
+    					listen_dev(img3, "click", /*handleSelect*/ ctx[0], false, false, false),
+    					listen_dev(img4, "click", /*handleSelect*/ ctx[0], false, false, false)
+    				];
+
+    				mounted = true;
+    			}
+    		},
+    		p: noop,
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div17);
+    			mounted = false;
+    			run_all(dispose);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment$1.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance$1($$self, $$props, $$invalidate) {
+    	let $app;
+    	validate_store(app$1, 'app');
+    	component_subscribe($$self, app$1, $$value => $$invalidate(1, $app = $$value));
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('Introduction', slots, []);
+
+    	onMount(() => {
+    		const uploadArea = document.getElementById('upload-area');
+
+    		uploadArea.addEventListener('change', e => {
+    			changeHandler({
+    				e,
+    				data: undefined,
+    				callback: image => {
+    					set_store_value(app$1, $app.file = image, $app);
+    				}
+    			});
+    		});
+
+    		uploadArea.addEventListener('drop', e => {
+    			e.preventDefault();
+
+    			changeHandler({
+    				e,
+    				data: e.dataTransfer.files[0],
+    				callback: image => {
+    					set_store_value(app$1, $app.file = image, $app);
+    				}
+    			});
+    		});
+
+    		uploadArea.addEventListener('dragenter', e => {
+    			e.preventDefault();
+    		});
+
+    		uploadArea.addEventListener('dragover', e => {
+    			e.preventDefault();
+    		});
+
+    		uploadArea.addEventListener('dragleave', e => {
+    			e.preventDefault();
+    		});
+
+    		const changeHandler = ({ e, data, callback }) => {
+    			// drag and dropの場合は e.dataTransfer.files[0] を使用
+    			let file = data === undefined ? e.target.files[0] : data;
+
+    			// 拡張子チェック
+    			if (!file.type.match(/^image\/(png|jpg|jpeg|gif)$/)) {
+    				return;
+    			}
+
+    			// 容量チェック(5MB)
+    			if (10 * 1024 * 1024 <= file.size) {
+    				return;
+    			}
+
+    			let image = new Image();
+    			let fileReader = new FileReader();
+
+    			fileReader.onload = e => {
+    				let base64 = e.target.result;
+
+    				image.onload = () => {
+    					callback(image);
+    				};
+
+    				image.src = base64;
+    			};
+
+    			fileReader.readAsDataURL(file);
+    		};
+    	});
+
+    	const handleSelect = e => {
+    		set_store_value(app$1, $app.file = e.currentTarget, $app);
+    	};
+
+    	const writable_props = [];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Introduction> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$capture_state = () => ({ onMount, app: app$1, handleSelect, $app });
+    	return [handleSelect];
+    }
+
+    class Introduction extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance$1, create_fragment$1, safe_not_equal, {});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "Introduction",
+    			options,
+    			id: create_fragment$1.name
+    		});
+    	}
+    }
+
+    /* src/App.svelte generated by Svelte v3.46.3 */
+    const file = "src/App.svelte";
+
+    // (14:2) {:else}
+    function create_else_block(ctx) {
+    	let viewer;
+    	let t0;
+    	let div0;
+    	let nav;
+    	let t1;
+    	let div1;
+    	let svg;
+    	let path;
+    	let current;
+    	let mounted;
+    	let dispose;
+
+    	viewer = new Viewer({
+    			props: { class: "w-full h-full" },
+    			$$inline: true
+    		});
+
+    	nav = new Nav({ $$inline: true });
+
+    	const block = {
+    		c: function create() {
+    			create_component(viewer.$$.fragment);
+    			t0 = space();
+    			div0 = element("div");
+    			create_component(nav.$$.fragment);
+    			t1 = space();
+    			div1 = element("div");
+    			svg = svg_element("svg");
+    			path = svg_element("path");
+    			attr_dev(div0, "class", "fixed right-8 top-8 hidden md:block");
+    			add_location(div0, file, 15, 4, 447);
+    			attr_dev(path, "stroke-linecap", "round");
+    			attr_dev(path, "stroke-linejoin", "round");
+    			attr_dev(path, "stroke-width", "2");
+    			attr_dev(path, "d", "M6 18L18 6M6 6l12 12");
+    			add_location(path, file, 20, 8, 733);
+    			attr_dev(svg, "fill", "none");
+    			attr_dev(svg, "viewBox", "0 0 24 24");
+    			attr_dev(svg, "stroke", "currentColor");
+    			attr_dev(svg, "class", "w-8 text-gray-800");
+    			add_location(svg, file, 19, 6, 639);
+    			attr_dev(div1, "class", "fixed left-8 top-8 bg-gray-100 p-2 cursor-pointer rounded-full");
+    			add_location(div1, file, 18, 4, 530);
+    		},
+    		m: function mount(target, anchor) {
+    			mount_component(viewer, target, anchor);
+    			insert_dev(target, t0, anchor);
+    			insert_dev(target, div0, anchor);
+    			mount_component(nav, div0, null);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, div1, anchor);
+    			append_dev(div1, svg);
+    			append_dev(svg, path);
+    			current = true;
+
+    			if (!mounted) {
+    				dispose = listen_dev(div1, "click", /*handleRemove*/ ctx[1], false, false, false);
+    				mounted = true;
+    			}
+    		},
+    		p: noop,
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(viewer.$$.fragment, local);
+    			transition_in(nav.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(viewer.$$.fragment, local);
+    			transition_out(nav.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			destroy_component(viewer, detaching);
+    			if (detaching) detach_dev(t0);
+    			if (detaching) detach_dev(div0);
+    			destroy_component(nav);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(div1);
+    			mounted = false;
+    			dispose();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_else_block.name,
+    		type: "else",
+    		source: "(14:2) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (12:2) {#if !$app.file}
+    function create_if_block(ctx) {
+    	let introduction;
+    	let current;
+    	introduction = new Introduction({ $$inline: true });
+
+    	const block = {
+    		c: function create() {
+    			create_component(introduction.$$.fragment);
+    		},
+    		m: function mount(target, anchor) {
+    			mount_component(introduction, target, anchor);
+    			current = true;
+    		},
+    		p: noop,
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(introduction.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(introduction.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			destroy_component(introduction, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block.name,
+    		type: "if",
+    		source: "(12:2) {#if !$app.file}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function create_fragment(ctx) {
+    	let main;
+    	let current_block_type_index;
+    	let if_block;
+    	let current;
+    	const if_block_creators = [create_if_block, create_else_block];
+    	const if_blocks = [];
+
+    	function select_block_type(ctx, dirty) {
+    		if (!/*$app*/ ctx[0].file) return 0;
+    		return 1;
+    	}
+
+    	current_block_type_index = select_block_type(ctx);
+    	if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+
+    	const block = {
+    		c: function create() {
+    			main = element("main");
+    			if_block.c();
+    			attr_dev(main, "class", "w-full h-full");
+    			add_location(main, file, 10, 0, 327);
+    		},
+    		l: function claim(nodes) {
+    			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, main, anchor);
+    			if_blocks[current_block_type_index].m(main, null);
+    			current = true;
+    		},
+    		p: function update(ctx, [dirty]) {
+    			let previous_block_index = current_block_type_index;
+    			current_block_type_index = select_block_type(ctx);
+
+    			if (current_block_type_index === previous_block_index) {
+    				if_blocks[current_block_type_index].p(ctx, dirty);
+    			} else {
+    				group_outros();
+
+    				transition_out(if_blocks[previous_block_index], 1, 1, () => {
+    					if_blocks[previous_block_index] = null;
+    				});
+
+    				check_outros();
+    				if_block = if_blocks[current_block_type_index];
+
+    				if (!if_block) {
+    					if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+    					if_block.c();
+    				} else {
+    					if_block.p(ctx, dirty);
+    				}
+
+    				transition_in(if_block, 1);
+    				if_block.m(main, null);
+    			}
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(if_block);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(if_block);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(main);
+    			if_blocks[current_block_type_index].d();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_fragment.name,
+    		type: "component",
+    		source: "",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    function instance($$self, $$props, $$invalidate) {
+    	let $app;
+    	validate_store(app$1, 'app');
+    	component_subscribe($$self, app$1, $$value => $$invalidate(0, $app = $$value));
+    	let { $$slots: slots = {}, $$scope } = $$props;
+    	validate_slots('App', slots, []);
+
+    	const handleRemove = () => {
+    		set_store_value(app$1, $app.file = null, $app);
+    	};
+
+    	const writable_props = [];
+
+    	Object.keys($$props).forEach(key => {
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<App> was created with unknown prop '${key}'`);
+    	});
+
+    	$$self.$capture_state = () => ({
+    		app: app$1,
+    		Nav,
+    		Viewer,
+    		Introduction,
+    		handleRemove,
+    		$app
+    	});
+
+    	return [$app, handleRemove];
+    }
+
+    class App extends SvelteComponentDev {
+    	constructor(options) {
+    		super(options);
+    		init(this, options, instance, create_fragment, safe_not_equal, {});
+
+    		dispatch_dev("SvelteRegisterComponent", {
+    			component: this,
+    			tagName: "App",
+    			options,
+    			id: create_fragment.name
+    		});
+    	}
+    }
+
+    const app = new App({
+        target: document.body,
+        props: {
+            name: 'world'
+        }
+    });
+
+    return app;
+
+})();
 //# sourceMappingURL=bundle.js.map

@@ -1,4 +1,4 @@
-import { parseVariables } from 'shared/lib/shader';
+import { parseVariables } from 'shared/lib/src/shader';
 import fragment from './main.frag';
 import vertex from './main.vert';
 import subFragment from './sub.frag';

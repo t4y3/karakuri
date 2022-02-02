@@ -3,6 +3,19 @@ type Args = {
   fragment: string;
 };
 
+type Return = {
+  attribute: {
+    variable: string;
+    type: string;
+    attStride: number;
+  }[];
+  uniform: {
+    variable: string;
+    type: string;
+  }[];
+  uniLocation: {};
+};
+
 const stride = (type: string) => {
   if (type === 'bool') {
     return 1;
@@ -10,7 +23,7 @@ const stride = (type: string) => {
   return Number(type[type.length - 1]);
 };
 
-export const parseVariables = ({ vertex, fragment }: Args) => {
+export const parseVariables = ({ vertex, fragment }: Args): Return => {
   const attribute = [];
   const uniform = [];
   const uniLocation = {};

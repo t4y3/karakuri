@@ -4,6 +4,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "outDir": "lib",
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "composite": true
   }
 }

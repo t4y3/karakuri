@@ -3,8 +3,8 @@ import { Taxis } from 'taxis';
 import { get } from 'svelte/store';
 import { settings } from '../../../stores/settings';
 // import { createProgram, createShaderObject, enableAttribute } from '../../../utils';
-import * as geometry from 'shared/lib/geometry';
-import { createProgram, createShaderObject, enableAttribute } from 'shared/lib/utils';
+import * as geometry from 'shared/lib/src/geometry';
+import { createProgram, createShaderObject, enableAttribute } from 'shared/lib/src/utils';
 
 export const setup = (canvas) => {
   const webgl = new WebGLUtility(); // WebGL API をまとめたユーティリティ
