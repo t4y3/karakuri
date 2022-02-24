@@ -16,6 +16,9 @@ jobs:
         with:
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
+      - name: npm install
+        run: npm install
+
       - name: Build
         run: npm run docs
 
