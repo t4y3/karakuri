@@ -5,6 +5,7 @@ export type Geometry = {
   color: Float32Array;
   indices?: number[];
   normal?: Float32Array;
+  texCoord?: number[];
 };
 
 /**
@@ -77,18 +78,18 @@ export const plane = (width: number, height: number, color: Color): Geometry => 
     color[0], color[1], color[2], color[3]
   ]);
   // prettier-ignore
-  // let st  = [
-  //   0.0, 0.0,
-  //   1.0, 0.0,
-  //   0.0, 1.0,
-  //   1.0, 1.0
-  // ];
+  let st  = [
+    0.0, 0.0,
+    1.0, 0.0,
+    0.0, 1.0,
+    1.0, 1.0
+  ];
   // prettier-ignore
   const idx = [
     0, 2, 1,
     1, 2, 3
   ];
-  return { position, normal: nor, color: col, indices: idx };
+  return { position, normal: nor, color: col, indices: idx, texCoord: st };
 };
 
 /**
