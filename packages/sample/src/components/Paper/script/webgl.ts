@@ -134,10 +134,10 @@ export const getVertexOption = (
 
     if (yyyy[1] === 0) {
       __origin.push(...[position[x], position[y], position[z]]);
-      // __start.push(...baseStart);
-      // __end.push(...baseEnd);
-      __start.push(...start);
-      __end.push(...end);
+      __start.push(...baseStart);
+      __end.push(...baseEnd);
+      // __start.push(...start);
+      // __end.push(...end);
       __vectors.push(0.0, 0.0, 0.0);
       // __origin.push(...[xx, 0, yy]);
       // __start.push(...start);
@@ -154,10 +154,10 @@ export const getVertexOption = (
     }
     if (yyyy[1] > 0) {
       __origin.push(...[position[x], position[y], position[z]]);
-      // __start.push(...baseStart);
-      // __end.push(...baseEnd);
-      __start.push(...start);
-      __end.push(...end);
+      __start.push(...baseStart);
+      __end.push(...baseEnd);
+      // __start.push(...start);
+      // __end.push(...end);
       __vectors.push(0.0, 0.0, 0.0);
       // __origin.push(...[xx, 0, yy]);
       // __start.push(...start);

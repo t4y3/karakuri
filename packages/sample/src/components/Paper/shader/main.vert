@@ -4,10 +4,12 @@ attribute vec4 end;
 attribute vec3 vectors;
 attribute vec3 origin;
 attribute vec4 color;
+attribute vec3 normal;
 attribute vec2 textureCoord;
 uniform mat4 mvpMatrix;
 uniform float interporation;
 varying vec4 vColor;
+varying vec3 vNormal;
 varying vec2 vTextureCoord;
 
 struct Quaternion {
@@ -148,6 +150,8 @@ void main(){
 //    gl_Position = mvpMatrix * vec4(rotate(position, q), 1.0);
 
     Quaternion q = slerp(a, b, interporation);
+
+    vNormal = transformQuat(normal, q);
 
     gl_Position = mvpMatrix * vec4(transformQuat(vectors, q) + origin, 1.0);
 }

@@ -27,6 +27,13 @@ export class Scene {
   parameters: Parameters & { interporation: number } = {
     cullFace: true,
     depthTest: true,
+    light: {
+      position: {
+        x: 1,
+        y: 1,
+        z: 1,
+      },
+    },
     clockWise: false,
     view: {
       fovy: 45,
@@ -190,6 +197,12 @@ export class Scene {
 
     this.reflectParameters();
 
+    this.gl.uniform3fv(this.uniLocation.eyePosition, this.camera.position);
+    this.gl.uniform3fv(this.uniLocation.lightDirection, [
+      this.parameters.light.position.x,
+      this.parameters.light.position.y,
+      this.parameters.light.position.z,
+    ]);
     this.gl.uniform1f(this.uniLocation.interporation, this.parameters.interporation);
 
     // 自作の
@@ -216,6 +229,7 @@ export class Scene {
       createVBO(this.gl, this.paper.geometry.vectors),
       createVBO(this.gl, this.paper.geometry.origin),
       createVBO(this.gl, this.paper.geometry.color),
+      createVBO(this.gl, this.paper.geometry.normal),
       createVBO(this.gl, this.paper.geometry.texCoord),
     ];
     this.paper.IBO = createIBO(this.gl, this.paper.geometry.indices);
