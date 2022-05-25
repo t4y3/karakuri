@@ -13,8 +13,13 @@
     "docs": "npm run build && rm -rf ../../docs/sample && cp -r public ../../docs/sample"
   },
   "dependencies": {
+    "bignumber.js": "^9.0.2",
     "gl-matrix": "^3.3.0",
+    "snapsvg": "^0.5.1",
     "taxis": "0.0.3",
-    "tweakpane": "^1.6.1"
+    "tweakpane": "^3.0.7"
+  },
+  "devDependencies": {
+    "@tweakpane/core": "^1.0.8"
   }
 }
