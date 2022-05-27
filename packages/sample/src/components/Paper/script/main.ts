@@ -28,9 +28,10 @@ import {
   drawTriangle,
   fillPoints,
   generateSvg,
+  fillLine,
 } from './svg';
 import { vec2, vec3 } from 'gl-matrix';
-import { getIndices, getPositions, getSt } from './webgl';
+import { getIndices, getDrawElementsPositions, getSt, getDrawArraysPositions } from './webgl';
 
 type CalcAdjacentVector = {
   vector: Vector;
@@ -446,29 +447,29 @@ export const generatePolygons = (element) => {
     // 確認のためにcanvasに情報を表示する
     const container = document.querySelectorAll('.wrapper')[i];
 
-    // pointsの描画
-    {
-      let svg = generateSvg();
-      container.appendChild(svg);
-      drawPointsSvg(svg, uniquePoints, { size: 1, fill: '#000', stroke: '#000' });
-
-      // clickで線分を表示
-      svg.querySelectorAll('circle').forEach((circle) => {
-        circle.addEventListener('click', (e) => {
-          svg.querySelectorAll('line').forEach((line) => {
-            line.remove();
-          });
-          const lines = matchSegment(
-            {
-              x: e.target.getAttribute('cx'),
-              y: e.target.getAttribute('cy'),
-            },
-            lineSegment,
-          );
-          drawLines(svg, lines);
-        });
-      });
-    }
+    // // pointsの描画
+    // {
+    //   let svg = generateSvg();
+    //   container.appendChild(svg);
+    //   drawPointsSvg(svg, uniquePoints, { size: 1, fill: '#000', stroke: '#000' });
+    //
+    //   // clickで線分を表示
+    //   svg.querySelectorAll('circle').forEach((circle) => {
+    //     circle.addEventListener('click', (e) => {
+    //       svg.querySelectorAll('line').forEach((line) => {
+    //         line.remove();
+    //       });
+    //       const lines = matchSegment(
+    //         {
+    //           x: e.target.getAttribute('cx'),
+    //           y: e.target.getAttribute('cy'),
+    //         },
+    //         lineSegment,
+    //       );
+    //       drawLines(svg, lines);
+    //     });
+    //   });
+    // }
 
     // // linesの描画
     // {
@@ -484,11 +485,11 @@ export const generatePolygons = (element) => {
     //   drawPolygons(svg, allPolygons);
     // }
 
-    // 全部の描画
-    let svg = generateSvg();
-    container.appendChild(svg);
-    drawTriangle(svg, triangles);
-    drawLines(svg, uniqueSplitVectors);
+    // // 全部の描画
+    // let svg = generateSvg();
+    // container.appendChild(svg);
+    // drawTriangle(svg, triangles);
+    // drawLines(svg, uniqueSplitVectors);
 
     // // TODO: htmlもけす
     // {
@@ -506,26 +507,29 @@ export const generatePolygons = (element) => {
     //   });
     // }
 
+
     // TODO: WebGL用の処理
-    const position = getPositions(uniquePoints);
-    const st = getSt(uniquePoints);
+    const { position, st } = getDrawArraysPositions(triangles);
+    // const position = getDrawElementsPositions(uniquePoints);
+    // const st = getSt(uniquePoints);
     const indices = getIndices(uniquePoints, triangles);
-    // pointsの描画
-    {
-      const right = getRightPoint(uniquePoints, { x0: 0, y0: 0, x1: 150, y1: 150 });
-      const left = getRightPoint(uniquePoints, { x0: 0, y0: 0, x1: 150, y1: 150 }, false);
-      let svg = generateSvg();
-      container.appendChild(svg);
-      drawPointsSvg(svg, right, { size: 3, fill: '#f00', stroke: '#f00' });
-      drawPointsSvg(svg, left, { size: 3, fill: '#00f', stroke: '#00f' });
-    }
+    // // pointsの描画
+    // {
+    //   const right = getRightPoint(uniquePoints, { x0: 0, y0: 0, x1: 150, y1: 150 });
+    //   const left = getRightPoint(uniquePoints, { x0: 0, y0: 0, x1: 150, y1: 150 }, false);
+    //   let svg = generateSvg();
+    //   container.appendChild(svg);
+    //   drawPointsSvg(svg, right, { size: 3, fill: '#f00', stroke: '#f00' });
+    //   drawPointsSvg(svg, left, { size: 3, fill: '#00f', stroke: '#00f' });
+    // }
     console.warn('頂点の数：', uniquePoints.length);
     console.warn('三角形の数：', triangles.length);
 
     const onLineClick = (callback) => {
       // clickで線分を表示
-      svg.querySelectorAll('line').forEach((line) => {
+      view.querySelectorAll('line').forEach((line) => {
         line.addEventListener('click', (e) => {
+          fillLine(view, getPointsFromLine(line));
           callback(line);
         });
       });
@@ -540,5 +544,5 @@ export const generatePolygons = (element) => {
     });
   });
 
-  return results.map(a=>a.data);
+  return results;
 };

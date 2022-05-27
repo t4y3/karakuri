@@ -10,6 +10,7 @@ import { addParameters } from '../../../utils/parameters';
 import type { Parameters } from '../../../utils/parameters';
 import { loadImage } from '../../../utils/utils';
 import { getVertexOption } from './webgl';
+import type { Vector } from './types';
 
 export class Scene {
   canvas: HTMLCanvasElement;
@@ -29,9 +30,9 @@ export class Scene {
     depthTest: true,
     light: {
       position: {
-        x: 1,
+        x: 0,
         y: 1,
-        z: 1,
+        z: 0,
       },
     },
     clockWise: false,
@@ -153,6 +154,17 @@ export class Scene {
 
         this.render();
       });
+
+    return {
+      updateGeometry: (vector: Vector) => {
+        this.setupPaperGeometry({
+          x0: vector.x0 / 10,
+          y0: vector.y0 / 10,
+          x1: vector.x1 / 10,
+          y1: vector.y1 / 10,
+        });
+      },
+    };
   }
 
   /**
@@ -218,9 +230,14 @@ export class Scene {
     mat4.multiply(this.vpMatrix, this.pMatrix, this.vMatrix);
   }
 
-  setupPaperGeometry() {
+  setupPaperGeometry(vector: Vector = { x0: 0, y0: 0, x1: 0, y1: 0 }) {
     // this.paper.geometry = kami(15.0, [1.0, 1.0, 0.0, 1.0]);
-    this.paper.geometry = kamiTest(this.paperGeometry.position, this.paperGeometry.st, this.paperGeometry.indices);
+    this.paper.geometry = kamiTest(
+      this.paperGeometry.position,
+      this.paperGeometry.st,
+      this.paperGeometry.indices,
+      vector,
+    );
 
     this.paper.VBO = [
       // createVBO(this.gl, this.paper.geometry.position),
@@ -244,7 +261,8 @@ export class Scene {
 
     this.setupMvp(mMatrix);
 
-    this.gl.drawElements(this.gl.TRIANGLES, this.paper.geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
+    // this.gl.drawElements(this.gl.TRIANGLES, this.paper.geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
+    this.gl.drawArrays(this.gl.TRIANGLES, 0, this.paper.geometry.position.length / 3);
   }
 
   setupAxisGeometry() {
@@ -484,6 +502,7 @@ export const kamiTest = (
   position,
   st,
   indices,
+  vector: Vector,
 ): Geometry & {
   vectors: Float32Array;
   origin: Float32Array;
@@ -493,19 +512,40 @@ export const kamiTest = (
   // prettier-ignore
   const normal: number[] = [];
   const color: number[] = [];
+  const colors = [
+    [227, 242, 253],
+    [187, 222, 251],
+    [232, 234, 246],
+    [197, 202, 233],
+    [237, 231, 246],
+    [209, 196, 233],
+    [225, 245, 254],
+    [179, 229, 252],
+  ];
+  console.warn(position.length / 3);
   [...Array(position.length / 3)].forEach(() => {
     normal.push(0.0, 1.0, 0.0);
-    color.push(1, 1, 1, 1.0);
+    // color.push(1, 1, 1, 1.0);
+  });
+  [...Array(position.length / 3)].forEach((_, i) => {
+    console.warn(i % colors.length)
+    color.push(
+      colors[i % colors.length][0] / 255,
+      colors[i % colors.length][1] / 255,
+      colors[i % colors.length][2] / 255,
+      1.0,
+      colors[i % colors.length][0] / 255,
+      colors[i % colors.length][1] / 255,
+      colors[i % colors.length][2] / 255,
+      1.0,
+      colors[i % colors.length][0] / 255,
+      colors[i % colors.length][1] / 255,
+      colors[i % colors.length][2] / 255,
+      1.0,
+    );
   });
 
-  const vertexOption = getVertexOption(position, {
-    x0: 0,
-    y0: 0,
-    x1: 15,
-    y1: 15,
-  });
-  
-  console.warn(vertexOption)
+  const vertexOption = getVertexOption(position, vector);
 
   return {
     position,

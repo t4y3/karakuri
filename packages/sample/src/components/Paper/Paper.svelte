@@ -7,7 +7,7 @@ import Cross03 from './svgs/cross03.svelte';
 import Cross04 from './svgs/cross04.svelte';
 import { Scene } from './script/setup';
 import { generatePolygons } from './script/main';
-import {  getPointsFromLine} from './script/svg';
+import { getPointsFromLine } from './script/svg';
 
 let canvasElement;
 let paneElement;
@@ -16,10 +16,10 @@ const scene = new Scene();
 
 onMount(() => {
   const list = generatePolygons(svgElement);
-  scene.init(canvasElement, paneElement, list[0]);
-  // list[0].onLineClick((line: SVGLineElement) => {
-  //   updateGeometry(getPointsFromLine(line));
-  // });
+  const { updateGeometry } = scene.init(canvasElement, paneElement, list[0].data);
+  list[0].onLineClick((line: SVGLineElement) => {
+    updateGeometry(getPointsFromLine(line));
+  });
 });
 onDestroy(() => {
   scene.destroy();
@@ -28,12 +28,13 @@ onDestroy(() => {
 
 <div class="w-full h-full flex">
   <div class="w-1/3 p-20 space-y-4" bind:this="{svgElement}">
-    <div class="wrapper flex space-x-2 rotate-x-180">
-      <Crane />
+    <!-- TODO: rotate-x-180 -->
+    <div class="wrapper flex space-x-2">
+      <div class="w-full"><Crane /></div>
     </div>
-<!--    <div class="wrapper flex space-x-2">-->
-<!--      <Cross />-->
-<!--    </div>-->
+    <!--    <div class="wrapper flex space-x-2">-->
+    <!--      <Cross />-->
+    <!--    </div>-->
     <!--    <div class="wrapper flex space-x-2">-->
     <!--      <Cross02 />-->
     <!--    </div>-->

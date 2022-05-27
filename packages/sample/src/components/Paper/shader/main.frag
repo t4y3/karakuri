@@ -21,6 +21,7 @@ void main(){
 
 //    gl_FragColor = vColor;
 //    gl_FragColor = vColor * sampleColor;
-    gl_FragColor = vec4(rgb, 1.0);
+//    gl_FragColor = sampleColor;
+    gl_FragColor = vColor * vec4(rgb, 1.0);
 }
 

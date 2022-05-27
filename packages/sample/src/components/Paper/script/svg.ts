@@ -2,14 +2,14 @@ import Snap from "snapsvg";
 import type { Point, Vector } from "./types";
 import { Width, Height } from "./constants";
 const Colors = [
-  "#E3F2FD",
-  "#BBDEFB",
-  "#E8EAF6",
-  "#C5CAE9",
-  "#EDE7F6",
-  "#D1C4E9",
-  "#E1F5FE",
-  "#B3E5FC",
+  "#E3F2FD", // 227, 242, 253
+  "#BBDEFB", // 187, 222, 251
+  "#E8EAF6", // 232, 234, 246
+  "#C5CAE9", // 197, 202, 233
+  "#EDE7F6", // 237, 231, 246
+  "#D1C4E9", // 209, 196, 233
+  "#E1F5FE", // 225, 245, 254
+  "#B3E5FC", // 179, 229, 252
 ];
 
 /**
@@ -72,6 +72,27 @@ export const drawLines = (svg: HTMLOrSVGElement, lines: Vector[]) => {
       stroke: "#000",
       'stroke-width': '1px'
     });
+  });
+  return paper.node;
+};
+
+export const fillLine = (svg: SVGElement, line: Vector) => {
+  const paper = Snap(svg);
+  const lines = svg.querySelectorAll(`line`);
+  lines.forEach((vec) => {
+    const vecPoint = getPointsFromLine(vec);
+    if (line.x0 === vecPoint.x0 && line.y0 === vecPoint.y0 &&
+      line.x1 === vecPoint.x1 && line.y1 === vecPoint.y1) {
+      Snap(vec).attr({
+        fill: '#f00',
+        stroke: "#f00",
+      })
+    } else {
+      Snap(vec).attr({
+        fill: '#000',
+        stroke: "#000",
+      })
+    }
   });
   return paper.node;
 };

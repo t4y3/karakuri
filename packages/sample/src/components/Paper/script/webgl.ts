@@ -5,7 +5,31 @@ import { equalPoint, equalPointLax } from './math';
 import { quat, vec3 } from 'gl-matrix';
 import { cross, normalize } from 'shared/lib/src/vec3';
 
-export const getPositions = (points: Point[]) => {
+export const getDrawArraysPositions = (polygons: Array<Point[]>) => {
+  const position = [];
+  const st = [];
+  polygons.forEach((points) => {
+    points.forEach((point) => {
+      position.push(point.x / 10, 0, point.y / 10);
+
+      let x = 0;
+      let y = 0;
+      if (point.x !== 0) {
+        x = point.x / Width;
+      }
+      if (point.y !== 0) {
+        y = point.y / Height;
+      }
+      st.push(x, y);
+    });
+  });
+  return {
+    position,
+    st,
+  };
+};
+
+export const getDrawElementsPositions = (points: Point[]) => {
   const position = [];
   points.forEach((point) => {
     position.push(point.x / 10, 0, point.y / 10);
@@ -133,37 +157,67 @@ export const getVertexOption = (
     // 垂線の足を求める ここまで
 
     if (yyyy[1] === 0) {
-      __origin.push(...[position[x], position[y], position[z]]);
-      __start.push(...baseStart);
-      __end.push(...baseEnd);
-      // __start.push(...start);
-      // __end.push(...end);
-      __vectors.push(0.0, 0.0, 0.0);
-      // __origin.push(...[xx, 0, yy]);
-      // __start.push(...start);
-      // __end.push(...end);
-      // // __vectors.push(x - xx, 0.0, z - yy);
-      // __vectors.push(position[x] - xx, 0.0, position[z] - yy);
+      // TODO: 他の三角形がどっちかによる
+      const triangleNo = Math.ceil(i / 3);
+      let adjacentPointIndex1 = 0;
+      let adjacentPointIndex2 = 0;
+      if (i === 0) {
+        adjacentPointIndex1 = 1;
+        adjacentPointIndex2 = 2;
+      }
+      if (i !== 0 && i !== (position.length / 3) && i % 3 === 0) {
+        adjacentPointIndex1 = i + 1;
+        adjacentPointIndex2 = i + 2;
+      }
+      if (i % 3 === 1) {
+        adjacentPointIndex1 = i - 1;
+        adjacentPointIndex2 = i + 1;
+      }
+      if (i % 3 === 2 || i === (position.length / 3)) {
+        adjacentPointIndex1 = i - 1;
+        adjacentPointIndex2 = i - 2;
+      }
+
+
+      const ap1X = adjacentPointIndex1 * 3;
+      const ap1Y = adjacentPointIndex1 * 3 + 1;
+      const ap1Z = adjacentPointIndex1 * 3 + 2;
+      const ap2X = adjacentPointIndex2 * 3;
+      const ap2Y = adjacentPointIndex2 * 3 + 1;
+      const ap2Z = adjacentPointIndex2 * 3 + 2;
+
+      // TODO: 雑なの直す
+      const yyyy = cross(
+        [foldLineVecX, 0, foldLineVecY],
+        normalize([position[ap1X] - foldLineVec.x0, position[ap1Y], position[ap1Z] - foldLineVec.y0]),
+      );
+      const yyyy2 = cross(
+        [foldLineVecX, 0, foldLineVecY],
+        normalize([position[ap2X] - foldLineVec.x0, position[ap2Y], position[ap2Z] - foldLineVec.y0]),
+      );
+      if (yyyy[1] < 0 || yyyy2[1] < 0) {
+        __origin.push(...[xx, 0, yy]);
+        __start.push(...start);
+        __end.push(...end);
+        __vectors.push(position[x] - xx, 0.0, position[z] - yy);
+      } else {
+        __origin.push(...[position[x], position[y], position[z]]);
+        __start.push(...baseStart);
+        __end.push(...baseEnd);
+        __vectors.push(0.0, 0.0, 0.0);
+      }
     }
     if (yyyy[1] < 0) {
       __origin.push(...[xx, 0, yy]);
       __start.push(...start);
       __end.push(...end);
-      // __vectors.push(x - xx, 0.0, z - yy);
       __vectors.push(position[x] - xx, 0.0, position[z] - yy);
     }
     if (yyyy[1] > 0) {
       __origin.push(...[position[x], position[y], position[z]]);
       __start.push(...baseStart);
       __end.push(...baseEnd);
-      // __start.push(...start);
-      // __end.push(...end);
       __vectors.push(0.0, 0.0, 0.0);
-      // __origin.push(...[xx, 0, yy]);
-      // __start.push(...start);
-      // __end.push(...end);
-      // // __vectors.push(x - xx, 0.0, z - yy);
-      // __vectors.push(position[x] - xx, 0.0, position[z] - yy);
     }
   });
 

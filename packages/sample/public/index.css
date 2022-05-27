@@ -618,6 +618,9 @@ html, body {
 .flex-1 {
   flex: 1 1 0%;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
@@ -663,6 +666,9 @@ html, body {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.stroke-\[3\] {
+  stroke-width: 3;
 }
 .p-8 {
   padding: 2rem;
