@@ -53,6 +53,11 @@ export const axis = (size: number, color?: Color): Geometry => {
   return { position, color: new Float32Array(col) };
 };
 
+/**
+ * @example
+ * // Render using drawArrays with mode gl.TRIANGLES.
+ * this.gl.drawElements(this.gl.TRIANGLES, this.paper.geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
+ */
 export const plane = (width: number, height: number, color: Color): Geometry => {
   const w = width / 2;
   const h = height / 2;
@@ -123,18 +128,84 @@ export const floor = (width: number, depth: number, color: Color): Geometry => {
     color[0], color[1], color[2], color[3]
   ]);
   // prettier-ignore
-  // let st  = [
-  //   0.0, 0.0,
-  //   1.0, 0.0,
-  //   0.0, 1.0,
-  //   1.0, 1.0
-  // ];
+  let st  = [
+    0.0, 0.0,
+    1.0, 0.0,
+    0.0, 1.0,
+    1.0, 1.0
+  ];
   // prettier-ignore
   let idx = [
-    0, 1, 2,
-    2, 1, 3
+    0, 2, 1,
+    1, 2, 3
   ];
-  return { position, normal, color: col, indices: idx };
+  return { position, normal, color: col, indices: idx, texCoord: st };
+};
+
+/**
+ * @example
+ * // Render using drawElements with mode gl.TRIANGLES.
+ * this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.floor.IBO);
+ * this.gl.drawElements(this.gl.TRIANGLES, this.floor.geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
+ */
+export const kami = (
+  size: number,
+  color: Color,
+): Geometry => {
+  const w = size / 2;
+  const d = size / 2;
+
+  const ww = w / 2;
+
+  // prettier-ignore
+  const position = new Float32Array([
+    -w, 0.0,  d,
+    ww, 0.0,  d,
+    -w, 0.0, -d,
+    ww, 0.0, -d,
+
+    ww, ww, d,
+    ww, ww, -d,
+  ]);
+  // prettier-ignore
+  const normal = new Float32Array([
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+
+    0.0, 1.0, 0.0,
+    0.0, 1.0, 0.0,
+  ]);
+  // prettier-ignore
+  let col = new Float32Array([
+    color[0], color[1], color[2], color[3],
+    color[0], color[1], color[2], color[3],
+    color[0], color[1], color[2], color[3],
+    color[0], color[1], color[2], color[3],
+
+    color[0], color[1], color[2], color[3],
+    color[0], color[1], color[2], color[3],
+  ]);
+  // prettier-ignore
+  let st  = [
+    0.0, 0.0,
+    1.0 * 0.75, 0.0,
+    0.0, 1.0, // TODO
+    1.0 * 0.75, 1.0, // TODO
+
+    1.0, 0.0,
+    1.0, 1.0
+  ];
+  // prettier-ignore
+  let idx = [
+    0, 2, 1,
+    1, 2, 3,
+
+    1, 3, 4,
+    4, 3, 5
+  ];
+  return { position, normal, color: col, indices: idx, texCoord: st };
 };
 
 // TODO: 変更

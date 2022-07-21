@@ -1,4 +1,4 @@
-/node_modules/
+node_modules/
 /packages/**/public/build/
 
 .DS_Store

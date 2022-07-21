@@ -32,15 +32,15 @@ export class Scene {
       position: {
         x: 30,
         y: 30,
-        z: 30
-      }
-    }
+        z: 30,
+      },
+    },
   };
   // model系
   floor: {
     geometry: Geometry;
     VBO: WebGLBuffer[];
-    IBO: WebGLBuffer
+    IBO: WebGLBuffer;
   } = {
     geometry: null,
     VBO: [],
@@ -53,6 +53,11 @@ export class Scene {
   }[] = [];
   itemsPosition: [x: number, y: number, z: number][] = [];
   camera: Camera;
+  // 色を保存するようのテクスチャ
+  texture: WebGLTexture;
+  renderBuffer;
+  WebGLRenderbuffer;
+  frameBuffer: WebGLFramebuffer;
 
   constructor() {
     this.taxis = new Taxis();
@@ -73,6 +78,35 @@ export class Scene {
     this.addResizeEvent();
 
     this.setupProgram();
+
+    this.texture = this.gl.createTexture();
+    this.gl.bindTexture(this.gl.TEXTURE_2D, this.texture);
+    this.gl.texImage2D(
+      this.gl.TEXTURE_2D,
+      0,
+      this.gl.RGBA,
+      this.canvas.width,
+      this.canvas.height,
+      0,
+      this.gl.RGBA,
+      this.gl.UNSIGNED_BYTE,
+      null,
+    );
+    // 深度保存ようのレンダーバッファ
+    this.renderBuffer = this.gl.createRenderbuffer();
+    this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, this.renderBuffer);
+    this.gl.renderbufferStorage(this.gl.RENDERBUFFER, this.gl.DEPTH_COMPONENT16, this.canvas.width, this.canvas.height);
+
+    this.frameBuffer = this.gl.createFramebuffer();
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, this.frameBuffer);
+    this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, this.texture, 0);
+    this.gl.framebufferRenderbuffer(this.gl.FRAMEBUFFER, this.gl.DEPTH_ATTACHMENT, this.gl.RENDERBUFFER, this.renderBuffer);
+
+
+    this.gl.bindTexture(this.gl.TEXTURE_2D, null);
+    this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, null);
+    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
+
 
     // 個別の処理
     this.setupItemsGeometry();
@@ -162,7 +196,7 @@ export class Scene {
       let mMatrix = mat4.create();
       mat4.translate(mMatrix, mMatrix, this.itemsPosition[i]);
       // 箱のサイズ分上にずらす
-      mat4.translate(mMatrix, mMatrix, [0.0, BOX_SIZE/ 2, 0.0]);
+      mat4.translate(mMatrix, mMatrix, [0.0, BOX_SIZE / 2, 0.0]);
 
       this.setupMvp(mMatrix);
       this.gl.drawElements(this.gl.TRIANGLES, this.items[i].geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);

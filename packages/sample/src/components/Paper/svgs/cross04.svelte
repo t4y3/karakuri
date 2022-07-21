@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150">
+    <!-- ここから枠-->
+    <line
+      stroke="#000"
+      opacity="1"
+      x1="0"
+      y1="0"
+      x2="150"
+      y2="0"
+      stroke-width="2"
+    />
+    <line
+      stroke="#000"
+      opacity="1"
+      x1="150"
+      y1="0"
+      x2="150"
+      y2="150"
+      stroke-width="2"
+    />
+    <line
+      stroke="#000"
+      opacity="1"
+      x1="0"
+      y1="150"
+      x2="150"
+      y2="150"
+      stroke-width="2"
+    />
+    <line
+      stroke="#000"
+      opacity="1"
+      x1="0"
+      y1="150"
+      x2="0"
+      y2="0"
+      stroke-width="2"
+    />
+    <!-- ここまで枠-->
+    <line
+      stroke="#000"
+      opacity="1"
+      x1="0"
+      y1="75"
+      x2="75"
+      y2="0"
+      stroke-width="1"
+    />
+</svg>

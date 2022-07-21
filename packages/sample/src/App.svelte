@@ -3,6 +3,7 @@ import Camera from './components/Camera/Camera.svelte';
 import Light from './components/Light/Light.svelte';
 import LightAmbient from './components/LightAmbient/LightAmbient.svelte';
 import Picking from './components/Picking/Picking.svelte';
+import Paper from './components/Paper/Paper.svelte';
 import url from './stores/url';
 
 const pages = {
@@ -14,17 +15,22 @@ const pages = {
   light: {
     hash: '#light',
     component: Light,
-    description: 'Phong reflection model'
+    description: 'Phong reflection model',
   },
   lightAmbient: {
     hash: '#lightAmbient',
     component: LightAmbient,
-    description: 'Ambient'
+    description: 'Ambient',
   },
   picking: {
     hash: '#picking',
     component: Picking,
-    description: '...'
+    description: '...',
+  },
+  paper: {
+    hash: '#paper',
+    component: Paper,
+    description: '...',
   },
 };
 const pageList = Object.values(pages);
