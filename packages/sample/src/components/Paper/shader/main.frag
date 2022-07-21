@@ -17,7 +17,7 @@ void main(){
     vec3 normal = normalize(vNormal);
     float diffuse = max(dot(light, normal), 0.0);
     // 拡散光と環境光の成分をグローバルカラーに適用しておく @@@
-    vec3 rgb = sampleColor.rgb * min(diffuse, 1.0);
+    vec3 rgb = sampleColor.rgb * min(diffuse + 0.2, 1.0);
 
 //    gl_FragColor = vColor;
 //    gl_FragColor = vColor * sampleColor;

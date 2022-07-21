@@ -35,13 +35,13 @@ export const generateSvg = () => {
   return svg.node;
 };
 
-export const drawPoints = (svg: HTMLOrSVGElement, points: Point[], opts: {
+export const drawPoints = (svg: SVGElement, points: Point[], opts: {
   size: number, fill:string, stroke: string
 } = { size: 1, fill: '#000', stroke: '#000' }) => {
   const paper = Snap(svg);
   points.forEach((point) => {
     paper.circle(point.x, point.y, opts.size).attr({
-      id: `p-${point.x}-${point.y}`.replace('.', '-'),
+      id: `p-${point.x}-${point.y}`.replace(/\./g, '-'),
       fill: opts.fill,
       stroke: opts.stroke,
     });
@@ -50,21 +50,31 @@ export const drawPoints = (svg: HTMLOrSVGElement, points: Point[], opts: {
 };
 
 export const fillPoints = (
-  svg: HTMLOrSVGElement,
+  svg: SVGElement,
   points: Point[],
   color: string
 ) => {
   const paper = Snap(svg);
   points.forEach((point) => {
-    const target = paper.select(`#p-${point.x}-${point.y}`.replace('.', '-'));
+    const target = paper.select(`#p-${point.x}-${point.y}`.replace(/\./g, '-'));
     target.attr({
       fill: color,
+      stroke: color
     });
   });
   return paper.node;
 };
 
-export const drawLines = (svg: HTMLOrSVGElement, lines: Vector[]) => {
+export const removePointsAll = (
+  svg: SVGElement
+) => {
+  const targets = svg.querySelectorAll(`circle`);
+  targets.forEach((point) => {
+    svg.removeChild(point);
+  });
+};
+
+export const drawLines = (svg: SVGElement, lines: Vector[]) => {
   const paper = Snap(svg);
   lines.forEach((vec) => {
     paper.line(vec.x0, vec.y0, vec.x1, vec.y1).attr({
@@ -98,7 +108,7 @@ export const fillLine = (svg: SVGElement, line: Vector) => {
 };
 
 export const drawPolygons = (
-  svg: HTMLOrSVGElement,
+  svg: SVGElement,
   polygons: Array<Point[]>
 ) => {
   const paper = Snap(svg);
@@ -124,7 +134,7 @@ export const drawPolygons = (
 };
 
 export const drawTriangle = (
-  svg: HTMLOrSVGElement,
+  svg: SVGElement,
   trianglePoints: Array<Point[]>
 ) => {
   const paper = Snap(svg);

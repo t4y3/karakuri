@@ -2,7 +2,7 @@ import { BigNumber } from 'bignumber.js';
 import {
   hasLine,
   equalPoint,
-  getIntersectionPoints,
+  getIntersectionPointsFromLine,
   sortPoints,
   reverseVector,
   getEndPoint,
@@ -17,7 +17,7 @@ import {
   isEdgeLax,
   hasLineLax,
   equalPointLax,
-  getRightPoint,
+  getRightPoint, getIntersectionPoint,
 } from './math';
 import type { Point, Vector, SegmentKey } from './types';
 import {
@@ -28,7 +28,7 @@ import {
   drawTriangle,
   fillPoints,
   generateSvg,
-  fillLine,
+  fillLine, removePointsAll,
 } from './svg';
 import { vec2, vec3 } from 'gl-matrix';
 import { getIndices, getDrawElementsPositions, getSt, getDrawArraysPositions } from './webgl';
@@ -297,7 +297,7 @@ export const generatePolygons = (element) => {
     const vectors: Vector[] = [...lines].map((line) => getPointsFromLine(line));
 
     // 各線分の交点を求める。重複点は削除する
-    const points = getIntersectionPoints(vectors);
+    const points = getIntersectionPointsFromLine(vectors);
 
     // uniqueなpointsにする
     // TODO: 微妙な誤差の点がある
@@ -507,30 +507,40 @@ export const generatePolygons = (element) => {
     //   });
     // }
 
-
     // TODO: WebGL用の処理
     const { position, st } = getDrawArraysPositions(triangles);
     // const position = getDrawElementsPositions(uniquePoints);
     // const st = getSt(uniquePoints);
     const indices = getIndices(uniquePoints, triangles);
-    // // pointsの描画
-    // {
-    //   const right = getRightPoint(uniquePoints, { x0: 0, y0: 0, x1: 150, y1: 150 });
-    //   const left = getRightPoint(uniquePoints, { x0: 0, y0: 0, x1: 150, y1: 150 }, false);
-    //   let svg = generateSvg();
-    //   container.appendChild(svg);
-    //   drawPointsSvg(svg, right, { size: 3, fill: '#f00', stroke: '#f00' });
-    //   drawPointsSvg(svg, left, { size: 3, fill: '#00f', stroke: '#00f' });
-    // }
     console.warn('頂点の数：', uniquePoints.length);
     console.warn('三角形の数：', triangles.length);
 
     const onLineClick = (callback) => {
+      let svg = generateSvg();
+      container.appendChild(svg);
+
       // clickで線分を表示
       view.querySelectorAll('line').forEach((line) => {
         line.addEventListener('click', (e) => {
           fillLine(view, getPointsFromLine(line));
           callback(line);
+
+          // pointsの描画
+          {
+            const vec = getPointsFromLine(line);
+            const right = getRightPoint(uniquePoints, vec);
+            const left = getRightPoint(uniquePoints, vec, false);
+            removePointsAll(svg);
+            drawPointsSvg(svg, uniquePoints, { size: 3, fill: '#000', stroke: '#000' });
+            fillPoints(svg, uniquePoints, '#ff0');
+            fillPoints(svg, right, '#f00');
+            fillPoints(svg, left, '#00f');
+            right.forEach(rp => {
+              const intersectionPoint = getIntersectionPoint(vec,  rp);
+              drawPointsSvg(svg, [intersectionPoint], { size: 3, fill: '#0ff', stroke: '#0ff' });
+            })
+
+          }
         });
       });
     };

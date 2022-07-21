@@ -9,7 +9,7 @@ import { fragment, vertex, attribute, uniLocation } from '../shader/shader';
 import { addParameters } from '../../../utils/parameters';
 import type { Parameters } from '../../../utils/parameters';
 import { loadImage } from '../../../utils/utils';
-import { getVertexOption } from './webgl';
+import { getAfterFoldedPosition, getPolygonColors, getVertexOption } from './webgl';
 import type { Vector } from './types';
 
 export class Scene {
@@ -48,6 +48,16 @@ export class Scene {
     st: number[];
     indices: number[];
   };
+  foldedLines: Vector[];
+  vertexAttributes: {
+    position: Float32Array;
+    origin: Float32Array;
+    // 折線から動かす点までのvector
+    vectors: Float32Array;
+    start: Float32Array;
+    end: Float32Array;
+    afterPosition: Float32Array;
+  }[];
   // model系
   axis: {
     geometry: Geometry;
@@ -83,10 +93,20 @@ export class Scene {
       st: number[];
       indices: number[];
     },
+    vectors: Vector[],
   ) {
     this.canvas = canvas;
     this.gl = canvas.getContext(`webgl`);
     this.paperGeometry = paperGeometry;
+    this.foldedLines = vectors.map((vector) => {
+      return {
+        x0: vector.x0 / 10,
+        y0: vector.y0 / 10,
+        x1: vector.x1 / 10,
+        y1: vector.y1 / 10,
+      };
+    });
+    this.vertexAttributes = [];
     this.camera = new Camera(canvas, {
       position: {
         direction: [0.0, 1.0, 0.5],
@@ -106,7 +126,8 @@ export class Scene {
         'interporation',
         {
           min: 0.0,
-          max: 1.0,
+          max: this.foldedLines.length,
+          // max: 1.0,
         },
       )
       .on('change', (v) => {
@@ -118,7 +139,21 @@ export class Scene {
     this.setupProgram();
 
     // 個別の処理
-    this.setupPaperGeometry();
+    this.foldedLines.forEach((vector, i) => {
+      const position = i === 0 ? this.paperGeometry.position : this.vertexAttributes[i - 1].afterPosition;
+      const geometry = pagerGeometry(position, this.paperGeometry.st, this.paperGeometry.indices, vector);
+      this.vertexAttributes[i] = {
+        position: geometry.position,
+        origin: geometry.origin,
+        vectors: geometry.vectors,
+        start: geometry.start,
+        end: geometry.end,
+        afterPosition: geometry.afterPosition,
+      };
+    });
+
+    this.setupPaperGeometry(this.foldedLines[0]);
+
     this.setupAxisGeometry();
     this.setupLocation();
 
@@ -215,7 +250,7 @@ export class Scene {
       this.parameters.light.position.y,
       this.parameters.light.position.z,
     ]);
-    this.gl.uniform1f(this.uniLocation.interporation, this.parameters.interporation);
+    this.gl.uniform1f(this.uniLocation.interporation, this.parameters.interporation % 1);
 
     // 自作の
     mat4.invert(this.vMatrix, this.camera.update());
@@ -231,28 +266,51 @@ export class Scene {
   }
 
   setupPaperGeometry(vector: Vector = { x0: 0, y0: 0, x1: 0, y1: 0 }) {
-    // this.paper.geometry = kami(15.0, [1.0, 1.0, 0.0, 1.0]);
-    this.paper.geometry = kamiTest(
+    this.paper.geometry = pagerGeometry(
       this.paperGeometry.position,
       this.paperGeometry.st,
       this.paperGeometry.indices,
       vector,
     );
 
-    this.paper.VBO = [
-      // createVBO(this.gl, this.paper.geometry.position),
-      createVBO(this.gl, this.paper.geometry.start),
-      createVBO(this.gl, this.paper.geometry.end),
-      createVBO(this.gl, this.paper.geometry.vectors),
-      createVBO(this.gl, this.paper.geometry.origin),
-      createVBO(this.gl, this.paper.geometry.color),
-      createVBO(this.gl, this.paper.geometry.normal),
-      createVBO(this.gl, this.paper.geometry.texCoord),
-    ];
+    // TODO: startとかをthis.paper.geometryにいれない
+    this.setupPaperVBO(
+      this.paper.geometry.start,
+      this.paper.geometry.end,
+      this.paper.geometry.vectors,
+      this.paper.geometry.origin,
+      this.paper.geometry.color,
+      this.paper.geometry.normal,
+      this.paper.geometry.texCoord,
+    );
     this.paper.IBO = createIBO(this.gl, this.paper.geometry.indices);
   }
 
+  setupPaperVBO(start, end, vectors, origin, color, normal, texCoord) {
+    this.paper.VBO = [
+      // createVBO(this.gl, this.paper.geometry.position),
+      createVBO(this.gl, start),
+      createVBO(this.gl, end),
+      createVBO(this.gl, vectors),
+      createVBO(this.gl, origin),
+      createVBO(this.gl, color),
+      createVBO(this.gl, normal),
+      createVBO(this.gl, texCoord),
+    ];
+  }
+
   renderPaperGeometry(position) {
+    const g = this.vertexAttributes[Math.min(Math.floor(this.parameters.interporation / 1), this.foldedLines.length - 1)];
+    this.setupPaperVBO(
+      g.start,
+      g.end,
+      g.vectors,
+      g.origin,
+      this.paper.geometry.color,
+      this.paper.geometry.normal,
+      this.paper.geometry.texCoord,
+    )
+
     let mMatrix = mat4.create();
     mat4.translate(mMatrix, mMatrix, position);
     enableAttribute(this.gl, this.paper.VBO, this.attLocation, this.attStride);
@@ -346,149 +404,6 @@ export class Scene {
 type Color = [number, number, number, number];
 
 /**
- * @example
- * // Render using drawElements with mode gl.TRIANGLES.
- * this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.floor.IBO);
- * this.gl.drawElements(this.gl.TRIANGLES, this.floor.geometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
- */
-export const kami = (
-  size: number,
-  color: Color,
-): Geometry & {
-  vectors: number[];
-  origin: Float32Array;
-  start: number[];
-  end: number[];
-} => {
-  const w = size / 2;
-  const d = size / 2;
-
-  // 1/4のとこ
-  const ww = w / 2;
-
-  // prettier-ignore
-  const position = new Float32Array([
-    0.0, 0.0,  size,
-    w + ww, 0.0,  size,
-    0.0, 0.0, 0.0,
-    w + ww, 0.0, 0.0,
-
-    // yの部分を計算で変えてみる
-    size, 0.0, size,
-    size, 0.0, 0.0,
-    // -w, 0.0,  d,
-    // ww, 0.0,  d,
-    // -w, 0.0, -d,
-    // ww, 0.0, -d,
-    //
-    // // yの部分を計算で変えてみる
-    // ww + ww, 0.0, d,
-    // ww + ww, 0.0, -d,
-  ]);
-  // prettier-ignore
-  const normal = new Float32Array([
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-
-    0.0, 1.0, 0.0,
-    0.0, 1.0, 0.0,
-  ]);
-  // prettier-ignore
-  let col = new Float32Array([
-    color[0], color[1], color[2], color[3],
-    color[0], color[1], color[2], color[3],
-    color[0], color[1], color[2], color[3],
-    color[0], color[1], color[2], color[3],
-
-    color[0], color[1], color[2], color[3],
-    color[0], color[1], color[2], color[3],
-  ]);
-  // prettier-ignore
-  let st  = [
-    0.0, 0.0,
-    1.0 * 0.75, 0.0,
-    0.0, 1.0, // TODO
-    1.0 * 0.75, 1.0, // TODO
-
-    1.0, 0.0,
-    1.0, 1.0
-  ];
-  // prettier-ignore
-  let idx = [
-    0, 2, 1,
-    1, 2, 3,
-
-    1, 3, 4,
-    4, 3, 5
-  ];
-
-  const startVec = vec3.fromValues(w, 0.0, 0.0);
-  const endVec = vec3.fromValues(0, w, 0.0);
-
-  // ２つのベクトルの回転軸
-  const __axis = normalize(cross(startVec, endVec));
-
-  const start = quat.create();
-  const end = quat.create();
-  quat.setAxisAngle(start, __axis, 0 * (Math.PI / 180));
-  quat.setAxisAngle(end, __axis, 180 * (Math.PI / 180));
-  quat.normalize(start, start);
-  quat.normalize(end, end);
-
-  const baseStart = quat.create();
-  const baseEnd = quat.create();
-  quat.identity(baseStart);
-  quat.identity(baseEnd);
-
-  return {
-    position,
-    normal,
-    color: col,
-    indices: idx,
-    texCoord: st,
-    // prettier-ignore
-    vectors: [
-      ...[0.0, 0.0, 0.0],
-      ...[0.0, 0.0, 0.0],
-      ...[0.0, 0.0, 0.0],
-      ...[0.0, 0.0, 0.0],
-      ...[ww, 0.0, 0.0],
-      ...[ww, 0.0, 0.0],
-    ],
-    // prettier-ignore
-    origin: [
-      position[0], position[1], position[2],
-      position[3], position[4], position[5],
-      position[6], position[7], position[8],
-      position[9], position[10], position[11],
-
-      position[3], position[4], position[5],
-      position[9], position[10], position[11],
-    ],
-    // prettier-ignore
-    start: [
-      ...baseStart,
-      ...baseStart,
-      ...baseStart,
-      ...baseStart,
-      ...start,
-      ...start
-    ],
-    // prettier-ignore
-    end: [
-      ...baseEnd,
-      ...baseEnd,
-      ...baseEnd,
-      ...baseEnd,
-      ...end,
-      ...end
-    ],
-  };
-};
-
-/**
  * 軌道の座標を配列で返します。
  *
  * @param {THREE.Vector3} startPos 開始点です。
@@ -498,63 +413,38 @@ export const kami = (
  * @see ics media
  */
 
-export const kamiTest = (
-  position,
-  st,
-  indices,
+export const pagerGeometry = (
+  position: number[],
+  st: number[],
+  indices: number[],
   vector: Vector,
 ): Geometry & {
   vectors: Float32Array;
   origin: Float32Array;
   start: Float32Array;
   end: Float32Array;
+  afterPosition: Float32Array;
 } => {
-  // prettier-ignore
   const normal: number[] = [];
-  const color: number[] = [];
-  const colors = [
-    [227, 242, 253],
-    [187, 222, 251],
-    [232, 234, 246],
-    [197, 202, 233],
-    [237, 231, 246],
-    [209, 196, 233],
-    [225, 245, 254],
-    [179, 229, 252],
-  ];
-  console.warn(position.length / 3);
+
+  const color = getPolygonColors(new Float32Array(position));
+
   [...Array(position.length / 3)].forEach(() => {
     normal.push(0.0, 1.0, 0.0);
-    // color.push(1, 1, 1, 1.0);
-  });
-  [...Array(position.length / 3)].forEach((_, i) => {
-    console.warn(i % colors.length)
-    color.push(
-      colors[i % colors.length][0] / 255,
-      colors[i % colors.length][1] / 255,
-      colors[i % colors.length][2] / 255,
-      1.0,
-      colors[i % colors.length][0] / 255,
-      colors[i % colors.length][1] / 255,
-      colors[i % colors.length][2] / 255,
-      1.0,
-      colors[i % colors.length][0] / 255,
-      colors[i % colors.length][1] / 255,
-      colors[i % colors.length][2] / 255,
-      1.0,
-    );
   });
 
   const vertexOption = getVertexOption(position, vector);
 
   return {
-    position,
+    // position,
+    position: vertexOption.afterPosition,
     normal: new Float32Array(normal),
     color: new Float32Array(color),
     origin: new Float32Array(vertexOption.origin),
     vectors: new Float32Array(vertexOption.vectors),
     start: new Float32Array(vertexOption.start),
     end: new Float32Array(vertexOption.end),
+    afterPosition: vertexOption.afterPosition,
     indices,
     texCoord: st,
   };

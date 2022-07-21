@@ -16,7 +16,10 @@ const scene = new Scene();
 
 onMount(() => {
   const list = generatePolygons(svgElement);
-  const { updateGeometry } = scene.init(canvasElement, paneElement, list[0].data);
+  const { updateGeometry } = scene.init(canvasElement, paneElement, list[0].data, [
+    { x0: 0, y0: 0, x1: 150, y1: 150 },
+    { x0: 0, y0: 150, x1: 150, y1: 0 }
+  ]);
   list[0].onLineClick((line: SVGLineElement) => {
     updateGeometry(getPointsFromLine(line));
   });

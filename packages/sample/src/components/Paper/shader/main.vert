@@ -1,4 +1,4 @@
-//assttribute vec3 position;
+//attttttribute vec3 position;
 attribute vec4 start;
 attribute vec4 end;
 attribute vec3 vectors;

@@ -199,7 +199,7 @@ export const getEndPoint = (v: Vector) => {
   };
 };
 
-export const getIntersectionPoints = (lines): Point[] => {
+export const getIntersectionPointsFromLine = (lines): Point[] => {
   const points = [];
   for (let i = 0, length = lines.length; i < length; i++) {
     for (let j = 0, length = lines.length; j < length; j++) {
@@ -444,39 +444,57 @@ export const makeUniqueVectors = (vectors: Vector[]) => {
 };
 
 export const isRightSide = (point: Point, vector: Vector) => {
-  const vec = normalize(vec3.fromValues(vector.x1 - vector.x0, vector.y1 - vector.y0, 0));
-  const __cross = cross(vec, normalize([point.x, point.y, 0]));
+  const __cross = cross(
+    [vector.x1 - vector.x0, vector.y1 - vector.y0, 0],
+    normalize([point.x - vector.x0, point.y - vector.y0, 0]),
+  );
+
   // 右側
   if (__cross[2] < 0) {
     return true;
   }
   return false;
-}
+};
 
 export const isLeftSide = (point: Point, vector: Vector) => {
-  const vec = normalize(vec3.fromValues(vector.x1 - vector.x0, vector.y1 - vector.y0, 0));
-  const __cross = cross(vec, normalize([point.x, point.y, 0]));
+  const __cross = cross(
+    [vector.x1 - vector.x0, vector.y1 - vector.y0, 0],
+    normalize([point.x - vector.x0, point.y - vector.y0, 0]),
+  );
+
   // 左側
   if (__cross[2] > 0) {
     return true;
   }
   return false;
-}
+};
 
-export const getRightPoint = (points: Point[], vector: Vector, right: Boolean = true): Point[] => {
-  const results = [];
-  points.forEach((point) => {
-    if (right && isRightSide(point, vector)) {
-      results.push(point);
-    }
-    if (!right && isLeftSide(point, vector)) {
-      results.push(point);
-    }
+/**
+ * 交点を求める
+ * @see http://atelier-peppe.jp/programTips/GEOMETRIC/KIKA_8.html
+ * @param vector
+ */
+export const getIntersectionPoint = (vector: Vector, point: Point) => {
+  const foldLineVecX = vector.x1 - vector.x0;
+  const foldLineVecY = vector.y1 - vector.y0;
 
-    // @see http://atelier-peppe.jp/programTips/GEOMETRIC/KIKA_8.html
+  let intersectionPointX = 0;
+  let intersectionPointY = 0;
+
+  // 線分が垂直の場合
+  if (foldLineVecX === 0) {
+    intersectionPointX = vector.x0;
+    intersectionPointY = point.y;
+  }
+  // 線分が水平の場合
+  else if (foldLineVecY === 0) {
+    intersectionPointX = point.x;
+    intersectionPointY = vector.y0;
+  } else {
+    // そ
     // 垂線の足を求める
     // 線分の傾き ey - sy / ex - sx
-    const m1 = (vector.y1 - vector.y0) / (vector.x1 - vector.x0);
+    const m1 = foldLineVecY / foldLineVecX;
     // 線分のY切片
     // const b1 = line.sp.y - (m1 * line.sp.x);
     const b1 = vector.y0 - m1 * vector.x0;
@@ -487,17 +505,25 @@ export const getRightPoint = (points: Point[], vector: Vector, right: Boolean = 
     const b2 = point.y - m2 * point.x;
 
     // 交点算出
-    const xx = (b2 - b1) / (m1 - m2);
-    const yy = (b2 * m1 - b1 * m2) / (m1 - m2);
+    intersectionPointX = (b2 - b1) / (m1 - m2);
+    intersectionPointY = (b2 * m1 - b1 * m2) / (m1 - m2);
+  }
 
-    // TODO: 線上にあるのか
-    // 線分の範囲内にあるか判定
-    // if ((0 >= xx && 7.5 <= xx && 0 >= yy && 7.5 <= yy) || (7.5 >= xx && 0 <= xx && 7.5 >= yy && 0 <= yy)) {
-    //   // TODO: a
-    //   console.warn(xx, yy);
-    // }
+  return {
+    x: intersectionPointX,
+    y: intersectionPointY,
+  };
+};
 
-    // 垂線の足を求める ここまで
+export const getRightPoint = (points: Point[], vector: Vector, right: Boolean = true): Point[] => {
+  const results = [];
+  points.forEach((point) => {
+    if (right && isRightSide(point, vector)) {
+      results.push(point);
+    }
+    if (!right && isLeftSide(point, vector)) {
+      results.push(point);
+    }
   });
   return results;
 };
